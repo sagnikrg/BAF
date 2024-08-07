@@ -124,22 +124,36 @@ cat <<EOF >mbldtcL${L}_${i1}.jl
 
 # Importing Headers
 
-using LinearAlgebra
-using Random
-using Kronecker
-using Arpack
+using LinearAlgebra         #   For Linear Algebra
+using Random                #   For Random Number Generation
+using Kronecker             #   For Kronecker Product
+using Arpack                #   For Eigenvalue Decomposition
+using StatsBase             #   For Statistics
 
+
+
+include("header/gates.jl")
+include("header/brickwall.jl")
+include("header/transfermat.jl")
+include("header/functions.jl")
 
 L=${L};
-theta=0.0; 
+theta=0.0;
+epsilon=0.0; 
 
 #########################################################################
 # Brickwall
 #########################################################################
 
+
+U=brickwall(L,theta,epsilon);
+
+
 #########################################################################
 # Eigenstatistics
 #########################################################################
+
+eigA,eigvecA=eigen(U);
 
 #########################################################################
 # Eigenstate Entanglement Entropy
@@ -150,34 +164,16 @@ theta=0.0;
 #########################################################################
 
 
-# getting the phase diagram
+file=h5open("mbldtc_L8_theta_\$(theta)_${i1}.hdf5","cw")
 
-#for itr in 1:20
-itr=1;
-	for j in 1:14
-
-file=h5open("EntanglementEntropyL10_theta_\$(thetalist[j])_${i1}.hdf5","w")
-
-		for i in 1:1:51
-
-			epsilon=(i-1)*0.02;
-			thetamean=thetalist[j];
-			Un=brickwall(L,thetamean,epsilon)
-		
-			for t in 1:16
-				Un.=Un*Un
-			end
-		
-			S,V,D=svd(reshape(Un[683,:],(32,32)));
-			V=V.^2;
+# Attributes:
 
 
-		file["SV/thetamea\$(thetamean)/epsilon"*first("\$(epsilon)",4)*"/Itr\$(itr)"]=V;
-	end
+	file["SV/thetamea\$(theta)/epsilon"*first("\$(epsilon)",4)*"/Itr\$(itr)"]=eigA;
 	
 close(file)	
-	end
-#end
+	
+end
 
 
 
