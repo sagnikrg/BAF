@@ -2,6 +2,8 @@
 
 #creates job iteratively 
 
+cd ..
+
 L=8
 
 for i1 in {1..1}
@@ -106,14 +108,14 @@ done
 
 
 
-cd $BUDDY
+#cd $BUDDY
 
-for i1 in {1..1000}
+for i1 in {1..1}
 do
 
 
 
-cat <<EOF >halfchainL10_${i1}.jl
+cat <<EOF >mbldtcL${L}_${i1}.jl
 
 
 #########################################################################
