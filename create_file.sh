@@ -141,6 +141,42 @@ L=${L};
 theta=0.0;
 epsilon=0.0; 
 
+
+
+file=h5open("mbldtc_L8_theta_\$(theta)_${i1}.hdf5","cw")
+
+######################################
+# Attributes:
+######################################
+
+	# Extracting Date and Time
+
+	Dates.now()
+	attrs["Date/Time"]=string(Dates.now())
+
+	# Extracting Processor Type
+
+    processor_type = Sys.CPU_NAME
+    attrs["Processor Type"] = string(processor_type)
+
+	# Extracting Julia Version
+
+	julia_version = VERSION
+	attrs["Julia Version"] = string(julia_version)
+
+	# Extracting Number of Threads
+
+	num_threads = Threads.nthreads()
+	attrs["Number of Threads"] = string(num_threads)	
+
+	# Meta Data
+
+	# Code
+
+	script_content = read("mbldtcL${L}_${i1}.jl", String)
+	
+	attrs["Code"] = script_content
+
 #########################################################################
 # Brickwall
 #########################################################################
@@ -164,12 +200,7 @@ eigA,eigvecA=eigen(U);
 #########################################################################
 
 
-file=h5open("mbldtc_L8_theta_\$(theta)_${i1}.hdf5","cw")
-
-# Attributes:
-
-
-	file["SV/thetamea\$(theta)/epsilon"*first("\$(epsilon)",4)*"/Itr\$(itr)"]=eigA;
+	file["L\$(L)/theta\$(theta)/epsilon"*first("\$(epsilon)",4)*"/Itr"]=eigA;
 	
 close(file)	
 	
