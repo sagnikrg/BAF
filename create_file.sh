@@ -124,17 +124,19 @@ cat <<EOF >mbldtcL${L}_${i1}.jl
 
 # Importing Headers
 
+using Pkg					#   For Package Management
+using Dates                 #   For Date and Time
 using LinearAlgebra         #   For Linear Algebra
 using Random                #   For Random Number Generation
 using Kronecker             #   For Kronecker Product
 using Arpack                #   For Eigenvalue Decomposition
 using StatsBase             #   For Statistics
-
+using HDF5                  #   For Saving Data
 
 
 include("header/gates.jl")
 include("header/brickwall.jl")
-include("header/transfermat.jl")
+include("header/TransferMat.jl")
 include("header/functions.jl")
 
 L=${L};
@@ -157,25 +159,30 @@ file=h5open("mbldtc_L8_theta_\$(theta)_${i1}.hdf5","cw")
 	# Extracting Processor Type
 
     processor_type = Sys.CPU_NAME
-    attrs["Processor Type"] = string(processor_type)
+    attrs["[ENV] Processor Type"] = string(processor_type)
+
 
 	# Extracting Julia Version
 
 	julia_version = VERSION
-	attrs["Julia Version"] = string(julia_version)
+	attrs["[ENV] Julia Version"] = string(julia_version)
 
 	# Extracting Number of Threads
 
 	num_threads = Threads.nthreads()
-	attrs["Number of Threads"] = string(num_threads)	
+	attrs["[ENV] Number of Threads"] = string(num_threads)	
 
 	# Meta Data
 
 	# Code
 
 	script_content = read("mbldtcL${L}_${i1}.jl", String)
-	
-	attrs["Code"] = script_content
+	attrs["[ENV] Code"] = script_content
+
+	# Modules
+
+	module_list = Pkg.installed()
+	attrs["[ENV] Modules"] = string(module_list)
 
 #########################################################################
 # Brickwall
