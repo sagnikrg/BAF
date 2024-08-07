@@ -159,10 +159,12 @@ attrs=attributes(file)
 	Dates.now()
 	attrs["Date/Time"]=string(Dates.now())
 
+
 	# Extracting Processor Type
 
     processor_type = Sys.CPU_NAME
     attrs["[ENV] Processor Type"] = string(processor_type)
+
 
 
 	# Extracting Julia Version
@@ -170,12 +172,14 @@ attrs=attributes(file)
 	julia_version = VERSION
 	attrs["[ENV] Julia Version"] = string(julia_version)
 
+	# Container OS
+
+	attrs["[ENV] Container OS"] = "Debian11"
+
 	# Extracting Number of Threads
 
 	num_threads = Threads.nthreads()
 	attrs["[ENV] Number of Threads"] = string(num_threads)	
-
-	# Meta Data
 
 	# Code
 
@@ -186,6 +190,9 @@ attrs=attributes(file)
 
 	module_list = Pkg.installed()
 	attrs["[ENV] Modules"] = string(module_list)
+
+
+	# Meta Data
 
 #########################################################################
 # Brickwall
