@@ -2,7 +2,7 @@
 
 #creates job iteratively 
 
-cd ../data
+cd ..
 
 L=8
 
