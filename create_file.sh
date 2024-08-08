@@ -2,6 +2,8 @@
 
 cd ../
 
+L=8
+
 #cd $BUDDY
 
 for i1 in {1..1}
