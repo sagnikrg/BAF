@@ -38,8 +38,8 @@ module load julia/1.9.4
 
 #Creates folder for the Job
 
-mkdir \${ClusterId}_\$Process
-cd \${ClusterId}_\$Process
+#mkdir \${ClusterId}_\$Process
+#cd \${ClusterId}_\$Process
 
 
 #Job submission 
