@@ -37,7 +37,7 @@ include("header/functions.jl")
 
 L=${L};
 theta=0.0;
-Itrnumb=2;
+Itrnumb=2000;
 
 
 file=h5open("mbldtc_L8_theta_\$(theta)_${i1}.hdf5","cw")
@@ -151,12 +151,12 @@ for i in 1:length(epsilonlist)
 # Eigenstate Entanglement Entropy
 #########################################################################
 
-for j in 1:length(eigvecA)
+#for j in 1:length(eigvecA)
 	
 	#computing the half chain entanglement entropy
-	entanglement_ee[i]=entanglement_ee[i]+EntanglementEntropy(eigvecA[j],L/2)
+	#entanglement_ee[i]=entanglement_ee[i]+EntanglementEntropy(eigvecA[j],L/2)
 	
-end
+#end
 
 
 #########################################################################
@@ -170,7 +170,7 @@ end
 levelspacing=levelspacing/\$(Itrnumb)
 
 
-file["L\$(L)/theta\$(theta)/epsilon"*first("\$(epsilon)",4)*"/Itr"]=eigA;
+file["L\$(L)/theta\$(theta)/Levelspacing"]=levelspacing;
 	
 close(file)	
 	
