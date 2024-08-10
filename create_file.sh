@@ -168,7 +168,7 @@ for i in 1:length(epsilonlist)
 
 end
 
-levelspacing=levelspacing/\$(Itrnumb)
+levelspacing=levelspacing/Itrnumb
 
 
 file["L\$(L)/theta\$(theta)/Levelspacing"]=levelspacing;
