@@ -112,7 +112,7 @@ for i in 1:length(epsilonlist)
 	epsilon=epsilonlist[i]
 
 
-	for itr in 1:\$(Itrnumb)
+	for itr in 1:Itrnumb
 	
 	#########################################################################
 	# Brickwall
