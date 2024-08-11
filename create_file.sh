@@ -173,12 +173,33 @@ for i in 1:length(epsilonlist)
 
 		Corr=LazadiresDiagram(eigA,eigvecA);
 
+		histogram_diag+=diag(Corr)
+		histogram_pi_diag+=pi_diag(Corr)
 
+		for j in 1:16
+			histogram_offdiag[j,:]+=offdiag(Corr,j)
+			histogram_pi_offdiag[j,:]+=pi_offdiag(Corr,j)
+		end
 
 
 		## Itr loop ends here
 	end
 
+	# normalising the Lazarides-Luitz statistics
+
+	histogram_diag=histogram_diag/Itrnumb
+	histogram_pi_diag=histogram_pi_diag/Itrnumb
+
+	histogram_offdiag=histogram_offdiag/Itrnumb
+	histogram_pi_offdiag=histogram_pi_offdiag/Itrnumb
+
+	#saving the Lazarides-Luitz statistics
+
+	file["L\$(L)/theta\$(theta)/epsilon"*first("\$(epsilon)",5)*"/Histogram/Diag"]=histogram_diag
+	file["L\$(L)/theta\$(theta)/epsilon"*first("\$(epsilon)",5)*"/Histogram/PiDiag"]=histogram_pi_diag
+
+	file["L\$(L)/theta\$(theta)/epsilon"*first("\$(epsilon)",5)*"/Histogram/OffDiag"]=histogram_offdiag
+	file["L\$(L)/theta\$(theta)/epsilon"*first("\$(epsilon)",5)*"/Histogram/PiOffDiag"]=histogram_pi_offdiag
 
 
 	## epsilon loop ends here
