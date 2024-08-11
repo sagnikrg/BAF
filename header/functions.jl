@@ -141,19 +141,12 @@ end
 # Phase ordering
 ################################    
 
-function phase_ordered_eigvecs(A)
+function phase_ordered_eigvecs(EigA,Eigvec)
 
-  #########################################
-    # Extracting local hilbert space dimension:
-    #########################################
-
-    localdim=length(eigvals(Z));
-    
     #########################################
     # Extracting eigenvalues and eigenvectors of the input matrix A:
     #########################################
 
-    EigA,Eigvec=eigen(A);
     N=angle.(EigA);
     
     #########################################
@@ -201,9 +194,9 @@ end
 
 
 
-function LazadiresDiagram(U)
+function LazadiresDiagram(EigA,Eigvec)
 
-    EigvecNew=phase_ordered_eigvecs(U)[2];
+    EigvecNew=phase_ordered_eigvecs(EigA,Eigvec)[2];
 
     #########################################
     # Extracting Number of qubits from the input matrix A:

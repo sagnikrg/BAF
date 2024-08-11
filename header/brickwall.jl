@@ -41,9 +41,9 @@ function brickwall(L,thetamean,epsilon)
   
     #Constructing the background Z field
     
-        h=rand(L)*pi;
-        Ind=collect(1:L)
-        ZRow=copy(kronlist(RZ.(h),Ind));
+        #h=rand(L)*pi;
+        #Ind=collect(1:L)
+        #ZRow=copy(kronlist(RZ.(h),Ind));
 
  
         #Constructing the Random Brickwall 
@@ -102,7 +102,7 @@ function brickwall(L,thetamean,epsilon)
             XRow=copy(kron_product(RX(g),L));
 
 
-          A=XRow*UEven*UOdd*ZRow;
+          A=XRow*UEven*UOdd;
           
 
  A    
@@ -389,6 +389,30 @@ psi = productMPS(sites, random_states)
 
     return psi
 end
+
+
+function EntanglementEntropy(eigvec, l)
+
+    lhalf=Int(l/2)
+    
+    eigreshape=reshape(eigvec,2^lhalf,2^lhalf)
+    
+    U,S,V=svd(eigreshape)
+    
+    ee=0.0
+    
+    for i in 1:2^lhalf
+        if S[i]>1e-10
+        ee=ee+-S[i]^2*log(S[i]^2)
+        end
+    end
+    
+    return ee
+    
+end
+    
+
+
 
 function halfchainee(Psi, sites)
 

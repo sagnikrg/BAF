@@ -141,7 +141,7 @@ end
 
 
 
-function offdiag(Corr)
+function pi_diag(Corr)
     L=size(Corr)[1];
     Lh=convert(Int64,L/2)
     
@@ -153,6 +153,40 @@ function offdiag(Corr)
 
     A
 end
+
+
+
+function offdiag(Corr, k)
+    L=size(Corr)[1];
+    
+    A=[]
+    for i in 1:L-k
+        A=push!(A, Corr[i,i+k])
+        A=push!(A, Corr[i+k,i])
+    end
+
+    A
+end
+
+
+function pi_offdiag(Corr,k)
+    L=size(Corr)[1];
+    Lh=convert(Int64,L/2)
+    
+    A=[]
+    for i in 1:Lh+k
+        A=push!(A, Corr[i,i+Lh-k])
+        A=push!(A, Corr[i+Lh-k,i])
+    end
+
+    for i in 1:Lh-k
+    A=push!(A, Corr[i,i+Lh+k])
+    A=push!(A, Corr[i+Lh+k,i])
+    end
+
+    A
+end
+
 
 function entanglement_entropy(eigenstate)
     # Compute the density matrix of the eigenstate
