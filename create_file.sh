@@ -38,12 +38,19 @@ include("header/functions.jl")
 L=${L};
 theta=0.0;
 Itrnumb=100;
+Ntot=2^L;
 
-
-epsilonlist=[0.0,0.025,0.05,0.075,0.1,0.125]#,0.15,0.175,0.2,0.225,0.25,0.275,0.3,0.325,0.35,0.375,0.4,0.425,0.45,0.475,0.5,0.525,0.55,0.575,0.6,0.625,0.65,0.675,0.7,0.725,0.75,0.775,0.8,0.825,0.85,0.875,0.9,0.925,0.95,0.975,1.0]
+epsilonlist=[0.0,0.025,0.05,0.075,0.1,0.125,0.15,0.175,0.2,0.225,0.25,0.275,0.3,0.325,0.35,0.375,0.4,0.425,0.45,0.475,0.5,0.525,0.55,0.575,0.6,0.625,0.65,0.675,0.7,0.725,0.75,0.775,0.8,0.825,0.85,0.875,0.9,0.925,0.95,0.975,1.0]
 
 levelspacing=fill(0.0,length(epsilonlist))
 entanglement_ee=fill(0.0,length(epsilonlist))
+
+histogram_diag=fill(0,2000)
+histogram_pi_diag=fill(0,2000)
+
+histogram_offdiag=fill(0,16,2000)
+histogram_pi_offdiag=fill(0,16,2000)
+
 
 
 
@@ -106,7 +113,6 @@ attrs=attributes(file)
 
 
 
-
 for i in 1:length(epsilonlist)
 
 	epsilon=epsilonlist[i]
@@ -114,62 +120,72 @@ for i in 1:length(epsilonlist)
 
 	for itr in 1:Itrnumb
 	
-	#########################################################################
-	# Brickwall
-	#########################################################################
-
-
-	U=brickwall(L,theta,epsilon);
-
-	#h=rand(L)*pi/2;
-	#Ind=collect(1:L)
-	#ZRow=copy(kronlist(RZ.(h),Ind));
+		#########################################################################
+		# Brickwall
+		#########################################################################
 
 
 
-
-	A=brickwall(L,theta,epsilon)
-	#A=A*ZRow
+		#h=rand(L)*pi/2;
+		#Ind=collect(1:L)
+		#ZRow=copy(kronlist(RZ.(h),Ind));
 
 
 
 
+		A=brickwall(L,theta,epsilon)
+		#A=A*ZRow
 
-#########################################################################
-# Eigenstatistics
-#########################################################################
-	eigA,eigvecA=eigen(A)
 
-	#saving the eigenvalues
-	file["L\$(L)/theta\$(theta)/epsilon"*first("\$(epsilon)",5)*"/Itr\$(itr)"]=eigA;
+
+
+
+		#########################################################################
+		# Eigenstatistics
+		#########################################################################
+		
+		eigA,eigvecA=eigen(A)
+
+		#saving the eigenvalues
+		file["L\$(L)/theta\$(theta)/epsilon"*first("\$(epsilon)",5)*"/Itr\$(itr)"]=eigA;
 	
-	#computing the level spacing
-	levelspacing[i]=levelspacing[i]+LevelSpacingRatio(eigA)
+		#computing the level spacing
+		levelspacing[i]=levelspacing[i]+LevelSpacingRatio(eigA)
     
 
 
-#########################################################################
-# Eigenstate Entanglement Entropy
-#########################################################################
+		#########################################################################
+		# Eigenstate Entanglement Entropy
+		#########################################################################
 
-#for j in 1:length(eigvecA)
+		for j in 1:length(eigvecA)
 	
-	#computing the half chain entanglement entropy
-	entanglement_ee[i]=entanglement_ee[i]+EntanglementEntropy(eigvecA[j])
+			#computing the half chain entanglement entropy
 	
-#end
+			entanglement_ee[i]=entanglement_ee[i]+EntanglementEntropy(eigvecA[j], L)
+	
+		end
 
 
-#########################################################################
-# Lazarides-Luitz Staistics 
-#########################################################################
+		#########################################################################
+		# Lazarides-Luitz Staistics 
+		#########################################################################
 
+		Corr=LazadiresDiagram(eigA,eigvecA);
+
+
+
+
+		## Itr loop ends here
 	end
 
+
+
+	## epsilon loop ends here
 end
 
 levelspacing=levelspacing/Itrnumb
-entanglement_ee=entanglement_ee/Itrnumb
+entanglement_ee=entanglement_ee/(Itrnumb*Ntot)
 
 file["L\$(L)/theta\$(theta)/Levelspacing"]=levelspacing;
 file["L\$(L)/theta\$(theta)/EntanglementEE"]=entanglement_ee;
