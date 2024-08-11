@@ -42,8 +42,8 @@ Ntot=2^L;
 
 epsilonlist=[0.0,0.025,0.05,0.075,0.1,0.125,0.15,0.175,0.2,0.225,0.25,0.275,0.3,0.325,0.35,0.375,0.4,0.425,0.45,0.475,0.5,0.525,0.55,0.575,0.6,0.625,0.65,0.675,0.7,0.725,0.75,0.775,0.8,0.825,0.85,0.875,0.9,0.925,0.95,0.975,1.0]
 
-levelspacing=fill(0.0,length(epsilonlist))
-entanglement_ee=fill(0.0,length(epsilonlist))
+global levelspacing=fill(0.0,length(epsilonlist))
+global entanglement_ee=fill(0.0,length(epsilonlist))
 
 
 
@@ -93,12 +93,31 @@ attrs=attributes(file)
 	module_list = Pkg.installed()
 	attrs["[ENV] Modules"] = string(module_list)
 
+	# Julia Environment
+
+	attrs["[ENV] Julia Environment"] = "julia-1.9.4-08-08-24.tar.gz" 
 
 	# Meta Data
 
+	attrs["METADATA"] = "This Data file contains a full parameter scan of epsilon in epsilonlint of the MBL-DTC Unitary for L=\$(L) and theta=\$(theta). The data contains the eigenvalues for each realisation, disorder averaged level spacing ratio, disorder averaged eigestate entanglement entropy and disorder averaged histograms diagonal, pi-diagonal and various offdiagonal elements of the Lazadires Matrix."
+
+	# Author
+
+	attrs["Author"] = "Sagnik Ghosh"
+
+	# cluster
+
+	attrs["Cluster"] = "BAF"
+
+	# Parameters
+
+	attrs["[Parameters] h"] = "0"
 	attrs["[Parameters] L"] = L
 	attrs["[Parameters] theta"] = theta
 	attrs["[Parameters] epsilon"] = string(epsilonlist)
+
+	attrs["[Parameters] Itrnumb"] = Itrnumb
+
 
 ######################################
 # Code:
