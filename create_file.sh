@@ -155,7 +155,7 @@ for i in 1:length(epsilonlist)
 #for j in 1:length(eigvecA)
 	
 	#computing the half chain entanglement entropy
-	#entanglement_ee[i]=entanglement_ee[i]+EntanglementEntropy(eigvecA[j])
+	entanglement_ee[i]=entanglement_ee[i]+EntanglementEntropy(eigvecA[j])
 	
 #end
 
@@ -169,9 +169,10 @@ for i in 1:length(epsilonlist)
 end
 
 levelspacing=levelspacing/Itrnumb
-
+entanglement_ee=entanglement_ee/Itrnumb
 
 file["L\$(L)/theta\$(theta)/Levelspacing"]=levelspacing;
+file["L\$(L)/theta\$(theta)/EntanglementEE"]=entanglement_ee;
 	
 close(file)	
 	
