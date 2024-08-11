@@ -45,12 +45,6 @@ epsilonlist=[0.0,0.025,0.05,0.075,0.1,0.125,0.15,0.175,0.2,0.225,0.25,0.275,0.3,
 levelspacing=fill(0.0,length(epsilonlist))
 entanglement_ee=fill(0.0,length(epsilonlist))
 
-histogram_diag=fill(0,2000)
-histogram_pi_diag=fill(0,2000)
-
-histogram_offdiag=fill(0,16,2000)
-histogram_pi_offdiag=fill(0,16,2000)
-
 
 
 
@@ -118,8 +112,16 @@ for i in 1:length(epsilonlist)
 	epsilon=epsilonlist[i]
 
 
+	global histogram_diag=fill(0,2000)
+	global histogram_pi_diag=fill(0,2000)
+
+	global histogram_offdiag=fill(0,16,2000)
+	global histogram_pi_offdiag=fill(0,16,2000)
+
+
 	for itr in 1:Itrnumb
-	
+
+
 		#########################################################################
 		# Brickwall
 		#########################################################################
@@ -158,7 +160,7 @@ for i in 1:length(epsilonlist)
 		# Eigenstate Entanglement Entropy
 		#########################################################################
 
-		for j in 1:length(eigvecA)
+		for j in 1:Ntot
 	
 			#computing the half chain entanglement entropy
 	
@@ -173,12 +175,12 @@ for i in 1:length(epsilonlist)
 
 		Corr=LazadiresDiagram(eigA,eigvecA);
 
-		histogram_diag+=diag(Corr)
-		histogram_pi_diag+=pi_diag(Corr)
+		histogram_diag .+=diag(Corr)
+		histogram_pi_diag .+=pi_diag(Corr)
 
 		for j in 1:16
-			histogram_offdiag[j,:]+=offdiag(Corr,j)
-			histogram_pi_offdiag[j,:]+=pi_offdiag(Corr,j)
+				histogram_offdiag[j,:] .+=offdiag(Corr,j)
+				histogram_pi_offdiag[j,:] .+=pi_offdiag(Corr,j)
 		end
 
 
