@@ -162,7 +162,7 @@ for i in 1:length(epsilonlist)
 	
 			#computing the half chain entanglement entropy
 	
-			entanglement_ee[i]=entanglement_ee[i]+EntanglementEntropy(eigvecA[j], L)
+			entanglement_ee[i]=entanglement_ee[i]+EntanglementEntropy(eigvecA[:,j], L)
 	
 		end
 
