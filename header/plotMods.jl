@@ -1,4 +1,6 @@
 
+viridis=[colorant"#440154", colorant"#482878", colorant"#3e4989", colorant"#31688e", colorant"#26828e", colorant"#1f9e89", colorant"#35b779", colorant"#6ece58", colorant"#b5de2b", colorant"#fde725"]
+
 function LazadiresDiagram(A)
 
     #########################################
