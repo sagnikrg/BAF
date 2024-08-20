@@ -1,73 +1,8 @@
 
 viridis=[colorant"#440154", colorant"#482878", colorant"#3e4989", colorant"#31688e", colorant"#26828e", colorant"#1f9e89", colorant"#35b779", colorant"#6ece58", colorant"#b5de2b", colorant"#fde725"]
 
-function LazadiresDiagram(A)
+function LazadiresDiagramPlot(Corr)
 
-    #########################################
-    # Extracting local hilbert space dimension:
-    #########################################
-
-    localdim=length(eigvals(Z));
-    
-    #########################################
-    # Extracting eigenvalues and eigenvectors of the input matrix A:
-    #########################################
-
-    EigA=eigvals(A);
-    N=angle.(EigA);
-    Eigvec=eigvecs(A);
-    
-    #########################################
-    # Defining a matrix to store the phase information of the eigenvectors:
-    #########################################
-
-
-    Ph=fill(0.0*im, length(EigA)+1,length(EigA));
-    
-    #########################################
-    # Extracting Number of qubits from the input matrix A:
-    #########################################
-
-    dim=convert(Int64,floor(log(length(EigA))/log(localdim)))
-    
-
-    ########################################################
-    # Storing the phase information of the eigenvectors in the matrix Ph:
-    ########################################################
-
-    Ph[1,:]=N;
-    for i in 1:length(EigA);
-        for j in 1:length(EigA)
-            Ph[i+1,j]=Eigvec[i,j];
-        end
-    end
-    
-    ########################################################
-    # Ordering the eigenstates from -pi to pi:
-    ########################################################
-
-    Phnew=copy(Ph[:,sortperm(real(Ph[1, :]))]); # Phase orders the eigenstates from -pi to pi
-    EigvecNew=Eigvec;
-    
-    for i in 1:length(EigA);
-        for j in 1:length(EigA)
-            EigvecNew[i,j]=Phnew[i+1,j];
-        end
-    end
-    
-    ########################################################
-    # Constructing the correlation matrix:
-    ########################################################
-
-    Corr=fill(0.0, length(EigA),length(EigA));
-    
-    ########################################################
-    # Defining the symmetry operator whose correlation we want to calculate:
-    ########################################################
-    
-    Xi=copy(kronecker(Z,kronecker(I(localdim),(dim-1))));
-    Corr=abs.(conj(transpose(EigvecNew))*Xi*EigvecNew)
-    
 ###############################
 #Phase ordered <n|Z|m>  
 ###############################

@@ -168,7 +168,7 @@ function brickwall_tensor(L,thetamean,epsilon)
             int2=exp(-im*J[j]*fonez-im*theta/2*(ftwox+ftwoy));
             int3=kron(RZ(delh[3]),RZ(delh[4]));
 
-            FU[j]=int3*int2*int1;
+            FU[j]=int2;
     end
 
  ##########################################
@@ -185,10 +185,10 @@ function brickwall_tensor(L,thetamean,epsilon)
  ##############################################
 
 
-    #for i in 1:2:L-1
-        #FU[i]=FU[i]*kron(ZRow[i],ZRow[i+1]);
-        #FUTensor[i]=reshape(Int,2,2,2,2)
-    #end
+ #   for i in 1:2:L-1
+  #      FU[i]=FU[i]*kron(ZRow[i],ZRow[i+1]);
+  #      FUTensor[i]=reshape(Int,2,2,2,2)
+  #  end
 
     for i in 2:2:L-1
         FU[i]=kron(RX(g),RX(g))*FU[i];
@@ -204,7 +204,7 @@ function brickwall_tensor(L,thetamean,epsilon)
 
 
  for i in 1:2:L-1
-    #FU[i]=FU[i]*kron(ZRow[i],ZRow[i+1]);
+    FU[i]=FU[i]*kron(ZRow[i],ZRow[i+1]);
     FUTensor[i]=reshape(FU[i],2,2,2,2)
 end
 
@@ -240,7 +240,7 @@ function brickwall_bare(L,thetamean)
 
     
             thetadev=pi/50;
-            theta=thetamean+randn(1)[]*thetadev;               #Interaction
+            theta=thetamean#+randn(1)[]*thetadev;               #Interaction
                                       
             delh=randn(4)*pi/50;                                          #Imperfection in Z tuning
 
@@ -249,11 +249,11 @@ function brickwall_bare(L,thetamean)
 
         for j in 1:length(FU)
         
-            int1=kron(RZ(delh[1]),RZ(delh[2]));
+            #int1=kron(RZ(delh[1]),RZ(delh[2]));
                 int2=exp(-im*J[j]*fonez-im*theta/2*(ftwox+ftwoy));
-                int3=kron(RZ(delh[3]),RZ(delh[4]));
+             #   int3=kron(RZ(delh[3]),RZ(delh[4]));
 
-                FU[j]=int3*int2*int1;
+                FU[j]=int2;
             end
 
         Indodd=collect(1:2:L-1);    
@@ -305,13 +305,13 @@ function itensorise(FUTensor, sites, dummysites)
     L=length(FUTensor);
     gates = ITensor[]
     for i in 1:2:L
-        push!(gates, ITensor(FUTensor[i],dummysites[i+1],dummysites[i],sites[i],sites[i+1]))
+        push!(gates, ITensor(FUTensor[i],dummysites[i+1],dummysites[i],sites[i+1],sites[i]))
     end
   
 
     for i in 2:2:L
-        push!(gates, ITensor(FUTensor[i],sites[i+1],sites[i],dummysites[i],dummysites[i+1]))
-    end
+        push!(gates, ITensor(FUTensor[i],sites[i+1],sites[i],dummysites[i+1],dummysites[i]))
+        end
   
     gates
 end
@@ -335,6 +335,8 @@ function brickwall_tev(Psi, brick, sites, dummysites)
     #    Psi=Psi*delta(sites[i],dummysites[i])
     #end
 
+    #order_dummy = (dummysites[1],dummysites[2],dummysites[3],dummysites[4],dummysites[5],dummysites[6],dummysites[7],dummysites[8])
+    #Psi=permute(Psi, order_dummy)
 
     for i in (Lhalf+1):L
         Psi=brick[i]*Psi
@@ -345,6 +347,8 @@ function brickwall_tev(Psi, brick, sites, dummysites)
         Psi=Psi*delta(sites[L+1],dummysites[L+1])
     #end
     
+    #order = (sites[8],sites[7],sites[6],sites[5],sites[4],sites[3],sites[2],sites[1])
+    #Psi=permute(Psi, order)
    
     # psi=apply(brick[1:2:L-1], psi);  # Apply the odd gates
    # psi=apply(brick[2:2:L-1], psi);  # Apply the even gates
