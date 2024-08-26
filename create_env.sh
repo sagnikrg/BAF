@@ -58,7 +58,7 @@ rm mbldtc_L${L}_${i1}.jl
 
 
 # copy results
-#cp  /jwd/\${ClusterId}_\$Process/*.hdf5 /home/sghosh/physik/local/data/.
+cp  /jwd/\${ClusterId}_\$Process/*.hdf5 /cephfs/user/sghosh/Data/.
 EOF
 
 
@@ -81,7 +81,7 @@ Universe                = vanilla
 
 Transfer_executable     = True
 Transfer_input_files    = 
-#Transfer_output_files   =
+Transfer_output_files   =
 
 
 Error                   = log/err.\$(ClusterId).\$(Process)
