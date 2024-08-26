@@ -38,7 +38,7 @@ include("header/functions.jl")
 L=${L};
 theta=0.0;
 Itrnumb=100;
-tnum=80000;
+tnum=800;
 tnum2=40000;
 Ntot=2^L;
 
@@ -206,25 +206,30 @@ for i in 1:length(epsilonlist)
 
 		for t in 1:tnum
    
-
-			Psi=brickwall_tev(Psi, brick, sites, dummysites)
 			halfchainee_t[t]=halfchainee(Psi,sites)
 
-			if t<=tnum2
+			for ttemp in 1:100
 
-			for k in 1:L
+				Psi=brickwall_tev(Psi, brick, sites, dummysites)
+				t_temp=(t-1)*100+ttemp
+			
+
+				if t_temp<=tnum2
+
+				for k in 1:L
 
 
-				PsiZ[k]=brickwall_tev(PsiZ[k], brick, sites, dummysites)
+					PsiZ[k]=brickwall_tev(PsiZ[k], brick, sites, dummysites)
 
-				Psitemp[k]=gateZ[k]*Psi
-				Psitemp[k]=Psitemp[k]*delta(sites[k],dummysites[k])
+					Psitemp[k]=gateZ[k]*Psi
+					Psitemp[k]=Psitemp[k]*delta(sites[k],dummysites[k])
 
-				zz=inner(PsiZ[k],Psitemp[k])
-				zz_t[t,k]=real(zz)
+					zz=inner(PsiZ[k],Psitemp[k])
+					zz_t[t_temp,k]=real(zz)
 
-			end
+				end
 
+				end
 			end
 		
 		end
