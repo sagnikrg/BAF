@@ -173,7 +173,7 @@ end
 end
 
 Parity_full=Parity_full/Itrnumb
-Parity_normal=Parity_normal/(Itrnumb*Ntot)
+Parity_normal=Parity_normal/(Itrnumb)
 
 file["L\$(L)/theta\$(theta)/Parity_full"]=Parity_full;
 file["L\$(L)/theta\$(theta)/Parity_normal"]=Parity_normal;
