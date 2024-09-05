@@ -4,9 +4,9 @@
 
 cd ..
 
-L=8
+L=12
 
-for i1 in {1..1}
+for i1 in {1001..2000}
 do
 
 
@@ -58,7 +58,7 @@ rm mbldtc_L${L}_${i1}.jl
 
 
 # copy results
-cp  /jwd/\${ClusterId}_\$Process/*.hdf5 /cephfs/user/sghosh/Data/.
+cp  /jwd/\${ClusterId}_\$Process/*.hdf5 /cephfs/user/sghosh/data/.
 EOF
 
 
@@ -88,7 +88,7 @@ Error                   = log/err.\$(ClusterId).\$(Process)
 Output                  = log/out.\$(ClusterId).\$(Process)
 Log                     = log/log.\$(ClusterId).\$(Process)
 
-Request_memory          = 8  GB
+Request_memory          = 12  GB
 Request_cpus            = 1
         
 Request_disk            = 2 GB
