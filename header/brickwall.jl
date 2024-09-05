@@ -41,9 +41,9 @@ function brickwall(L,thetamean,epsilon)
   
     #Constructing the background Z field
     
-        #h=rand(L)*pi;
-        #Ind=collect(1:L)
-        #ZRow=copy(kronlist(RZ.(h),Ind));
+        h=rand(L)*2*pi;
+        Ind=collect(1:L)
+        ZRow=copy(kronlist(RZ.(h),Ind));
 
  
         #Constructing the Random Brickwall 
@@ -102,7 +102,7 @@ function brickwall(L,thetamean,epsilon)
             XRow=copy(kron_product(RX(g),L));
 
 
-          A=XRow*UEven*UOdd;
+          A=XRow*UEven*UOdd*ZRow;
           
 
  A    
