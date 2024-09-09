@@ -294,6 +294,13 @@ function kick(L,epsilon)
 
 end
 
+function parity(L)
+    
+    ZRow=copy(kron_product(Z,L));
+    ZRow
+
+end
+
     ########################################
     # time evolution with ITensor
     ########################################
