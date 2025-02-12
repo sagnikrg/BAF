@@ -8,7 +8,7 @@ fp=0.1
 
 Itrnumb=1
 
-for i1 in {1..Itrnumb}
+for i1 in {1..${Itrnumb}}
 do
 
 
