@@ -17,7 +17,8 @@ cat <<EOF >opo_fp_${fp}_${i1}.jl
 
 
 #########################################################################
-# Computing Eigenstatistics of the MBL-DTC Unitary
+# Dynamics of the Optical Parametric Oscillator (OPO) Model
+# with RK4 method
 #########################################################################
 
 # Importing Headers
