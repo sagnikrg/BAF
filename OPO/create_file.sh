@@ -69,8 +69,8 @@ attrs=attributes(file)
 
 	# Extracting Processor Type
 
-    processor_type = Sys.CPU_NAME
-    attrs["[ENV] Processor Type"] = string(processor_type)
+    	processor_type = Sys.CPU_NAME
+    	attrs["[ENV] Processor Type"] = string(processor_type)
 
 
 
@@ -155,7 +155,8 @@ attrs=attributes(file)
 	
 	t = 0.0
 	while t < T
-    		u = rk4_step_full(u, dt, t, g, f_0, kappa, dx).+noise_strength*randn(Complex{Float64}, N)
+    		global u,t
+		u = rk4_step_full(u, dt, t, g, f_0, kappa, dx).+noise_strength*randn(Complex{Float64}, N)
     		t += dt
     	push!(time_series_1, u[47])
     	push!(time_series_2, u[126])
@@ -165,10 +166,10 @@ attrs=attributes(file)
 	push!(time_series_6, u[512])
 
 	# Saving the full wavefunction for certain time steps
-	if t in [3.0, 3.5 ,4.0, 4.5, 5.0, 5.5, 6.0, 6.5, 7.0, 7.5, 8.0, 8.5, 9.0, 9.5, 10.0]
-		dataset = string("psi_", Int(t))
-		file[dataset] = u
-    end
+		if t in [3.0, 3.5 ,4.0, 4.5, 5.0, 5.5, 6.0, 6.5, 7.0, 7.5, 8.0, 8.5, 9.0, 9.5, 10.0]
+			dataset = string("psi_", Int(t))
+			file[dataset] = u
+    		end
 
 	end
 	file["psi_77/\$(itr)"] = time_series_1

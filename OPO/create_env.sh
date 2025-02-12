@@ -62,7 +62,7 @@ rm opo_fp_${fp}_${i1}.jl
 
 
 # copy results
-cp  /jwd/\${ClusterId}_\$Process/*.hdf5 /cephfs/user/sghosh/data/.
+cp  *.hdf5 /cephfs/user/sghosh/data/.
 rm -rf /jwd/\${ClusterId}_\$Process
 EOF
 
