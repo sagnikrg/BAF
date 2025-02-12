@@ -1,6 +1,6 @@
 
 
-cd ../
+cd $BUDDY
 
 L=8
 
