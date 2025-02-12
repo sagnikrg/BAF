@@ -1,8 +1,6 @@
 
 using LinearAlgebra
 using Random
-using Statistics
-using FFTW
 
 
 
@@ -69,7 +67,7 @@ end
 
 
 function pump(f_0, k_p, omega_p, t, x)
-    return f_0 .* exp.(im.*((k_p*2*pi/L) .*x .- omega_p * t))
+    return f_0 .* exp.(im.*(k_p .*x .- omega_p * t))
 end
 
 function Diff(n,dx)
