@@ -2,14 +2,12 @@
 
 #creates job iteratively 
 
-cd ../../..
+cd ../..
 fp=0.1
 
-#cd $BUDDY
 
-Itrnumb=1
 
-for i1 in {1..${Itrnumb}}
+for i1 in {1..2}
 do
 
 
