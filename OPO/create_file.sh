@@ -2,16 +2,18 @@
 
 cd $BUDDY
 
-fp=8
+fp=0.1
 
 #cd $BUDDY
 
-for i1 in {1..1}
+Itrnumb=1
+
+for i1 in {1..Itrnumb}
 do
 
 
 
-cat <<EOF >mbldtc_L${L}_${i1}.jl
+cat <<EOF >opo_fp_${fp}_${i1}.jl
 
 
 #########################################################################
@@ -22,33 +24,36 @@ cat <<EOF >mbldtc_L${L}_${i1}.jl
 
 using Pkg					#   For Package Management
 using Dates                 #   For Date and Time
-using LinearAlgebra         #   For Linear Algebra
-using Random                #   For Random Number Generation
-using Kronecker             #   For Kronecker Product
-using Arpack                #   For Eigenvalue Decomposition
-using StatsBase             #   For Statistics
 using HDF5                  #   For Saving Data
 
 
-include("header/gates.jl")
-include("header/brickwall.jl")
-include("header/TransferMat.jl")
-include("header/functions.jl")
-
-L=${L};
-theta=0.0;
-Itrnumb=100;
-Ntot=2^L;
-
-epsilonlist=[0.0,0.025,0.05,0.075,0.1,0.125,0.15,0.175,0.2,0.225,0.25,0.275,0.3,0.325,0.35,0.375,0.4,0.425,0.45,0.475,0.5,0.525,0.55,0.575,0.6,0.625,0.65,0.675,0.7,0.725,0.75,0.775,0.8,0.825,0.85,0.875,0.9,0.925,0.95,0.975,1.0]
-
-global levelspacing=fill(0.0,length(epsilonlist))
-global entanglement_ee=fill(0.0,length(epsilonlist))
+include("header/Headers.jl")
 
 
 
+# Parameters
 
-file=h5open("mbldtc_L8_theta_\$(theta)_${i1}.hdf5","cw")
+g = 0.00118         		# Nonlinear interaction strength
+kappa = 0.045    			# Decay coefficient
+N = 512         			# Number of spatial points
+dx = 0.6799         		# Spatial step size
+L = dx*N        			# Length of the domain
+k=1;
+
+dt = 0.001       			# Time step size
+T = 10.0         			# Total time
+
+noise_strength = sqrt(kappa/dx)*sqrt(dt)  
+							# Strength of the noise
+
+f_0=\$(fp) 					# Pumping strength
+k_p=1.4						# Pumping wave number
+omega_p=-0.42;				# Pumping frequency
+
+
+
+
+file=h5open("OPO_fp_\$(fp)_${i1}.hdf5","cw")
 attrs=attributes(file)
 
 
