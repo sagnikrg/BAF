@@ -89,9 +89,9 @@ Transfer_input_files    =
 Transfer_output_files   =
 
 
-Error                   = log/err.\$(ClusterId).\$(Process)
-Output                  = log/out.\$(ClusterId).\$(Process)
-Log                     = log/log.\$(ClusterId).\$(Process)
+Error                   = log/err.OPO_fp_${fp}_${i1}.log
+Output                  = 
+Log                     = 
 
 Request_memory          = 12  GB
 Request_cpus            = 1
