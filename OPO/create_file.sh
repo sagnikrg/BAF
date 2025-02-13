@@ -67,7 +67,7 @@ attrs=attributes(file)
 	# Extracting Date and Time
 
 	start_time=Dates.now()
-	attrs["[Benchmark] Date/Time"]=string(Dates.now())
+	attrs["[Benchmark] Date/Time"]=Dates.format(Dates.now(), " dd/MM/yyyy at HH:mm:ss")
 
 	
 
