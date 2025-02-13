@@ -16,6 +16,8 @@ do
 cat <<EOF >opo_fp_${fp}_${i1}.jl
 
 
+
+
 #########################################################################
 # Dynamics of the Optical Parametric Oscillator (OPO) Model
 # with RK4 method
@@ -70,8 +72,9 @@ attrs=attributes(file)
 
 	# Extracting Processor Type
 
-    	processor_type = Sys.CPU_NAME
-    	attrs["[ENV] Processor Type"] = string(processor_type)
+    
+	model_name = read_model_name("model_name.txt")
+    attrs["[ENV] Processor Type"] = string(model_name)
 
 
 

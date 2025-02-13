@@ -35,6 +35,7 @@ cp \$BUDDY/julia/julia-1.9.4-08-08-24.tar.gz ./
 tar -xf julia-1.9.4-08-08-24.tar.gz
 rm -f julia-1.9.4-08-08-24.tar.gz
 
+lscpu --json | grep "Model name" | awk -F '"' '{print $8}' > model_name.txt
 
 
 #Loads Julia

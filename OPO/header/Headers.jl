@@ -2,7 +2,12 @@
 using LinearAlgebra
 using Random
 
-
+# Function to read a single line from a file
+function read_model_name(filename)
+    open(filename, "r") do file
+        return readline(file)
+    end
+end
 
 function complex_noise(n, strength)
     return (randn(n) + 1im * randn(n)) * strength
