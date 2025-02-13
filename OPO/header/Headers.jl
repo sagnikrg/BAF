@@ -1,6 +1,8 @@
 
 using LinearAlgebra
 using Random
+using Dates
+
 
 # Function to read a single line from a file
 function read_model_name(filename)
@@ -8,6 +10,19 @@ function read_model_name(filename)
         return readline(file)
     end
 end
+
+
+using Dates
+
+function format_duration(duration::Millisecond)
+    total_seconds = div(duration.value, 1000)  # Convert milliseconds to seconds
+    hrs = div(total_seconds, 3600)             # Get hours
+    mins = div(total_seconds % 3600, 60)       # Get minutes
+    secs = total_seconds % 60                  # Get seconds
+    return "$(hrs) hour(s), $(mins) minute(s), and $(secs) second(s)"
+end
+
+
 
 function complex_noise(n, strength)
     return (randn(n) + 1im * randn(n)) * strength

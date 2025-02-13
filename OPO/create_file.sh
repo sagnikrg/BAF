@@ -66,9 +66,10 @@ attrs=attributes(file)
 
 	# Extracting Date and Time
 
-	Dates.now()
-	attrs["Date/Time (start)"]=string(Dates.now())
+	start_time=Dates.now()
+	attrs["Date/Time"]=string(Dates.now())
 
+	
 
 	# Extracting Processor Type
 
@@ -125,10 +126,8 @@ attrs=attributes(file)
 
 	# Parameters
 
-	attrs["[Parameters] h"] = "0"
 	attrs["[Parameters] fp"] = f_0
 	
-	#attrs["[Parameters] Itrnumb"] = Itrnumb
 
 
 ######################################
@@ -199,7 +198,10 @@ attrs=attributes(file)
 	file["psi_423"] = time_series_5
 	file["psi_512"] = time_series_6
 
-attrs["Date/Time (end)"]=string(Dates.now())
+end_time=Dates.now()
+
+elapsed_time = end_time - start_time
+attrs["Elapsed Time"] = string(format_duration(elapsed_time))
 
 close(file)
 
