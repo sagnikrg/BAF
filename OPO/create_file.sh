@@ -67,7 +67,7 @@ attrs=attributes(file)
 	# Extracting Date and Time
 
 	start_time=Dates.now()
-	attrs["Date/Time"]=string(Dates.now())
+	attrs["[Benchmark] Date/Time"]=string(Dates.now())
 
 	
 
@@ -75,7 +75,7 @@ attrs=attributes(file)
 
     
 	model_name = read_model_name("model_name.txt")
-    attrs["[ENV] Processor Type"] = string(model_name)
+    attrs["[Benchmark] Processor Type"] = string(model_name)
 
 
 
@@ -201,7 +201,7 @@ attrs=attributes(file)
 end_time=Dates.now()
 
 elapsed_time = end_time - start_time
-attrs["Elapsed Time"] = string(format_duration(elapsed_time))
+attrs["[Benchmark] Elapsed Time"] = string(format_duration(elapsed_time))
 
 close(file)
 
