@@ -42,7 +42,7 @@ L = dx*N        			# Length of the domain
 k=1;
 
 dt = 0.001       			# Time step size
-T = 0.01         			# Total time
+T = 10.00         			# Total time
 
 noise_strength = sqrt(kappa/dx)*sqrt(dt)  
 							# Strength of the noise
@@ -152,33 +152,44 @@ attrs=attributes(file)
 	# Initial condition
 	u = zeros(Complex{Float64}, N)
 
+
+
+	# Initialize the next save time
+	next_save_time = 3.0
+	save_times = [3.5, 4.0, 4.5, 5.0, 5.5, 6.0, 6.5, 7.0, 7.5, 8.0, 8.5, 9.0, 9.5, 10.0, 10.5]
+
+
 	# Time-stepping
-	
 	t = 0.0
 	while t < T
-    		global u,t
-		u = rk4_step_full(u, dt, t, g, f_0, kappa, dx).+noise_strength*randn(Complex{Float64}, N)
-    		t += dt
-    	push!(time_series_1, u[47])
-    	push!(time_series_2, u[126])
-	push!(time_series_3, u[225])
-	push!(time_series_4, u[324])
-	push!(time_series_5, u[423])
-	push!(time_series_6, u[512])
-
-	# Saving the full wavefunction for certain time steps
-		if t in [3.0, 3.5 ,4.0, 4.5, 5.0, 5.5, 6.0, 6.5, 7.0, 7.5, 8.0, 8.5, 9.0, 9.5, 10.0]
-			dataset = string("psi_", Int(t))
-			file[dataset] = u
-    		end
-
+    	global u, t
+    	u = rk4_step_full(u, dt, t, g, f_0, kappa, dx).+noise_strength*randn(Complex{Float64}, N)
+    	t += dt
+    
+    if t >= next_save_time
+        dataset = string("psi_t_", next_save_time)
+        file[dataset] = u
+        next_save_time = popfirst!(save_times)
+    end
+    
+    # Collect time series data
+    push!(time_series_1, u[47])
+    push!(time_series_2, u[126])
+    push!(time_series_3, u[225])
+    push!(time_series_4, u[324])
+    push!(time_series_5, u[423])
+    push!(time_series_6, u[512])
 	end
-	file["psi_77/\$(itr)"] = time_series_1
-	file["psi_126/\$(itr)"] = time_series_2
-	file["psi_225/\$(itr)"] = time_series_3
-	file["psi_324/\$(itr)"] = time_series_4
-	file["psi_423/\$(itr)"] = time_series_5
-	file["psi_512/\$(itr)"] = time_series_6
+
+	
+
+
+	file["psi_77"] = time_series_1
+	file["psi_126"] = time_series_2
+	file["psi_225"] = time_series_3
+	file["psi_324"] = time_series_4
+	file["psi_423"] = time_series_5
+	file["psi_512"] = time_series_6
 
 
 
