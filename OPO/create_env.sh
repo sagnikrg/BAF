@@ -7,7 +7,7 @@ fp=0.1
 
 
 
-for i1 in {1..100}
+for i1 in {1..1}
 do
 
 
@@ -35,16 +35,12 @@ cp \$BUDDY/julia/julia-1.9.4-08-08-24.tar.gz ./
 tar -xf julia-1.9.4-08-08-24.tar.gz
 rm -f julia-1.9.4-08-08-24.tar.gz
 
-lscpu --json | grep "Model name" | awk -F '"' '{print $8}' > model_name.txt
+ lscpu --json | grep "Model name" | awk -F '"' '{print $8}' > model_name.txt
+
 
 
 #Loads Julia
 module load julia/1.9.4
-
-#Creates folder for the Job
-
-#mkdir \${ClusterId}_\$Process
-#cd \${ClusterId}_\$Process
 
 
 #Job submission 
@@ -64,7 +60,7 @@ rm opo_fp_${fp}_${i1}.jl
 
 # copy results
 cp  *.hdf5 /cephfs/user/sghosh/data/.
-rm -rf /jwd/\${ClusterId}_\$Process
+rm -rf *
 EOF
 
 

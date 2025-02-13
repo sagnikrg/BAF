@@ -2,13 +2,13 @@
 
 cd $BUDDY
 
-fp=0.2
+fp=0.1
 
 #cd $BUDDY
 
 #Itrnumb=1
 
-for i1 in {1..100}
+for i1 in {1..1}
 do
 
 
@@ -43,7 +43,7 @@ dx = 0.6799         		# Spatial step size
 L = dx*N        			# Length of the domain
 k=1;
 
-dt = 0.001       			# Time step size
+dt = 0.1       			# Time step size
 T = 10.00         			# Total time
 
 noise_strength = sqrt(kappa/dx)*sqrt(dt)  
