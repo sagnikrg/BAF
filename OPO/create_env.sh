@@ -35,7 +35,7 @@ cp \$BUDDY/julia/julia-1.9.4-08-08-24.tar.gz ./
 tar -xf julia-1.9.4-08-08-24.tar.gz
 rm -f julia-1.9.4-08-08-24.tar.gz
 
- lscpu --json | grep "Model name" | awk -F '"' '{print $8}' > model_name.txt
+ lscpu | grep 'Model name: '> model_name.txt
 
 
 
@@ -72,9 +72,10 @@ EOF
 cat <<EOF >job_file_OPO_fp${fp}_${i1}.jdl
 
 #Job Script to be submitted using HTCondor
-        
+
+
 Executable              = run_file_OPO_fp${fp}_${i1}.sh
-        
+JobBatchName            = OPO: fp=${fp}, Itr=${i1}        
 Environment             = ClusterId=\$(ClusterId);Process=\$(Process);SubHost=$ENV(SUBHOST);
         
 Arguments		= 8
