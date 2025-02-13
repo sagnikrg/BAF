@@ -67,7 +67,7 @@ attrs=attributes(file)
 	# Extracting Date and Time
 
 	Dates.now()
-	attrs["Date/Time"]=string(Dates.now())
+	attrs["Date/Time (start)"]=string(Dates.now())
 
 
 	# Extracting Processor Type
@@ -199,7 +199,7 @@ attrs=attributes(file)
 	file["psi_423"] = time_series_5
 	file["psi_512"] = time_series_6
 
-
+attrs["Date/Time (end)"]=string(Dates.now())
 
 close(file)
 
