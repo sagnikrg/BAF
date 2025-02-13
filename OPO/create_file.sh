@@ -2,13 +2,13 @@
 
 cd $BUDDY
 
-fp=0.1
+fp=0.2
 
 #cd $BUDDY
 
 #Itrnumb=1
 
-for i1 in {1..2}
+for i1 in {1..100}
 do
 
 
@@ -161,24 +161,29 @@ attrs=attributes(file)
 
 	# Time-stepping
 	t = 0.0
+
 	while t < T
-    	global u, t
-    	u = rk4_step_full(u, dt, t, g, f_0, kappa, dx).+noise_strength*randn(Complex{Float64}, N)
-    	t += dt
+
+		global u, t
+    		u = rk4_step_full(u, dt, t, g, f_0, kappa, dx).+noise_strength*randn(Complex{Float64}, N)
+    		t += dt
     
-    if t >= next_save_time
-        dataset = string("psi_t_", next_save_time)
-        file[dataset] = u
-        next_save_time = popfirst!(save_times)
-    end
+    		if t >= next_save_time
+        	global next_save_time
+			dataset = string("psi_t_", next_save_time)
+        		file[dataset] = u
+        		next_save_time = popfirst!(save_times)
+   	 	end
     
-    # Collect time series data
-    push!(time_series_1, u[47])
-    push!(time_series_2, u[126])
-    push!(time_series_3, u[225])
-    push!(time_series_4, u[324])
-    push!(time_series_5, u[423])
-    push!(time_series_6, u[512])
+  		# Collect time series data
+    	
+		push!(time_series_1, u[47])
+   		push!(time_series_2, u[126])
+    		push!(time_series_3, u[225])
+    		push!(time_series_4, u[324])
+    		push!(time_series_5, u[423])
+    		push!(time_series_6, u[512])
+	
 	end
 
 	
