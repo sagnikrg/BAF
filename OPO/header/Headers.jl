@@ -12,16 +12,15 @@ function read_model_name(filename)
 end
 
 
-using Dates
 
 function format_duration(duration::Millisecond)
+    milliseconds=duration.value % 1000
     total_seconds = div(duration.value, 1000)  # Convert milliseconds to seconds
     hrs = div(total_seconds, 3600)             # Get hours
     mins = div(total_seconds % 3600, 60)       # Get minutes
     secs = total_seconds % 60                  # Get seconds
-    return "$(hrs) hour(s), $(mins) minute(s), and $(secs) second(s)"
+    return "$(hrs) hour(s), $(mins) minute(s), $(secs) second(s), and $(milliseconds) millisecond(s)"
 end
-
 
 
 function complex_noise(n, strength)
