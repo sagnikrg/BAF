@@ -158,7 +158,7 @@ attrs=attributes(file)
 
 	# Initialize the next save time
 	next_save_time = 3.0
-	save_times = [3.5, 4.0, 4.5, 5.0, 5.5, 6.0, 6.5, 7.0, 7.5, 8.0, 8.5, 9.0, 9.5, 10.0, 10.5]
+	save_times = collect(3.5:0.5:10.5)
 
 
 	# Time-stepping
