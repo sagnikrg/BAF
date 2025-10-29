@@ -221,22 +221,39 @@ close(file_destination)
         file=h5open("anderson_eigendata$(L)_$(itr).hdf5","cw");
         for W in WList
 
-            Time_begin=Dates.now()
+            Time_begin_eigen=Dates.now()
 	        
-            #The Lindbladian:
-            Lind, μ = Lindbladian(W,L,γ);
+                #The Lindbladian:
+                
+                    Lind, μ = Lindbladian(W,L,γ);
 
 
-            # Compute eigenvalues and right eigenvectors
-            eigenvalues, right_eigenvectors = eigen(Matrix(Lind));          
+                # Compute eigenvalues and right eigenvectors
+                    eigenvalues, right_eigenvectors = eigen(Matrix(Lind));          
             
+            Time_end_eigen=Dates.now()
+            total_time_eigen=Time_end_eigen-Time_begin_eigen
+
+                # Writing Benchmark time
+                    file["L\$L/W\$(W)/itr\$(itr)/eigen_benchmark_time"] = string(format_duration(total_time_eigen)); 
+              
+
+            for j in 1:L^2
+
+            IPR_rightvec[j]=IPR(right_eigenvectors_sorted[:,j])
+
+            end
+
+
+
+
             file["L\$L/W\$(W)/itr\$(itr)/eigenvalues"] = eigenvalues;
             file["L\$L/W\$(W)/itr\$(itr)/disorder_realisation"] = μ;
 
             #compute the left eigenvectors by looking at Lindblad complex conjugate transpose
 
             left_eigenvectors = right_eigenvectors';
-
+            
             # Save results to HDF5 file
 
             file["L\$L/W\$(W)/itr\$(itr)/left_eigenvectors_norm"] = norm.(eachcol(left_eigenvectors)); 
@@ -244,7 +261,8 @@ close(file_destination)
 
             Time_end=Dates.now()
             total_time=Time_end-Time_begin
-            file["L\$L/W\$(W)/itr\$(itr)/benchmark_time"] = string(format_duration(total_time)); 
+
+            file["L\$L/W\$(W)/itr\$(itr)/eigen_benchmark_time"] = string(format_duration(total_time)); 
 
         end
         close(file)
