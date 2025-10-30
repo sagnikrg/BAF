@@ -238,14 +238,6 @@ close(file_destination)
                     file["L\$L/W\$(W)/itr\$(itr)/eigen_benchmark_time"] = string(format_duration(total_time_eigen)); 
               
 
-            for j in 1:L^2
-
-            IPR_rightvec[j]=IPR(right_eigenvectors_sorted[:,j])
-
-            end
-
-
-
 
             file["L\$L/W\$(W)/itr\$(itr)/eigenvalues"] = eigenvalues;
             file["L\$L/W\$(W)/itr\$(itr)/disorder_realisation"] = μ;
@@ -259,10 +251,28 @@ close(file_destination)
             file["L\$L/W\$(W)/itr\$(itr)/left_eigenvectors_norm"] = norm.(eachcol(left_eigenvectors)); 
             file["L\$L/W\$(W)/itr\$(itr)/right_eigenvectors_norm"] = norm.(eachcol(right_eigenvectors));
 
-            Time_end=Dates.now()
-            total_time=Time_end-Time_begin
 
-            file["L\$L/W\$(W)/itr\$(itr)/eigen_benchmark_time"] = string(format_duration(total_time)); 
+        #IPR in computational basis:
+
+            global IPR_rightvec=fill(0.0, L^2)
+            
+            for j in 1:L^2
+
+                IPR_rightvec[j]=IPR(right_eigenvectors_sorted[:,j])
+
+            end
+
+
+   
+
+        # Writing IPR and Densities of some states
+
+         file["L\$L/W\$(W)/itr\$(itr)/IPR"] = IPR_rightvec
+         file["L\$L/W\$(W)/itr\$(itr)/Eigstate_ground"] = right_eigenvectors[:,argmax(IPR_rightvec)]
+         file["L\$L/W\$(W)/itr\$(itr)/Eigstate_IPR_argmax"] = right_eigenvectors[:,argmax(IPR_rightvec)]
+         file["L\$L/W\$(W)/itr\$(itr)/Eigstate_lowerband"] = right_eigenvectors[:,argmax(IPR_rightvec)+L]
+         file["L\$L/W\$(W)/itr\$(itr)/Eigstate_upperband"] = right_eigenvectors[:,argmax(IPR_rightvec)-2*L]
+
 
         end
         close(file)
