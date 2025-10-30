@@ -27,10 +27,10 @@ source /etc/profile
 
 #Copies, Extracts and removes the Julia tarball 
             
-cp \$BUDDY/julia/julia-1.9.4-08-08-24.tar.gz ./
+cp \$BUDDY/julia/julia-1.11.1-anderson-Oct-30-25.tar.gz ./
 
-tar -xf julia-1.9.4-08-08-24.tar.gz
-rm -f julia-1.9.4-08-08-24.tar.gz
+tar -xf julia-1.11.1-anderson-Oct-30-25.tar.gz
+rm -f julia-1.11.1-anderson-Oct-30-25.tar.gz
 
  lscpu | grep 'Model name: '> model_name.txt
 
