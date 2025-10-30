@@ -2,11 +2,11 @@
 
 cd ../..
 
-fp=0.1
+Itrnumb=100
 
-for i1 in {1..1}
+for itr in {1..1}
 do
 
- condor_submit job_file_OPO_fp${fp}_${i1}.jdl
+ condor_submit job_file_eigenscatterL${L}_${itr}.jdl
 
 done

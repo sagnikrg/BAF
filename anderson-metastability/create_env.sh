@@ -188,7 +188,10 @@ attrs=HDF5.attributes(file_destination)
 
 	# Meta Data
 
-	attrs["METADATA"] = "This file contains the raw eigenvalues of the Lindbladian for an 1D Anderson model, with open boundary conditions, and a Z channel dissipation on site 1. The data is organized by system size (L), disorder strength (W), and iteration number (itr). Each entry includes the eigenvalues, norms of the left and right eigenvectors, the specific disorder realization used, and the time taken to compute these values."
+	attrs["METADATA"] = "This file contains the raw eigenvalues of the Lindbladian for an 1D Anderson model, with open boundary conditions, and a Z channel dissipation on site 1. The data is organized by system size (L), disorder strength (W), and iteration number (itr). Each entry includes the eigenvalues, norms of the left and right eigenvectors, the specific disorder realization used, and the time taken to compute these values.
+    
+    
+    We also compute the IPR on the fly of each eigenstates, and save the following eigenstates: ground state, state with maximal IPR, a state in the lower and upper band at L and 2L distance from the argmax IPR respectively"
 	
 	# Author
 
@@ -258,7 +261,7 @@ close(file_destination)
             
             for j in 1:L^2
 
-                IPR_rightvec[j]=IPR(right_eigenvectors_sorted[:,j])
+                IPR_rightvec[j]=IPR(right_eigenvectorsd[:,j])
 
             end
 
@@ -268,10 +271,8 @@ close(file_destination)
         # Writing IPR and Densities of some states
 
          file["L\$L/W\$(W)/itr\$(itr)/IPR"] = IPR_rightvec
-         file["L\$L/W\$(W)/itr\$(itr)/Eigstate_ground"] = right_eigenvectors[:,argmax(IPR_rightvec)]
+         file["L\$L/W\$(W)/itr\$(itr)/Eigstate_ground"] = right_eigenvectors[:,end]
          file["L\$L/W\$(W)/itr\$(itr)/Eigstate_IPR_argmax"] = right_eigenvectors[:,argmax(IPR_rightvec)]
-         file["L\$L/W\$(W)/itr\$(itr)/Eigstate_lowerband"] = right_eigenvectors[:,argmax(IPR_rightvec)+L]
-         file["L\$L/W\$(W)/itr\$(itr)/Eigstate_upperband"] = right_eigenvectors[:,argmax(IPR_rightvec)-2*L]
 
 
         end
