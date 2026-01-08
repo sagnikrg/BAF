@@ -27,18 +27,18 @@ if [[ ! -d "$repo" ]]; then
   exit 1
 fi
 
-if [[ ! -x "$repo/cat_env.sh" ]]; then
+if [[ ! -x "./$repo/cat_env.sh" ]]; then
   echo "ERROR: missing or non-executable: $repo/cat_env.sh" >&2
   exit 1
 fi
 
-if [[ ! -x "$repo/cat_run.sh" ]]; then
+if [[ ! -x "./$repo/cat_run.sh" ]]; then
   echo "ERROR: missing or non-executable: $repo/cat_run.sh" >&2
   exit 1
 fi
 
 
-if [[ ! -x "$repo/cat_jl.sh" ]]; then
+if [[ ! -x "./$repo/cat_jl.sh" ]]; then
   echo "ERROR: missing or non-executable: $repo/cat_jl.sh" >&2
   exit 1
 fi
@@ -47,9 +47,9 @@ fi
 
 # Executing the cat scripts
 
-./$repo/cat_run.sh
-./$repo/cat_env.sh
-./$repo/cat_jl.sh
+bash ./$repo/cat_run.sh
+bash ./$repo/cat_env.sh
+bash ./$repo/cat_jl.sh
 
 
 
