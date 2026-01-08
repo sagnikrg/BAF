@@ -8,12 +8,8 @@ L=8
 Itrnumb=1
 
 
-for itr in {1..Itrnumb}
+for (( itr=1; itr<=Itrnumb; itr++ ))
 do
-
-
-
-
 
 
 
