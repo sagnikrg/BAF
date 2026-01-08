@@ -3,3 +3,54 @@
 # Automate File Handling 
 # with a repo_name based standard folder structure
 #########
+
+
+
+#!/usr/bin/env bash
+set -euo pipefail
+
+
+# global automated parameters:
+
+repo="anderson_metastability"   
+
+
+
+
+
+################################ 
+# --- sanity checks ---
+################################
+
+if [[ ! -d "$repo" ]]; then
+  echo "ERROR: repo directory not found: $repo" >&2
+  exit 1
+fi
+
+if [[ ! -x "$repo/cat_env.sh" ]]; then
+  echo "ERROR: missing or non-executable: $repo/cat_env.sh" >&2
+  exit 1
+fi
+
+if [[ ! -x "$repo/cat_run.sh" ]]; then
+  echo "ERROR: missing or non-executable: $repo/cat_run.sh" >&2
+  exit 1
+fi
+
+
+if [[ ! -x "$repo/cat_jl.sh" ]]; then
+  echo "ERROR: missing or non-executable: $repo/cat_jl.sh" >&2
+  exit 1
+fi
+
+# --- step 1+2: generate env/jdl+runscript, then create files in BUDDY dir ---
+
+# Executing the cat scripts
+
+./$repo/cat_run.sh
+./$repo/cat_env.sh
+./$repo/cat_jl.sh
+
+
+
+echo "Done."
