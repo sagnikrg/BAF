@@ -43,9 +43,11 @@ if [[ ! -f "./$repo/cat_jl.sh" ]]; then
   exit 1
 fi
 
-# --- step 1+2: generate env/jdl+runscript, then create files in BUDDY dir ---
 
-# Executing the cat scripts
+################################ 
+# --- Script Execution ---
+################################
+
 
 bash ./$repo/cat_run.sh
 bash ./$repo/cat_env.sh
