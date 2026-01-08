@@ -6,11 +6,11 @@ DATA_DIR="../../data"                           # where the files are
 BASE_PREFIX="mbldtc_L8_theta_0.0_"    # filename prefix
 EXT="hdf5"                             # extension
 START_ITR=1
-END_ITR=1000
+END_ITR=2000
 
 # Size threshold for corrupted (delete if smaller than this)
 # Requirement: "file size is not less than 24 MB" => keep >= 24 MB, delete < 24 MB
-THRESHOLD_MB=24
+THRESHOLD_MB=20
 OUTPUT_FILE="small_files.txt"
 
 DRY_RUN=0
