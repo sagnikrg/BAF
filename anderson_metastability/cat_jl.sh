@@ -29,7 +29,7 @@ WList=[ 0.01, 0.02, 0.03, 0.04, 0.05, 0.06, 0.07, 0.08, 0.09, 0.1 , 0.11, 0.12, 
 Itrnumber=1000
 
 
-file_destination= h5open("anderson_eigendata$(L)_$(itr).hdf5","cw");
+#file_destination= h5open("anderson_eigendata$(L)_$(itr).hdf5","cw");
 
 attrs=HDF5.attributes(file_destination)
 
@@ -63,7 +63,7 @@ attrs=HDF5.attributes(file_destination)
 
 	# Code
 
-	script_content = read("eigenscatterL$(L).jl", String)
+	#script_content = read("eigenscatterL$(L).jl", String)
 	attrs["[ENV] Code"] = script_content
 
     #Lindblad

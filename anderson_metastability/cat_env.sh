@@ -2,7 +2,7 @@
 
 #creates job iteratively 
 
-cd ../..
+cd ~/local/
 
 L=8
 Itrnumb=1
