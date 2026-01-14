@@ -14,12 +14,12 @@ do
 
 
 
-cat <<EOF >job_file_eigenscatterL${L}_${itr}.jdl
+cat <<EOF >job_file_eigenscatter_L${L}_${itr}.jdl
 
 #Job Script to be submitted using HTCondor
 
 
-Executable              = run_file_eigenscatterL${L}_${itr}.sh
+Executable              = run_file_eigenscatter_L${L}_${itr}.sh
 JobBatchName            = Anderson: L=${L}, Itr=${itr}        
 Environment             = ClusterId=\$(ClusterId);Process=\$(Process);SubHost=$ENV(SUBHOST);
         
@@ -32,8 +32,8 @@ Transfer_input_files    =
 Transfer_output_files   =
 
 
-Error                   = log/err.eigenscatterL${L}_${itr}.log
-Output                  = log/out.eigenscatterL${L}_${itr}.log
+Error                   = log/err.eigenscatter_L${L}_${itr}.log
+Output                  = log/out.eigenscatter_L${L}_${itr}.log
 Log                     = 
 
 Request_memory          = 12  GB
