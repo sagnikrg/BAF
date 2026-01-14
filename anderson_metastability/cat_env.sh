@@ -20,7 +20,7 @@ cat <<EOF >job_file_anderson_metastability_L${L}_${itr}.jdl
 
 
 Executable              = run_file_anderson_metastability_L${L}_${itr}.sh
-JobBatchName            = Anderson: L=${L}, Itr=${itr}        
+JobBatchName            = anderson_metastability: L=${L}, Itr=${itr}        
 Environment             = ClusterId=\$(ClusterId);Process=\$(Process);SubHost=$ENV(SUBHOST);
         
 Arguments		= 8

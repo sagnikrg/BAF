@@ -118,13 +118,9 @@ function Lindbladian(W,L,γ)
 end
 
 
+function Lindbladian(Ham,γ)
 
-# Overloaded function with default γ=1.0
-
-
-function Lindbladian(W,L)
-
-        H_dense, μ =H(W,L);
+        H_dense=Ham;
         decay_channel_1=Z_channel(L)
 
         Hdim = size(H_dense)[1]
@@ -144,12 +140,38 @@ function Lindbladian(W,L)
             
         L1 = kron(conj_decay_channel_1, decay_channel_1) - 0.5 * (kron(identity_matrix, D1) + kron(transpose_D1, identity_matrix))
 
+            
         
         
-        
-        Lind = -1im * L_H + (L1) # + L_X1 + L_Y1)  # Sum of all Lindblad terms
+        Lind = -1im * L_H + γ * (L1) # + L_X1 + L_Y1)  # Sum of all Lindblad terms
 
+    return Lind 
+end
+
+# With default γ=1.0
+
+function Lindbladian(Ham)
+    γ=1.0
+    return Lindbladian(Ham,γ)
+end
+
+
+# Overloaded function with default γ=1.0
+
+
+function Lindbladian(W,L)
+
+    Lind , μ = Lindbladian(W,L,1.0);
     return Lind , μ 
+end
+
+
+# ------------------------------------------
+# Inverse Participation Ratio (IPR) Calculation
+# ------------------------------------------
+
+function IPR(eigenvector)
+    return sum(abs.(eigenvector).^4)/sum(abs.(eigenvector).^2)^2
 end
 
 
@@ -179,6 +201,65 @@ end
 
 
 
+function set_hdf5_attributes(file::HDF5.File)
+
+    attrs = HDF5.attributes(file)
+    
+    ######################################
+    # Attributes:
+    ######################################
+    
+       # Extracting Date and Time
+
+	#Dates.now()
+	attrs["Date/Time"]=string(Dates.now())
+
+
+	
+	# Extracting Processor Type
+
+    
+	model_name = read_model_name("model_name.txt")
+    attrs["[Benchmark] Processor Type"] = string(model_name)
+
+
+	# Extracting Julia Version
+
+	julia_version = VERSION
+	attrs["[ENV] Julia Version"] = string(julia_version)
+
+	# Extracting Number of Threads
+
+	num_threads = Threads.nthreads()
+	attrs["[ENV] Number of Threads"] = string(num_threads)	
+
+    # Modules
+
+	module_list = Pkg.installed()
+	attrs["[ENV] Modules"] = string(module_list)
+
+    # Julia Environment
+
+	attrs["[ENV] Julia Environment"] = "julia_1.11.1_15.01.26.tar.gz" 
+
+    # Author
+
+	attrs["Author"] = "Sagnik Ghosh"
+
+
+	# cluster
+
+	attrs["Cluster"] = "BAF"
+
+
+
+    
+    return nothing
+
+        
+end
+
+
 
 #------------------------------------------------------------------------------------------
 
@@ -203,74 +284,75 @@ file_destination_gamma= h5open("anderson_metastability_gamma_${L}_${itr}_bootstr
 file_destination_midscpectragap= h5open("anderson_metastability_midgspectragap_${L}_${itr}_bootstrap.hdf5","cw");
 
 
+file_destination_IPR_realbasis= h5open("anderson_metastability_IPR_realbasis_${L}_${itr}_bootstrap.hdf5","cw");
+file_destination_IPR_eigenbasis= h5open("anderson_metastability_IPR_eigenbasis_${L}_${itr}_bootstrap.hdf5","cw");
 
-attrs=HDF5.attributes(file_destination_rawdata)
+
+# Setting HDF5 Attributes
+
+set_hdf5_attributes(file_destination_rawdata)
+set_hdf5_attributes(file_destination_gamma)
+set_hdf5_attributes(file_destination_midscpectragap)
+set_hdf5_attributes(file_destination_IPR_realbasis)
+set_hdf5_attributes(file_destination_IPR_eigenbasis)
+
+attrs_rawdata = HDF5.attributes(file_destination_rawdata)
+attrs_gamma = HDF5.attributes(file_destination_gamma)
+attrs_midscpectragap = HDF5.attributes(file_destination_midscpectragap)
+attrs_IPR_realbasis = HDF5.attributes(file_destination_IPR_realbasis)
+attrs_IPR_eigenbasis = HDF5.attributes(file_destination_IPR_eigenbasis)
+
 
 ######################################
 # Attributes: Raw Data File
 ######################################
 
-	# Extracting Date and Time
-
-	#Dates.now()
-	attrs["Date/Time"]=string(Dates.now())
-
-
 	
-	# Extracting Processor Type
-
-    
-	model_name = read_model_name("model_name.txt")
-    attrs["[Benchmark] Processor Type"] = string(model_name)
-
-
-	# Extracting Julia Version
-
-	julia_version = VERSION
-	attrs["[ENV] Julia Version"] = string(julia_version)
-
-	# Extracting Number of Threads
-
-	num_threads = Threads.nthreads()
-	attrs["[ENV] Number of Threads"] = string(num_threads)	
-
 	# Code
 
 	script_content = read("anderson_metastability_L${L}_${itr}.jl", String)
-	attrs["[ENV] Code"] = script_content
+	attrs_rawdata["[ENV] Code"] = script_content
+    attrs_gamma["[ENV] Code"] = script_content
+    attrs_midscpectragap["[ENV] Code"] = script_content
+    attrs_IPR_realbasis["[ENV] Code"] = script_content
+    attrs_IPR_eigenbasis["[ENV] Code"] = script_content
 
-	# Modules
-
-	module_list = Pkg.installed()
-	attrs["[ENV] Modules"] = string(module_list)
-
-    # Julia Environment
-
-	attrs["[ENV] Julia Environment"] = "julia_1.11.1_15.01.26.tar.gz" 
-
+	
 	# Meta Data
 
-	#attrs["METADATA"] = read("METADATA.txt", String)
+	attrs_rawdata["METADATA"] = read("METADATA_rawdata.txt", String)
+    attrs_gamma["METADATA"] = read("METADATA_gamma.txt", String)
+    attrs_midscpectragap["METADATA"] = read("METADATA_midscpectragap.txt", String)
+    attrs_IPR_realbasis["METADATA"] = read("METADATA_IPR_realbasis.txt", String)
+    attrs_IPR_eigenbasis["METADATA"] = read("METADATA_IPR_eigenbasis.txt", String)
 	
-	# Author
 
-	attrs["Author"] = "Sagnik Ghosh"
+	# Parameters
+	attrs_rawdata["[Parameters] Itrnumb"] = Itrnumber
+    attrs_gamma["[Parameters] Itrnumb"] = Itrnumber
+    attrs_midscpectragap["[Parameters] Itrnumb"] = Itrnumber
+    attrs_IPR_realbasis["[Parameters] Itrnumb"] = Itrnumber
+    attrs_IPR_eigenbasis["[Parameters] Itrnumb"] = Itrnumber
 
+    attrs_rawdata["[Parameters] L"] = L
+    attrs_gamma["[Parameters] L"] = L
+    attrs_midscpectragap["[Parameters] L"] = L
+    attrs_IPR_realbasis["[Parameters] L"] = L
+    attrs_IPR_eigenbasis["[Parameters] L"] = L
 
-	# cluster
-
-	attrs["Cluster"] = "BAF"
-
-
-	attrs["[Parameters] Itrnumb"] = Itrnumber
-    attrs["[Parameters] L"] = L
-    attrs["[Parameters] WList"] = string(WList)
-
+    attrs_rawdata["[Parameters] WList"] = string(WList)
+    attrs_gamma["[Parameters] WList"] = string(WList)
+    attrs_midscpectragap["[Parameters] WList"] = string(WList)
+    attrs_IPR_realbasis["[Parameters] WList"] = string(WList)
+    attrs_IPR_eigenbasis["[Parameters] WList"] = string(WList)
     attrs["[Parameters] γ"] = string(γ)
+
 
 close(file_destination_rawdata)
 close(file_destination_gamma)
 close(file_destination_midscpectragap)
+close(file_destination_IPR_realbasis)
+close(file_destination_IPR_eigenbasis)
 
 
 
@@ -288,19 +370,35 @@ close(file_destination_midscpectragap)
        global file_destination_rawdata=h5open("anderson_metastability_eigendata_${L}_${itr}.hdf5","cw");
        global file_destination_gamma=h5open("anderson_metastability_gamma_${L}_${itr}_bootstrap.hdf5","cw");
        global file_destination_midscpectragap=h5open("anderson_metastability_midgspectragap_${L}_${itr}_bootstrap.hdf5","cw");
+       global file_destination_IPR_realbasis=h5open("anderson_metastability_IPR_realbasis_${L}_${itr}_bootstrap.hdf5","cw");
+       global file_destination_IPR_eigenbasis=h5open("anderson_metastability_IPR_eigenbasis_${L}_${itr}_bootstrap.hdf5","cw");
+
+
 
         for W in WList
 
                 Time_begin_eigen=Dates.now()
 	        
-                #The Lindbladian:
+                #The Hamiltonian, Lindbladian:
                 
-                    Lind, μ = Lindbladian(W,L,γ);
+
+                    Hamiltonian, μ = H(W,L);
+                    Lind = Lindbladian(Hamiltonian,γ);
+
+                # Computing Eigen spectrum of Hamiltonian
+
+                    eigvalues_H, eigvectors_H = eigen(Hamiltonian);    
+                    basis_for_Lindblad = kron(conj.(eigvectors_H), eigvectors_H);
+
 
 
                 # Compute eigenvalues and right eigenvectors
                     eigenvalues, right_eigenvectors = eigen(Matrix(Lind));          
             
+
+                # Rotate eigenvectors to the Hamiltonian eigenbasis (for later IPR calculations)
+                    right_eigenvectors_rotated = basis_for_Lindblad * right_eigenvectors;
+
 
 
                 Time_end_eigen=Dates.now()
@@ -341,12 +439,28 @@ close(file_destination_midscpectragap)
 
             # midspectral gap
 
-                    file_destination_midscpectragap["L\$L/W\$(W)/itr\$(itr)/midspectral_gap"] = (eigsort[mid_band_ind]-eigsort[mid_band_ind+1]);
+                    file_destination_midscpectragap["L\$L/W\$(W)/itr\$(itr)/midspectral_gap_up"] = (eigsort[mid_band_ind]-eigsort[mid_band_ind+1]);
+                    file_destination_midscpectragap["L\$L/W\$(W)/itr\$(itr)/midspectral_gap_down"] = (eigsort[mid_band_ind-1]-eigsort[mid_band_ind]);
+
+            # IPR Calculations
+
+                    IPR_realbasis_array=zeros(length(eigenvalues))
+                    IPR_eigenbasis_array=zeros(length(eigenvalues))
+
+                    for idx in 1:length(eigenvalues)
+                        IPR_realbasis_array[idx]=IPR(right_eigenvectors[:,idx])
+                        IPR_eigenbasis_array[idx]=IPR(right_eigenvectors_rotated[:,idx])
+                    end
+
+                    file_destination_IPR_realbasis["L\$L/W\$(W)/itr\$(itr)/IPR_realbasis"] = IPR_realbasis_array;
+                    file_destination_IPR_eigenbasis["L\$L/W\$(W)/itr\$(itr)/IPR_eigenbasis"] = IPR_eigenbasis_array;
                     
         end
         close(file_destination_rawdata)
         close(file_destination_gamma)
         close(file_destination_midscpectragap)
+        close(file_destination_IPR_realbasis)
+        close(file_destination_IPR_eigenbasis)
 
         GC.gc()
     end

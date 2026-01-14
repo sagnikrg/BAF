@@ -1,0 +1,5 @@
+This file is a derived one from the eigen computation of the Lindbladian for an 1D Anderson model, with open boundary conditions, and a Z channel dissipation on site 1. The data is organized by system size (L), disorder strength (W), and iteration number (itr). 
+
+Each entry includes, the specific disorder realization used. Since adopting the new automisation standard 2026, we decided to have a dedicated file for each derived quantity to simplify and automate bootstrap processes.
+
+This file contains the data for: Inverse Participation Ratio in Eigen Basis of the Hamiltonian (IPR_eigenbasis)
