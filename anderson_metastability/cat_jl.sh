@@ -174,7 +174,7 @@ function format_duration(duration::Millisecond)
     hrs = div(total_seconds, 3600)             # Get hours
     mins = div(total_seconds % 3600, 60)       # Get minutes
     secs = total_seconds % 60                  # Get seconds
-    return "$(hrs) hour(s), $(mins) minute(s), $(secs) second(s), and $(milliseconds) millisecond(s)"
+    return "\$(hrs) hour(s), \$(mins) minute(s), \$(secs) second(s), and \$(milliseconds) millisecond(s)"
 end
 
 
