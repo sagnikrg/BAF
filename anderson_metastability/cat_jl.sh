@@ -10,7 +10,7 @@ do
 
 
 
-cat <<EOF >eigenscatterL${L}_${itr}.jl
+cat <<EOF >anderson_eigenscatterL${L}_${itr}.jl
 
 ###################
 # Headers
@@ -44,8 +44,8 @@ mid_band_ind=2*L-1
 #------------------------------------
 
 file_destination_rawdata= h5open("anderson_eigendata${L}_${itr}.hdf5","cw");
-file_destination_slowdecaymodes= h5open("anderson_slowdecaymodes${L}_${itr}.hdf5","cw");
-file_destination_midscpectragap= h5open("anderson_midgspectragap${L}_${itr}.hdf5","cw");
+file_destination_gamma= h5open("anderson_gamma_${L}_${itr}_bootstrap.hdf5","cw");
+file_destination_midscpectragap= h5open("anderson_midgspectragap${L}_${itr}_bootstrap.hdf5","cw");
 
 
 
@@ -114,7 +114,8 @@ attrs=HDF5.attributes(file_destination_rawdata)
     attrs["[Parameters] γ"] = string(γ)
 
 close(file_destination)
-
+close(file_destination_gamma)
+close(file_destination_midscpectragap)
 
 
 
@@ -131,9 +132,8 @@ close(file_destination)
           
         
         file_destination_rawdata=h5open("anderson_eigendata${L}_${itr}.hdf5","cw");
-        file_destination_slowdecaymodes=h5open("anderson_slowdecaymodes${L}_${itr}.hdf5","cw");
-        file_destination_midscpectragap=h5open("anderson_midgspectragap${L}_${itr}.hdf5","cw");
-
+        file_destination_gamma=h5open("anderson_gamma_${L}_${itr}_bootstrap.hdf5","cw");
+        file_destination_midscpectragap=h5open("anderson_midgspectragap_${L}_${itr}_bootstrap.hdf5","cw");
 
         for W in WList
 
@@ -158,7 +158,7 @@ close(file_destination)
 
 
             file_destination_rawdata["L\$L/W\$(W)/itr\$(itr)/disorder_realisation"] = μ;
-            file_destination_slowdecaymodes["L\$L/W\$(W)/itr\$(itr)/disorder_realisation"] = μ;
+            file_destination_gamma["L\$L/W\$(W)/itr\$(itr)/disorder_realisation"] = μ;
             file_destination_midscpectragap["L\$L/W\$(W)/itr\$(itr)/disorder_realisation"] = μ;
 
 
@@ -183,7 +183,7 @@ close(file_destination)
 
                     eig_real=real.(eigenvalues)
                     eigsort=sort(eig_real)
-                    file_destination_slowdecaymodes["L\$L/W\$(W)/itr\$(itr)/slowest_decay_modes"] = eigsort[L^2-1];
+                    file_destination_gamma["L\$L/W\$(W)/itr\$(itr)/slowest_decay_modes"] = eigsort[L^2-1];
 
             # midspectral gap
 
@@ -191,7 +191,7 @@ close(file_destination)
                     
         end
         close(file_destination_rawdata)
-        close(file_destination_slowdecaymodes)
+        close(file_destination_gamma)
         close(file_destination_midscpectragap)
 
         GC.gc()
