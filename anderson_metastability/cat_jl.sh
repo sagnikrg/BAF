@@ -266,8 +266,8 @@ close(file_destination_midscpectragap)
         for W in WList
 
                 Time_begin_eigen=Dates.now()
-	        :
-                #The Lindbladian
+	        
+                #The Lindbladian:
                 
                     Lind, μ = Lindbladian(W,L,γ);
 
