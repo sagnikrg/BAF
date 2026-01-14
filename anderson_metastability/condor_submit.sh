@@ -9,6 +9,6 @@ Itrnumb=1
 for (( itr=1; itr<=Itrnumb; itr++ ))
 do
 
- condor_submit job_file_eigenscatter_L${L}_${itr}.jdl
+ condor_submit job_file_anderson_metastability_L${L}_${itr}.jdl
 
 done

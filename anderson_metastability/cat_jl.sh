@@ -10,7 +10,7 @@ do
 
 
 
-cat <<EOF >anderson_eigenscatter_L${L}_${itr}.jl
+cat <<EOF >anderson_metastability_L${L}_${itr}.jl
 
 ###################
 # Headers
@@ -198,9 +198,9 @@ mid_band_ind=2*L-1
 # Output files:
 #------------------------------------
 
-file_destination_rawdata= h5open("anderson_eigendata_${L}_${itr}.hdf5","cw");
-file_destination_gamma= h5open("anderson_gamma_${L}_${itr}_bootstrap.hdf5","cw");
-file_destination_midscpectragap= h5open("anderson_midgspectragap_${L}_${itr}_bootstrap.hdf5","cw");
+file_destination_rawdata= h5open("anderson_metastability_eigendata_${L}_${itr}.hdf5","cw");
+file_destination_gamma= h5open("anderson_metastability_gamma_${L}_${itr}_bootstrap.hdf5","cw");
+file_destination_midscpectragap= h5open("anderson_metastability_midgspectragap_${L}_${itr}_bootstrap.hdf5","cw");
 
 
 
@@ -284,11 +284,10 @@ close(file_destination_midscpectragap)
     for itr in 1:Itrnumber
 
        # println("L=",L," itr=",itr)
-          
-        
-       global file_destination_rawdata=h5open("anderson_eigendata_${L}_${itr}.hdf5","cw");
-       global file_destination_gamma=h5open("anderson_gamma_${L}_${itr}_bootstrap.hdf5","cw");
-       global file_destination_midscpectragap=h5open("anderson_midgspectragap_${L}_${itr}_bootstrap.hdf5","cw");
+
+       global file_destination_rawdata=h5open("anderson_metastability_eigendata_${L}_${itr}.hdf5","cw");
+       global file_destination_gamma=h5open("anderson_metastability_gamma_${L}_${itr}_bootstrap.hdf5","cw");
+       global file_destination_midscpectragap=h5open("anderson_metastability_midgspectragap_${L}_${itr}_bootstrap.hdf5","cw");
 
         for W in WList
 

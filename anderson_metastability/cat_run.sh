@@ -13,7 +13,7 @@ do
 
 
 
-cat <<EOF >run_file_eigenscatter_L${L}_${itr}.sh
+cat <<EOF >run_file_anderson_metastability_L${L}_${itr}.sh
 #!/bin/bash
      
   
@@ -27,10 +27,10 @@ source /etc/profile
 
 #Copies, Extracts and removes the Julia tarball 
             
-cp \$BUDDY/BAF/anderson_metastability/.julia/julia_1.11.1_30.10.25.tar.gz ./
+cp \$BUDDY/BAF/anderson_metastability/.julia/julia_1.11.1_15.01.26.tar.gz ./
 
-tar -xf julia_1.11.1_30.10.25.tar.gz.tar.gz
-rm -f julia_1.11.1_30.10.25.tar.gz
+tar -xf julia_1.11.1_15.01.26.tar.gz
+rm -f julia_1.11.1_15.01.26.tar.gz
 
  lscpu | grep 'Model name: '> model_name.txt
 
@@ -42,7 +42,7 @@ module load julia/1.11.1
 
 #Job submission 
 
-cp \$BUDDY/anderson_eigenscatter_L${L}_${itr}.jl ./
+cp \$BUDDY/anderson_metastability_L${L}_${itr}.jl ./
 
 # set number of threads
 export OPENBLAS_NUM_THREADS=1
@@ -51,8 +51,8 @@ export JULIA_NUM_THREADS=1
 
 # Do the real thing here
 
-julia anderson_eigenscatter_L${L}_${itr}.jl
-rm anderson_eigenscatter_L${L}_${itr}.jl
+julia anderson_metastability_L${L}_${itr}.jl
+rm anderson_metastability_L${L}_${itr}.jl
 
 
 
