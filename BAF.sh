@@ -65,6 +65,7 @@ bash ./$repo/cat_run.sh
 bash ./$repo/cat_env.sh
 bash ./$repo/cat_jl.sh
 
+bash ./$repo/condor_submit.sh
 
 
 echo "Done."
