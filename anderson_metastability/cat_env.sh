@@ -20,7 +20,7 @@ cat <<EOF >job_file_eigenscatterL${L}_${itr}.jdl
 
 
 Executable              = run_file_eigenscatterL${L}_${itr}.sh
-JobBatchName            = OPO: L=${L}, Itr=${itr}        
+JobBatchName            = Anderson: L=${L}, Itr=${itr}        
 Environment             = ClusterId=\$(ClusterId);Process=\$(Process);SubHost=$ENV(SUBHOST);
         
 Arguments		= 8
