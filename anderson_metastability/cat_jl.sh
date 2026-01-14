@@ -153,6 +153,33 @@ function Lindbladian(W,L)
 end
 
 
+# ------------------------------------------
+# HDF5 Mods
+# ------------------------------------------
+
+
+
+# Function to read a single line from a file
+function read_model_name(filename)
+    open(filename, "r") do file
+        return readline(file)
+    end
+end
+
+
+
+function format_duration(duration::Millisecond)
+    milliseconds=duration.value % 1000
+    total_seconds = div(duration.value, 1000)  # Convert milliseconds to seconds
+    hrs = div(total_seconds, 3600)             # Get hours
+    mins = div(total_seconds % 3600, 60)       # Get minutes
+    secs = total_seconds % 60                  # Get seconds
+    return "$(hrs) hour(s), $(mins) minute(s), $(secs) second(s), and $(milliseconds) millisecond(s)"
+end
+
+
+
+
 #------------------------------------------------------------------------------------------
 
 ###################
@@ -193,8 +220,8 @@ attrs=HDF5.attributes(file_destination_rawdata)
 	# Extracting Processor Type
 
     
-	#model_name = read_model_name("model_name.txt")
-    #attrs["[Benchmark] Processor Type"] = string(model_name)
+	model_name = read_model_name("model_name.txt")
+    attrs["[Benchmark] Processor Type"] = string(model_name)
 
 
 	# Extracting Julia Version
@@ -259,9 +286,9 @@ close(file_destination_midscpectragap)
        # println("L=",L," itr=",itr)
           
         
-        file_destination_rawdata=h5open("anderson_eigendata_${L}_${itr}.hdf5","cw");
-        file_destination_gamma=h5open("anderson_gamma_${L}_${itr}_bootstrap.hdf5","cw");
-        file_destination_midscpectragap=h5open("anderson_midgspectragap_${L}_${itr}_bootstrap.hdf5","cw");
+       global file_destination_rawdata=h5open("anderson_eigendata_${L}_${itr}.hdf5","cw");
+       global file_destination_gamma=h5open("anderson_gamma_${L}_${itr}_bootstrap.hdf5","cw");
+       global file_destination_midscpectragap=h5open("anderson_midgspectragap_${L}_${itr}_bootstrap.hdf5","cw");
 
         for W in WList
 
