@@ -16,7 +16,6 @@ cat <<EOF >eigenscatterL${L}_${itr}.jl
 # Headers
 ###################
 
-include(".header/Headers.jl");
 
 ###################
 # Parameters
@@ -29,9 +28,14 @@ WList=[ 0.01, 0.02, 0.03, 0.04, 0.05, 0.06, 0.07, 0.08, 0.09, 0.1 , 0.11, 0.12, 
 Itrnumber=1000
 
 
-file_destination= h5open("anderson_eigendata${L}_${itr}.hdf5","cw");
+# Output files:
 
-attrs=HDF5.attributes(file_destination)
+file_destination_rawdata= h5open("anderson_eigendata${L}_${itr}.hdf5","cw");
+
+
+
+
+attrs=HDF5.attributes(file_destination_rawdata)
 
 ######################################
 # Attributes:
@@ -77,7 +81,7 @@ attrs=HDF5.attributes(file_destination)
 
 	# Meta Data
 
-	attrs["METADATA"] = read("METADATA.txt", String)
+	#attrs["METADATA"] = read("METADATA.txt", String)
 	
 	# Author
 
@@ -96,6 +100,11 @@ attrs=HDF5.attributes(file_destination)
     attrs["[Parameters] γ"] = string(γ)
 
 close(file_destination)
+
+
+
+
+
 ###################
 # Main Loop
 ###################
@@ -107,10 +116,13 @@ close(file_destination)
        # println("L=",L," itr=",itr)
           
         
-        file=h5open("anderson_eigendata${L}_${itr}.hdf5","cw");
+        file_destination_rawdata=h5open("anderson_eigendata${L}_${itr}.hdf5","cw");
+
+
+
         for W in WList
 
-            Time_begin_eigen=Dates.now()
+                Time_begin_eigen=Dates.now()
 	        
                 #The Lindbladian:
                 
@@ -120,49 +132,36 @@ close(file_destination)
                 # Compute eigenvalues and right eigenvectors
                     eigenvalues, right_eigenvectors = eigen(Matrix(Lind));          
             
-            Time_end_eigen=Dates.now()
-            total_time_eigen=Time_end_eigen-Time_begin_eigen
+
+
+                Time_end_eigen=Dates.now()
+                total_time_eigen=Time_end_eigen-Time_begin_eigen
 
                 # Writing Benchmark time
-                    file["L\$L/W\$(W)/itr\$(itr)/eigen_benchmark_time"] = string(format_duration(total_time_eigen)); 
+                    file_destination_rawdata["L\$L/W\$(W)/itr\$(itr)/eigen_benchmark_time"] = string(format_duration(total_time_eigen)); 
               
 
 
-            file["L\$L/W\$(W)/itr\$(itr)/eigenvalues"] = eigenvalues;
-            file["L\$L/W\$(W)/itr\$(itr)/disorder_realisation"] = μ;
+            file_destination_rawdata["L\$L/W\$(W)/itr\$(itr)/eigenvalues"] = eigenvalues;
+            file_destination_rawdata["L\$L/W\$(W)/itr\$(itr)/disorder_realisation"] = μ;
+
 
             #compute the left eigenvectors by looking at Lindblad complex conjugate transpose
 
+
             left_eigenvectors = right_eigenvectors';
             
+
+
             # Save results to HDF5 file
 
-            file["L\$L/W\$(W)/itr\$(itr)/left_eigenvectors_norm"] = norm.(eachcol(left_eigenvectors)); 
-            file["L\$L/W\$(W)/itr\$(itr)/right_eigenvectors_norm"] = norm.(eachcol(right_eigenvectors));
+            file_destination_rawdata["L\$L/W\$(W)/itr\$(itr)/left_eigenvectors_norm"] = norm.(eachcol(left_eigenvectors)); 
+            file_destination_rawdata["L\$L/W\$(W)/itr\$(itr)/right_eigenvectors_norm"] = norm.(eachcol(right_eigenvectors));
 
-
-        #IPR in computational basis:
-
-            global IPR_rightvec=fill(0.0, L^2)
-            
-            for j in 1:L^2
-
-                IPR_rightvec[j]=IPR(right_eigenvectorsd[:,j])
-
-            end
-
-
-   
-
-        # Writing IPR and Densities of some states
-
-         file["L\$L/W\$(W)/itr\$(itr)/IPR"] = IPR_rightvec
-         file["L\$L/W\$(W)/itr\$(itr)/Eigstate_ground"] = right_eigenvectors[:,end]
-         file["L\$L/W\$(W)/itr\$(itr)/Eigstate_IPR_argmax"] = right_eigenvectors[:,argmax(IPR_rightvec)]
 
 
         end
-        close(file)
+        close(file_destination_rawdata)
         GC.gc()
     end
 
