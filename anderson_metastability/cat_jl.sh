@@ -10,7 +10,7 @@ do
 
 
 
-cat <<EOF >anderson_eigenscatterL${L}_${itr}.jl
+cat <<EOF >anderson_eigenscatter_L${L}_${itr}.jl
 
 ###################
 # Headers
@@ -81,7 +81,7 @@ attrs=HDF5.attributes(file_destination_rawdata)
 
 	# Code
 
-	script_content = read("eigenscatterL\$(L).jl", String)
+	script_content = read("anderson_eigenscatter_L\$(L).jl", String)
 	attrs["[ENV] Code"] = script_content
 
 	# Modules
