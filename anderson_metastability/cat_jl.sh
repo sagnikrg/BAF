@@ -20,7 +20,6 @@ cat <<EOF >anderson_eigenscatter_L${L}_${itr}.jl
 
 using LinearAlgebra     # for eigenvalues and eigenvectors
 using StatsBase         # for statistical functions
-using CairoMakie        # for plotting
 using HDF5              # for saving data
 using Dates             # for benchmark_time
 using Pkg               # for package management
