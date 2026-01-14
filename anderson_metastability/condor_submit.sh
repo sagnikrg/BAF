@@ -1,6 +1,6 @@
 #!/bin/bash
 
-cd ../..
+cd ..
 L=8
 Itrnumb=1
 
