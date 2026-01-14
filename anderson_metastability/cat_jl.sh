@@ -236,7 +236,7 @@ attrs=HDF5.attributes(file_destination_rawdata)
 
 	# Code
 
-	script_content = read("anderson_eigenscatter_L${L}_${itr}.jl", String)
+	script_content = read("anderson_metastability_L${L}_${itr}.jl", String)
 	attrs["[ENV] Code"] = script_content
 
 	# Modules
@@ -246,7 +246,7 @@ attrs=HDF5.attributes(file_destination_rawdata)
 
     # Julia Environment
 
-	attrs["[ENV] Julia Environment"] = "julia_1.11.1_30.10.25.tar.gz" 
+	attrs["[ENV] Julia Environment"] = "julia_1.11.1_15.01.26.tar.gz" 
 
 	# Meta Data
 
