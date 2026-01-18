@@ -87,37 +87,6 @@ end
 ##----------------------------
 
 
-function Lindbladian(W,L,γ)
-
-        H_dense, μ =H(W,L);
-        decay_channel_1=Z_channel(L)
-
-        Hdim = size(H_dense)[1]
-        identity_matrix = Matrix{Float64}(I, Hdim, Hdim)  # Corrected identity matrix creation
-        
-        H_transpose = transpose(H_dense)
-        
-        
-        L_H = kron(identity_matrix, H_dense) - kron(H_transpose, identity_matrix)   # Commutator part
-
-        
-        conj_decay_channel_1 = conj(decay_channel_1)
-        
-        D1 = decay_channel_1' * decay_channel_1
-        transpose_D1 = transpose(D1)
-            
-            
-        L1 = kron(conj_decay_channel_1, decay_channel_1) - 0.5 * (kron(identity_matrix, D1) + kron(transpose_D1, identity_matrix))
-
-            
-        
-        
-        Lind = -1im * L_H + γ * (L1) # + L_X1 + L_Y1)  # Sum of all Lindblad terms
-
-    return Lind, μ 
-end
-
-
 function Lindbladian(Ham,γ)
 
         H_dense=Ham;
@@ -290,17 +259,17 @@ file_destination_IPR_eigenbasis= h5open("anderson_metastability_IPR_eigenbasis_$
 
 # Setting HDF5 Attributes
 
-set_hdf5_attributes(file_destination_rawdata)
-set_hdf5_attributes(file_destination_gamma)
-set_hdf5_attributes(file_destination_midscpectragap)
-set_hdf5_attributes(file_destination_IPR_realbasis)
-set_hdf5_attributes(file_destination_IPR_eigenbasis)
+    set_hdf5_attributes(file_destination_rawdata)
+    set_hdf5_attributes(file_destination_gamma)
+    set_hdf5_attributes(file_destination_midscpectragap)
+    set_hdf5_attributes(file_destination_IPR_realbasis)
+    set_hdf5_attributes(file_destination_IPR_eigenbasis)
 
-attrs_rawdata = HDF5.attributes(file_destination_rawdata)
-attrs_gamma = HDF5.attributes(file_destination_gamma)
-attrs_midscpectragap = HDF5.attributes(file_destination_midscpectragap)
-attrs_IPR_realbasis = HDF5.attributes(file_destination_IPR_realbasis)
-attrs_IPR_eigenbasis = HDF5.attributes(file_destination_IPR_eigenbasis)
+    attrs_rawdata = HDF5.attributes(file_destination_rawdata)
+    attrs_gamma = HDF5.attributes(file_destination_gamma)
+    attrs_midscpectragap = HDF5.attributes(file_destination_midscpectragap)
+    attrs_IPR_realbasis = HDF5.attributes(file_destination_IPR_realbasis)
+    attrs_IPR_eigenbasis = HDF5.attributes(file_destination_IPR_eigenbasis)
 
 
 ######################################
@@ -322,7 +291,7 @@ attrs_IPR_eigenbasis = HDF5.attributes(file_destination_IPR_eigenbasis)
 
 	attrs_rawdata["METADATA"] = read("METADATA_rawdata.txt", String)
     attrs_gamma["METADATA"] = read("METADATA_gamma.txt", String)
-    attrs_midscpectragap["METADATA"] = read("METADATA_midscpectragap.txt", String)
+    attrs_midscpectragap["METADATA"] = read("METADATA_midspectragap.txt", String)
     attrs_IPR_realbasis["METADATA"] = read("METADATA_IPR_realbasis.txt", String)
     attrs_IPR_eigenbasis["METADATA"] = read("METADATA_IPR_eigenbasis.txt", String)
 	
@@ -345,7 +314,12 @@ attrs_IPR_eigenbasis = HDF5.attributes(file_destination_IPR_eigenbasis)
     attrs_midscpectragap["[Parameters] WList"] = string(WList)
     attrs_IPR_realbasis["[Parameters] WList"] = string(WList)
     attrs_IPR_eigenbasis["[Parameters] WList"] = string(WList)
-    attrs["[Parameters] γ"] = string(γ)
+
+    attrs_rawdata["[Parameters] γ"] = string(γ)
+    attrs_gamma["[Parameters] γ"] = string(γ)
+    attrs_midscpectragap["[Parameters] γ"] = string(γ)
+    attrs_IPR_realbasis["[Parameters] γ"] = string(γ)
+    attrs_IPR_eigenbasis["[Parameters] γ"] = string(γ)
 
 
 close(file_destination_rawdata)
@@ -365,8 +339,7 @@ close(file_destination_IPR_eigenbasis)
 
     for itr in 1:Itrnumber
 
-       # println("L=",L," itr=",itr)
-
+    
        global file_destination_rawdata=h5open("anderson_metastability_eigendata_${L}_${itr}.hdf5","cw");
        global file_destination_gamma=h5open("anderson_metastability_gamma_${L}_${itr}_bootstrap.hdf5","cw");
        global file_destination_midscpectragap=h5open("anderson_metastability_midgspectragap_${L}_${itr}_bootstrap.hdf5","cw");
@@ -382,12 +355,12 @@ close(file_destination_IPR_eigenbasis)
                 #The Hamiltonian, Lindbladian:
                 
 
-                    Hamiltonian, μ = H(W,L);
-                    Lind = Lindbladian(Hamiltonian,γ);
+                    Ham, μ = H(W,L);
+                    Lind = Lindbladian(Matrix(Ham),γ);
 
                 # Computing Eigen spectrum of Hamiltonian
 
-                    eigvalues_H, eigvectors_H = eigen(Hamiltonian);    
+                    eigvalues_H, eigvectors_H = eigen(Ham);    
                     basis_for_Lindblad = kron(conj.(eigvectors_H), eigvectors_H);
 
 
