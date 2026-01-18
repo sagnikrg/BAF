@@ -43,7 +43,7 @@ Request_disk            = 4 GB
 
 +CephFS_IO  = "low"
         
-+MaxRuntimeHours	=   12
++MaxRuntimeHours	=   16
         
 +ContainerOS        = "Debian12"
 
