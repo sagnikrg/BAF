@@ -2,4 +2,4 @@ This file is a derived one from the eigen computation of the Lindbladian for an 
 
 Each entry includes, the specific disorder realization used. Since adopting the new automisation standard 2026, we decided to have a dedicated file for each derived quantity to simplify and automate bootstrap processes.
 
-This file contains the data for: The gap between the mid-spectra decay mode and the one above it, and the one below it;
+This file contains the data for: The 2L-1th Lindbladian eigenvalue (midspectral_band) gap between the mid-spectra decay mode and the one above it, and the one below it;

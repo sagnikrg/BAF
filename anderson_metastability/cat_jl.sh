@@ -396,6 +396,7 @@ close(file_destination_IPR_eigenbasis)
             # midspectral gap
 
                     file_destination_midscpectragap["L\$L/W\$(W)/itr\$(itr)/midspectral_gap_up"] = (eigsort[mid_band_ind]-eigsort[mid_band_ind+1]);
+                    file_destination_midscpectragap["L\$L/W\$(W)/itr\$(itr)/midspectral_eig"] = eigenvalues[mid_band_ind];
                     file_destination_midscpectragap["L\$L/W\$(W)/itr\$(itr)/midspectral_gap_down"] = (eigsort[mid_band_ind-1]-eigsort[mid_band_ind]);
 
             # IPR Calculations
