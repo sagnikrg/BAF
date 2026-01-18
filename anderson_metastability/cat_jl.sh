@@ -275,7 +275,7 @@ file_destination_IPR_eigenbasis= h5open("anderson_metastability_IPR_eigenbasis_$
 
 	attrs_rawdata["METADATA"] = read("METADATA_rawdata.txt", String)
     attrs_gamma["METADATA"] = read("METADATA_gamma.txt", String)
-    attrs_midscpectragap["METADATA"] = read("METADATA_midspectragap.txt", String)
+    attrs_midscpectragap["METADATA"] = read("METADATA_midspectra_gap.txt", String)
     attrs_IPR_realbasis["METADATA"] = read("METADATA_IPR_realbasis.txt", String)
     attrs_IPR_eigenbasis["METADATA"] = read("METADATA_IPR_eigenbasis.txt", String)
 	

@@ -31,7 +31,7 @@ cp \$BUDDY/BAF/anderson_metastability/.julia/julia_1.11.1_15.01.26.tar.gz ./
 
 cp \$BUDDY/BAF/anderson_metastability/METADATA_rawdata.txt ./
 cp \$BUDDY/BAF/anderson_metastability/METADATA_gamma.txt ./
-cp \$BUDDY/BAF/anderson_metastability/METADATA_midscpectragap.txt ./
+cp \$BUDDY/BAF/anderson_metastability/METADATA_midspectra_gap.txt ./
 cp \$BUDDY/BAF/anderson_metastability/METADATA_IPR_realbasis.txt ./
 cp \$BUDDY/BAF/anderson_metastability/METADATA_IPR_eigenbasis.txt ./
 
