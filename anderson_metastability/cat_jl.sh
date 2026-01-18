@@ -172,8 +172,8 @@ function set_hdf5_attributes(file::HDF5.File)
 	# Extracting Processor Type
 
     
-	model_name = read_model_name("model_name.txt")
-    attrs["[Benchmark] Processor Type"] = string(model_name)
+	#model_name = read_model_name("model_name.txt")
+    #attrs["[Benchmark] Processor Type"] = string(model_name)
 
 
 	# Extracting Julia Version
