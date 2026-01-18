@@ -117,22 +117,6 @@ function Lindbladian(Ham,γ)
     return Lind 
 end
 
-# With default γ=1.0
-
-function Lindbladian(Ham)
-    γ=1.0
-    return Lindbladian(Ham,γ)
-end
-
-
-# Overloaded function with default γ=1.0
-
-
-function Lindbladian(W,L)
-
-    Lind , μ = Lindbladian(W,L,1.0);
-    return Lind , μ 
-end
 
 
 # ------------------------------------------
@@ -366,8 +350,7 @@ close(file_destination_IPR_eigenbasis)
 
 
                 # Compute eigenvalues and right eigenvectors
-                    eigenvalues, right_eigenvectors = eigen(Matrix(Lind));          
-            
+                    eigenvalues, right_eigenvectors = eigen(Matrix(Lind));                      
 
                 # Rotate eigenvectors to the Hamiltonian eigenbasis (for later IPR calculations)
                     right_eigenvectors_rotated = basis_for_Lindblad * right_eigenvectors;
