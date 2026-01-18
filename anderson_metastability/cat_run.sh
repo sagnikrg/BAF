@@ -5,7 +5,7 @@
 cd ~/local/
 
 L=8
-Itrnumb=1
+Itrnumb=12
 
 
 for (( itr=1; itr<=Itrnumb; itr++ ))
@@ -65,7 +65,7 @@ rm anderson_metastability_L${L}_${itr}.jl
 
 # Clean up the working directory
 
-cp  * /cephfs/user/sghosh/data/.
+cp  *hdf5 /cephfs/user/sghosh/data/.
 rm -rf *
 EOF
 

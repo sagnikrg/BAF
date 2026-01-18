@@ -4,7 +4,7 @@ cd ~/local/
 
 
 L=8
-Itrnumb=1
+Itrnumb=12
 
 for (( itr=1; itr<=Itrnumb; itr++ ))
 do
