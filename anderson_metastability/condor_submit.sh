@@ -3,8 +3,8 @@
 cd ~/local/
 
 
-L=18
-Itrnumb=12
+L=19
+Itrnumb=24
 
 for (( itr=1; itr<=Itrnumb; itr++ ))
 do
