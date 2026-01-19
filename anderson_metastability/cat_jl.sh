@@ -2,7 +2,7 @@
 
 cd $BUDDY
 
-L=15
+L=16
 Itrnumb=14
 
 for (( itr=1; itr<=Itrnumb; itr++ ))
