@@ -3,7 +3,7 @@
 cd ~/local/
 
 
-L=19
+L=20
 Itrnumb=24
 
 for (( itr=1; itr<=Itrnumb; itr++ ))
