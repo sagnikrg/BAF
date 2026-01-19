@@ -4,8 +4,8 @@
 
 cd ~/local/
 
-L=9
-Itrnumb=11
+L=10
+Itrnumb=10
 
 
 for (( itr=1; itr<=Itrnumb; itr++ ))
@@ -43,7 +43,7 @@ Request_disk            = 4 GB
 
 +CephFS_IO  = "low"
         
-+MaxRuntimeHours	=   16
++MaxRuntimeHours	=   24
         
 +ContainerOS        = "Debian12"
 

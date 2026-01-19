@@ -4,8 +4,8 @@
 
 cd ~/local/
 
-L=9
-Itrnumb=11
+L=10
+Itrnumb=10
 
 
 for (( itr=1; itr<=Itrnumb; itr++ ))
