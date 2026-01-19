@@ -4,7 +4,7 @@
 
 cd ~/local/
 
-L=23
+L=24
 Itrnumb=60
 
 
