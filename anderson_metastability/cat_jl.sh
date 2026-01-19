@@ -2,8 +2,8 @@
 
 cd $BUDDY
 
-L=17
-Itrnumb=14
+L=18
+Itrnumb=12
 
 for (( itr=1; itr<=Itrnumb; itr++ ))
 do
