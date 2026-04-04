@@ -13,8 +13,8 @@ quan="eigendata"
 
 #paths
 
-source_path="cephfs/user/sghosh/data/"
-dest_path="/physik_mbl_dtc/${repo}/"
+source_path="cephfs/user/sghosh/data"
+dest_path="~/physik_mbl_dtc/${repo}"
 
 
 
