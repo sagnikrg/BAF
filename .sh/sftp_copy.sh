@@ -13,10 +13,6 @@ quan="eigendata"
 
 #paths
 
-source_path="cephfs/user/sghosh/data"
-dest_path="~/physik_mbl_dtc/${repo}"
-
-
 
 cd ~
 
@@ -25,8 +21,8 @@ cd ~
 
 L=10
 
-mkdir "${dest_path}/EIGENDATA/L${L}"
-rsync -avz --progress "${source_path}/${repo}_${quan}_${L}_*.hdf5" "${dest_path}/EIGENDATA/L${L}/"
+mkdir "~/physik_mbl_dtc/${repo}/EIGENDATA/L${L}"
+rsync -avz --progress "\$BUDDY$/data/${repo}_${quan}_${L}_*.hdf5" "~/physik_mbl_dtc/${repo}/EIGENDATA/L${L}"
 
 
 
