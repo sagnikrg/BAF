@@ -20,7 +20,6 @@ mkdir physik_mbl_dtc/${repo}/${quan}
 for (( L=16; L<=16; L++ ))
 do
 
-#L=10
 
 mkdir  physik_mbl_dtc/${repo}/${quan}/L${L}
 rsync -avz --progress $BUDDY/data/${repo}_${quan}_${L}_*.hdf5 physik_mbl_dtc/${repo}/${quan}/L${L}/.
