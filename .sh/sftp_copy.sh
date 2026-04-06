@@ -9,21 +9,23 @@
 # global automated parameters:
 
 repo=anderson_metastability   
-quan=eigendata
+quan=gamma
 
 #paths
 
 
 cd ~
+mkdir physik_mbl_dtc/${repo}/${quan}
 
-for (( L=11; L<=12; L++ ))
+for (( L=16; L<=16; L++ ))
 do
 
 #L=10
 
-mkdir  physik_mbl_dtc/${repo}/EIGENDATA/L${L}
-rsync -avz --progress $BUDDY/data/${repo}_${quan}_${L}_*.hdf5 physik_mbl_dtc/${repo}/EIGENDATA/L${L}/.
+mkdir  physik_mbl_dtc/${repo}/${quan}/L${L}
+rsync -avz --progress $BUDDY/data/${repo}_${quan}_${L}_*.hdf5 physik_mbl_dtc/${repo}/${quan}/L${L}/.
 
+rm -r  $BUDDY/data/${repo}_${quan}_${L}_*.hdf5  
 
 
 
