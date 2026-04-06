@@ -21,8 +21,8 @@ do
 
 #L=10
 
-mkdir  physik_mbl_dtc/anderson_metastability/EIGENDATA/L${L}
-rsync -avz --progress $BUDDY/data/anderson_metastability_eigendata_${L}_*.hdf5 physik_mbl_dtc/anderson_metastability/EIGENDATA/L${L}/.
+mkdir  physik_mbl_dtc/${repo}/EIGENDATA/L${L}
+rsync -avz --progress $BUDDY/data/${repo}_${quan}_${L}_*.hdf5 physik_mbl_dtc/${repo}/EIGENDATA/L${L}/.
 
 
 
