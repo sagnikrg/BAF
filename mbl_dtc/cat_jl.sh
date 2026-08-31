@@ -108,7 +108,8 @@ attrs=attributes(file)
 
 	# Parameters
 
-	attrs["[Parameters] h"] = "0"
+	attrs["[Parameters] h"] = "2pi"
+    attrs["[Parameters] J"] = "pi"
 	attrs["[Parameters] L"] = L
 	attrs["[Parameters] theta"] = theta
 	attrs["[Parameters] epsilon"] = string(epsilonlist)
@@ -144,9 +145,12 @@ for i in 1:length(epsilonlist)
 
 
 
-		A=brickwall(L,theta,epsilon)
+		
+        h=rand(L)*2*pi ;
+        J=rand(L-1)*pi;
 
 
+        A=circuit_dtc(L, theta, epsilon, h, J);
 
 
 
@@ -159,6 +163,11 @@ for i in 1:length(epsilonlist)
 		#saving the eigenvalues
 		file["L\$(L)/theta\$(theta)/epsilon"*first("\$(epsilon)",5)*"/Itr\$(itr)"]=eigA;
 	
+        attribs = HDF5.attributes(file["L\$(L)/theta\$(theta)/epsilon\$(epsilon)/itr\$(itr)"])
+        attribs["J"]=J
+        attribs["h"]=h
+
+
 		#computing the level spacing
 		levelspacing[i]=levelspacing[i]+LevelSpacingRatio(eigA)
     
