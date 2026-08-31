@@ -4,9 +4,9 @@
 
 cd ~/local/
 
-L=12
-thetarun=0.3
-Itrnumb=2000
+L=8
+thetarun=0.0
+Itrnumb=1
 
 for (( i1=1; i1<=Itrnumb; i1++ ))
 do
@@ -26,7 +26,7 @@ Arguments		= 8
         
 Universe                = vanilla
 
-Transfer_executable     = True
+Transfer_executable     = 
 Transfer_input_files    = 
 Transfer_output_files   =
 
