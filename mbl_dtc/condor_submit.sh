@@ -1,10 +1,11 @@
 #!/bin/bash
 
-cd ../
+cd ~/local/
 
 L=12
+Itrnumb=1
 
-for i1 in {1..2000}
+for (( i1=1; i1<=Itrnumb; i1++ ))
 do
 
  condor_submit job_file_mbldtcL${L}_${i1}.jdl
