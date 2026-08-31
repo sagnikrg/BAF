@@ -25,14 +25,14 @@ Arguments		= 8
         
 Universe                = vanilla
 
-Transfer_executable     = 
+Transfer_executable     = True
 Transfer_input_files    = 
 Transfer_output_files   =
 
 
 Error                   = log/err.\$(ClusterId).\$(Process)
 Output                  = log/out.\$(ClusterId).\$(Process)
-Log                     = 
+Log                     = log/log.\$(ClusterId).\$(Process)
 
 Request_memory          = 12  GB
 Request_cpus            = 1
