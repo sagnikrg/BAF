@@ -169,7 +169,7 @@ for i in 1:length(epsilonlist)
 
 
 		#computing the level spacing
-		levelspacing[i]=levelspacing[i]+LevelSpacingRatio(eigA)
+		levelspacing[i]=levelspacing[i]+MeanLevelSpacingRatio(eigA)
     
 
 
