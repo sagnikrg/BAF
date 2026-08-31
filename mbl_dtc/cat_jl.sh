@@ -12,7 +12,7 @@ for (( i1=1; i1<=Itrnumb; i1++ ))
 do
 
 
-cat <<EOF >mbldtc_L${L}_${i1}.jl
+cat <<EOF >mbldtc_L${L}_theta${thetarun}_${i1}.jl
 
 
 #########################################################################

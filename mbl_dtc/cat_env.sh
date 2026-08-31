@@ -14,11 +14,11 @@ do
 
 
 
-cat <<EOF >job_file_mbldtcL${L}_${i1}.jdl
+cat <<EOF >job_file_mbldtcL${L}_theta${thetarun}_${i1}.jdl
 
 #Job Script to be submitted using HTCondor
         
-Executable              = run_file_mbldtcL${L}_${i1}.sh
+Executable              = run_file_mbldtcL${L}_theta${thetarun}_${i1}.sh
 JobBatchName            = mbldtc: L=${L}, theta=${thetarun}, Itr=${i1}                
 Environment             = ClusterId=\$(ClusterId);Process=\$(Process);SubHost=$ENV(SUBHOST);
         

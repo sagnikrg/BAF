@@ -15,7 +15,7 @@ do
 
 
 
-cat <<EOF >run_file_mbldtcL${L}_${i1}.sh
+cat <<EOF >run_file_mbldtcL${L}_theta${thetarun}_${i1}.sh
 #!/bin/bash
      
   
@@ -47,7 +47,7 @@ module load julia/1.9.4
 
 #Job submission 
 
-cp \$BUDDY/mbldtc_L${L}_${i1}.jl ./
+cp \$BUDDY/mbldtc_L${L}_theta${thetarun}_${i1}.jl ./
 cp -rf \$BUDDY/BAF/mbl_dtc/.header ./
 
 # set number of threads
@@ -64,7 +64,7 @@ rm mbldtc_L${L}_${i1}.jl
 # Clean up the working directory
 
 cp  *hdf5 /cephfs/user/sghosh/data/.
-rm -rf *
+#rm -rf *
 EOF
 
 
