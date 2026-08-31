@@ -83,7 +83,7 @@ attrs=attributes(file)
 
 	# Code
 
-	script_content = read("mbldtc_L${L}_${i1}.jl", String)
+	script_content = read("mbldtc_L${L}_theta${thetarun}_${i1}.jl", String)
 	attrs["[ENV] Code"] = script_content
 
 	# Modules
