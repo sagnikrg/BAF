@@ -19,7 +19,7 @@ cat <<EOF >job_file_mbldtcL${L}_${i1}.jdl
 #Job Script to be submitted using HTCondor
         
 Executable              = run_file_mbldtcL${L}_${i1}.sh
-JobBatchName            = mbldtc: L=${L}, theta=${thetarun} Itr=${i1}                
+JobBatchName            = mbldtc: L=${L}, theta=${thetarun}, Itr=${i1}                
 Environment             = ClusterId=\$(ClusterId);Process=\$(Process);SubHost=$ENV(SUBHOST);
         
 Arguments		= 8
@@ -31,9 +31,9 @@ Transfer_input_files    =
 Transfer_output_files   =
 
 
-Error                   = log/err.\$(ClusterId).\$(Process)
-Output                  = log/out.\$(ClusterId).\$(Process)
-Log                     = log/log.\$(ClusterId).\$(Process)
+Error                   = log/err.mbldtcL${L}_theta${thetarun}_${i1}
+Output                  = log/out.mbldtcL${L}_theta${thetarun}_${i1}
+Log                     = log/log.mbldtcL${L}_theta${thetarun}_${i1}
 
 Request_memory          = 12  GB
 Request_cpus            = 1
