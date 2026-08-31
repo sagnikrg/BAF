@@ -47,7 +47,7 @@ module load julia/1.9.4
 #Job submission 
 
 cp \$BUDDY/mbldtc_L${L}_${i1}.jl ./
-cp -rf \$BUDDY/BAF/.header ./
+cp -rf \$BUDDY/BAF/mbl_dtc/.header ./
 
 # set number of threads
 export OPENBLAS_NUM_THREADS=1
