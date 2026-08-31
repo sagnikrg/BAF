@@ -3,7 +3,7 @@
 cd $BUDDY
 
 L=8
-Itrnumb=12
+Itrnumb=1
 
 #cd $BUDDY
 

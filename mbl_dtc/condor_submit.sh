@@ -2,7 +2,7 @@
 
 cd ~/local/
 
-L=12
+L=8
 Itrnumb=1
 
 for (( i1=1; i1<=Itrnumb; i1++ ))
