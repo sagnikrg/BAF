@@ -151,4 +151,4 @@ Corr
 end
 
 include("off-and-diagonals.jl")
-include("lazadires_diagram_plots.jl")
+#include("lazadires_diagram_plots.jl")

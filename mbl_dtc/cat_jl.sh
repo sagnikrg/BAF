@@ -161,9 +161,9 @@ for i in 1:length(epsilonlist)
 		eigA,eigvecA=eigen(A)
 
 		#saving the eigenvalues
-		file["L\$(L)/theta\$(theta)/epsilon"*first("\$(epsilon)",5)*"/Itr\$(itr)"]=eigA;
+		file["L\$(L)/theta\$(theta)/epsilon"*first("\$(epsilon)",5)*"/Itr\$(itr)/eig"]=eigA;
 	
-        attribs = HDF5.attributes(file["L\$(L)/theta\$(theta)/epsilon\$(epsilon)/itr\$(itr)"])
+        attribs = HDF5.attributes(file["L\$(L)/theta\$(theta)/epsilon"*first("\$(epsilon)",5)*"/Itr\$(itr)"])
         attribs["J"]=J
         attribs["h"]=h
 

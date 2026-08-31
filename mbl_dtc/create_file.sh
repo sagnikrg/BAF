@@ -99,7 +99,7 @@ attrs=attributes(file)
 
 	# Meta Data
 
-	attrs["METADATA"] = "This Data file contains a full parameter scan of epsilon in epsilonlint of the MBL-DTC Unitary for L=\$(L) and theta=\$(theta). The data contains the eigenvalues for each realisation, disorder averaged level spacing ratio, disorder averaged eigestate entanglement entropy and disorder averaged histograms diagonal, pi-diagonal and various offdiagonal elements of the Lazadires Matrix."
+	attrs["METADATA"] = "This Data file contains a full parameter scan of epsilon in epsilonlist of the MBL-DTC Unitary for L=\$(L) and theta=\$(theta). The data contains the eigenvalues for each realisation, disorder averaged level spacing ratio, disorder averaged eigestate entanglement entropy and disorder averaged histograms diagonal, pi-diagonal and various offdiagonal elements of the Lazadires Matrix."
 
 	# Author
 
