@@ -30,10 +30,7 @@ using StatsBase             #   For Statistics
 using HDF5                  #   For Saving Data
 
 
-include("header/gates.jl")
-include("header/brickwall.jl")
-include("header/TransferMat.jl")
-include("header/functions.jl")
+include(".header/Header.jl")
 
 L=${L};
 theta=0.0;
@@ -147,15 +144,7 @@ for i in 1:length(epsilonlist)
 
 
 
-		#h=rand(L)*pi/2;
-		#Ind=collect(1:L)
-		#ZRow=copy(kronlist(RZ.(h),Ind));
-
-
-
-
 		A=brickwall(L,theta,epsilon)
-		#A=A*ZRow
 
 
 
