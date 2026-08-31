@@ -173,62 +173,61 @@ for i in 1:length(epsilonlist)
     
 
 
-		#########################################################################
-		# Eigenstate Entanglement Entropy
-		#########################################################################
+			#########################################################################
+			# Eigenstate Entanglement Entropy
+			#########################################################################
 
-		for j in 1:Ntot
+				for j in 1:Ntot
 	
-			#computing the half chain entanglement entropy
+					#computing the half chain entanglement entropy
+					entanglement_ee[i]=entanglement_ee[i]+EntanglementEntropy(eigvecA[:,j], L)
 	
-			entanglement_ee[i]=entanglement_ee[i]+EntanglementEntropy(eigvecA[:,j], L)
-	
+				end
+
+
+			#########################################################################
+			# Lazarides-Luitz Staistics 
+			#########################################################################
+
+				Corr=LazadiresDiagram(eigA,eigvecA);
+
+				histogram_diag .+=histgram(diag(Corr), -1:0.001:1)
+				histogram_pi_diag .+=histgram(pi_diag(Corr), -1:0.001:1)
+
+				for j in 1:16
+					histogram_offdiag[j,:] .+=histgram(offdiag(Corr,j), -1:0.001:1)
+					histogram_pi_offdiag[j,:] .+=histgram(pi_offdiag(Corr,j), -1:0.001:1)
+				end
+
+
+				## Itr loop ends here
 		end
 
+		# normalising the Lazarides-Luitz statistics
 
-		#########################################################################
-		# Lazarides-Luitz Staistics 
-		#########################################################################
+			histogram_diag=histogram_diag/Itrnumb
+			histogram_pi_diag=histogram_pi_diag/Itrnumb
 
-		Corr=LazadiresDiagram(eigA,eigvecA);
+			histogram_offdiag=histogram_offdiag/Itrnumb
+			histogram_pi_offdiag=histogram_pi_offdiag/Itrnumb
 
-		histogram_diag .+=histgram(diag(Corr), -1:0.001:1)
-		histogram_pi_diag .+=histgram(pi_diag(Corr), -1:0.001:1)
+		#saving the Lazarides-Luitz statistics
 
-		for j in 1:16
-				histogram_offdiag[j,:] .+=histgram(offdiag(Corr,j), -1:0.001:1)
-				histogram_pi_offdiag[j,:] .+=histgram(pi_offdiag(Corr,j), -1:0.001:1)
-		end
+			file["L\$(L)/theta\$(theta)/epsilon"*first("\$(epsilon)",5)*"/Histogram/Diag"]=histogram_diag
+			file["L\$(L)/theta\$(theta)/epsilon"*first("\$(epsilon)",5)*"/Histogram/PiDiag"]=histogram_pi_diag
+
+			file["L\$(L)/theta\$(theta)/epsilon"*first("\$(epsilon)",5)*"/Histogram/OffDiag"]=histogram_offdiag
+			file["L\$(L)/theta\$(theta)/epsilon"*first("\$(epsilon)",5)*"/Histogram/PiOffDiag"]=histogram_pi_offdiag
 
 
-		## Itr loop ends here
+		## epsilon loop ends here
 	end
 
-	# normalising the Lazarides-Luitz statistics
+	levelspacing=levelspacing/Itrnumb
+	entanglement_ee=entanglement_ee/(Itrnumb*Ntot)
 
-	histogram_diag=histogram_diag/Itrnumb
-	histogram_pi_diag=histogram_pi_diag/Itrnumb
-
-	histogram_offdiag=histogram_offdiag/Itrnumb
-	histogram_pi_offdiag=histogram_pi_offdiag/Itrnumb
-
-	#saving the Lazarides-Luitz statistics
-
-	file["L\$(L)/theta\$(theta)/epsilon"*first("\$(epsilon)",5)*"/Histogram/Diag"]=histogram_diag
-	file["L\$(L)/theta\$(theta)/epsilon"*first("\$(epsilon)",5)*"/Histogram/PiDiag"]=histogram_pi_diag
-
-	file["L\$(L)/theta\$(theta)/epsilon"*first("\$(epsilon)",5)*"/Histogram/OffDiag"]=histogram_offdiag
-	file["L\$(L)/theta\$(theta)/epsilon"*first("\$(epsilon)",5)*"/Histogram/PiOffDiag"]=histogram_pi_offdiag
-
-
-	## epsilon loop ends here
-end
-
-levelspacing=levelspacing/Itrnumb
-entanglement_ee=entanglement_ee/(Itrnumb*Ntot)
-
-file["L\$(L)/theta\$(theta)/Levelspacing"]=levelspacing;
-file["L\$(L)/theta\$(theta)/EntanglementEE"]=entanglement_ee;
+	file["L\$(L)/theta\$(theta)/Levelspacing"]=levelspacing;
+	file["L\$(L)/theta\$(theta)/EntanglementEE"]=entanglement_ee;
 	
 close(file)	
 	
