@@ -64,7 +64,7 @@ rm mbldtc_L${L}_${i1}.jl
 # Clean up the working directory
 
 cp  *hdf5 /cephfs/user/sghosh/data/.
-#rm -rf *
+rm -rf *
 EOF
 
 
