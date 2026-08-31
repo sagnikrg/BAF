@@ -206,12 +206,12 @@ for i in 1:length(epsilonlist)
 
 				Corr=LazadiresDiagram(eigA,eigvecA);
 
-				histogram_diag .+=histgram(diag(Corr), -1:0.001:1)
-				histogram_pi_diag .+=histgram(pi_diag(Corr), -1:0.001:1)
+				histogram_diag .+=histgram_interval(diag(Corr), -1:0.001:1)
+				histogram_pi_diag .+=histgram_interval(pi_diag(Corr), -1:0.001:1)
 
 				for j in 1:16
-					histogram_offdiag[j,:] .+=histgram(offdiag(Corr,j), -1:0.001:1)
-					histogram_pi_offdiag[j,:] .+=histgram(pi_offdiag(Corr,j), -1:0.001:1)
+					histogram_offdiag[j,:] .+=histgram_interval(offdiag(Corr,j), -1:0.001:1)
+					histogram_pi_offdiag[j,:] .+=histgram_interval(pi_offdiag(Corr,j), -1:0.001:1)
 				end
 
 
