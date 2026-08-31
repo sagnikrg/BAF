@@ -173,7 +173,7 @@ for i in 1:length(epsilonlist)
 		#saving the eigenvalues
 		file["L\$(L)/theta\$(theta)/epsilon"*first("\$(epsilon)",5)*"/Itr\$(itr)/eig"]=eigA;
 	
-		file["L$(L)/theta$(theta)/epsilon"*first("$(epsilon)",5)*"/Itr$(itr)/gap"]=gap;
+		file["L\$(L)/theta\$(theta)/epsilon"*first("\$(epsilon)",5)*"/Itr(itr)/gap"]=gap;
 		
 
         attribs = HDF5.attributes(file["L\$(L)/theta\$(theta)/epsilon"*first("\$(epsilon)",5)*"/Itr\$(itr)"])
