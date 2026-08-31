@@ -3,7 +3,7 @@
 cd ~/local/
 
 L=8
-thetarun=0.0
+thetarun=0.3
 Itrnumb=16
 
 for (( i1=1; i1<=Itrnumb; i1++ ))
