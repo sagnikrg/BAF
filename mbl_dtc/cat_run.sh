@@ -56,8 +56,8 @@ export OMP_NUM_THREADS=1
 export JULIA_NUM_THREADS=1
 
 # Do the real thing here
-julia mbldtc_L${L}_${i1}.jl
-rm mbldtc_L${L}_${i1}.jl
+julia mbldtc_L${L}_theta${thetarun}_${i1}.jl
+rm mbldtc_L${L}_theta${thetarun}_${i1}.jl
 
 
 
