@@ -3,6 +3,7 @@
 cd $BUDDY
 
 L=8
+thetarun=0.0
 Itrnumb=1
 
 #cd $BUDDY
@@ -33,7 +34,7 @@ using HDF5                  #   For Saving Data
 include(".header/Header.jl")
 
 L=${L};
-theta=0.0;
+theta=${thetarun};
 Itrnumb=100;
 Ntot=2^L;
 

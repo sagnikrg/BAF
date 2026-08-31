@@ -5,6 +5,7 @@
 cd ~/local/
 
 L=8
+thetarun=0.0
 Itrnumb=1
 
 for (( i1=1; i1<=Itrnumb; i1++ ))
@@ -18,7 +19,7 @@ cat <<EOF >job_file_mbldtcL${L}_${i1}.jdl
 #Job Script to be submitted using HTCondor
         
 Executable              = run_file_mbldtcL${L}_${i1}.sh
-JobBatchName            = mbldtc: L=${L}, Itr=${i1}                
+JobBatchName            = mbldtc: L=${L}, theta=${thetarun} Itr=${i1}                
 Environment             = ClusterId=\$(ClusterId);Process=\$(Process);SubHost=$ENV(SUBHOST);
         
 Arguments		= 8
