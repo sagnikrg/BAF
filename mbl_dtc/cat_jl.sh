@@ -122,7 +122,7 @@ attrs=attributes(file)
 ######################################	
 
 
-
+time_taken= @elapsed begin
 
 for i in 1:length(epsilonlist)
 
@@ -160,9 +160,22 @@ for i in 1:length(epsilonlist)
 		
 		eigA,eigvecA=eigen(A)
 
+
+		gap=Float64[]
+        		omega=sort(angle.(eigA).+pi)
+
+
+        		for (i, omega_i) in enumerate(omega)
+            			pair=mod(pi+omega_i, 2pi)
+            			push!(gap, minimum(abs.(omega.-pair)))
+        		end
+
 		#saving the eigenvalues
 		file["L\$(L)/theta\$(theta)/epsilon"*first("\$(epsilon)",5)*"/Itr\$(itr)/eig"]=eigA;
 	
+		file["L$(L)/theta$(theta)/epsilon"*first("$(epsilon)",5)*"/Itr$(itr)/gap"]=gap;
+		
+
         attribs = HDF5.attributes(file["L\$(L)/theta\$(theta)/epsilon"*first("\$(epsilon)",5)*"/Itr\$(itr)"])
         attribs["J"]=J
         attribs["h"]=h
@@ -180,6 +193,7 @@ for i in 1:length(epsilonlist)
 				for j in 1:Ntot
 	
 					#computing the half chain entanglement entropy
+					
 					entanglement_ee[i]=entanglement_ee[i]+EntanglementEntropy(eigvecA[:,j], L)
 	
 				end
@@ -222,6 +236,7 @@ for i in 1:length(epsilonlist)
 
 		## epsilon loop ends here
 	end
+end
 
 	levelspacing=levelspacing/Itrnumb
 	entanglement_ee=entanglement_ee/(Itrnumb*Ntot)
@@ -229,6 +244,7 @@ for i in 1:length(epsilonlist)
 	file["L\$(L)/theta\$(theta)/Levelspacing"]=levelspacing;
 	file["L\$(L)/theta\$(theta)/EntanglementEE"]=entanglement_ee;
 	
+	attrs["Time Elapsed"]=time_taken
 close(file)	
 	
 
