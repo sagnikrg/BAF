@@ -3,7 +3,7 @@
 cd $BUDDY
 
 L=12
-thetarun=0.3
+thetarun=0.0
 Itrnumb=2000
 
 #cd $BUDDY
