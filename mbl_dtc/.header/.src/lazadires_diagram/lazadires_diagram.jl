@@ -118,6 +118,38 @@ end
 ################################
 
 
+function LazadiresDiagram(EigA,Eigvec)
+
+    EigvecNew=phase_ordered_eigvecs(EigA,Eigvec)[2];
+
+    #########################################
+    # Extracting Number of qubits from the input matrix A:
+    #########################################
+
+   
+    localdim=length(eigvals(Z));
+    dim=convert(Int64,floor(log(size(EigvecNew)[1])/log(localdim)))
+
+
+    ########################################################
+    # Constructing the correlation matrix:
+    ########################################################
+
+    Corr=fill(0.0, size(EigvecNew));
+    
+    ########################################################
+    # Defining the symmetry operator whose correlation we want to calculate:
+    ########################################################
+    
+    Xi=copy(kron(Z,kron_power(I(localdim),(dim-1))));
+    Corr=real.(conj(transpose(EigvecNew))*Xi*EigvecNew)
+    
+Corr
+
+
+end
+
+
 
 function LazadiresDiagram(U)
 
