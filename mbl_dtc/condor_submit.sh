@@ -2,9 +2,9 @@
 
 cd ~/local/
 
-L=12
-thetarun=0.3
-Itrnumb=8
+L=8
+thetarun=0.1
+Itrnumb=4
 
 
 for (( i1=1; i1<=Itrnumb; i1++ ))
