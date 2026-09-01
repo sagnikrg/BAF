@@ -5,9 +5,9 @@
 cd ~/local/
 
 
-L=12
-thetarun=0.2
-Itrnumb=500
+L=8
+thetarun=0.0
+Itrnumb=1
 
 
 for (( i1=1; i1<=Itrnumb; i1++ ))

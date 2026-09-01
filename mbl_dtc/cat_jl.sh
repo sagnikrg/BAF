@@ -2,9 +2,9 @@
 
 cd $BUDDY
 
-L=12
-thetarun=0.2
-Itrnumb=500
+L=8
+thetarun=0.0
+Itrnumb=1
 
 #cd $BUDDY
 
@@ -46,7 +46,7 @@ global entanglement_ee=fill(0.0,length(epsilonlist))
 
 
 
-file=h5open("mbldtc_L${L}_theta_${theta}_${i1}.hdf5","cw")
+file=h5open("mbldtc_L${L}_theta_${thetarun}_${i1}.hdf5","cw")
 attrs=attributes(file)
 
 
