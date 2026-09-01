@@ -6,7 +6,7 @@ cd ~/local/
 
 
 L=12
-thetarun=0.3
+thetarun=0.1
 Itrnumb=500
 
 
