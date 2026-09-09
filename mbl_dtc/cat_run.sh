@@ -5,9 +5,9 @@
 cd ~/local/
 
 
-L=12
-thetarun=0.2
-Itrnumb=500
+L=8
+thetarun=0.1
+Itrnumb=4
 
 
 
@@ -18,7 +18,7 @@ do
 
 
 
-cat <<EOF >run_file_mbldtcL${L}_theta${thetarun}_${i1}.sh
+cat <<EOF >run_file_mbldtc_h0_L${L}_theta${thetarun}_${i1}.sh
 #!/bin/bash
      
   
@@ -50,7 +50,7 @@ module load julia/1.9.4
 
 #Job submission 
 
-cp \$BUDDY/mbldtc_L${L}_theta${thetarun}_${i1}.jl ./
+cp \$BUDDY/mbldtc_h0_L${L}_theta${thetarun}_${i1}.jl ./
 cp -rf \$BUDDY/BAF/mbl_dtc/.header ./
 
 # set number of threads
@@ -59,8 +59,8 @@ export OMP_NUM_THREADS=1
 export JULIA_NUM_THREADS=1
 
 # Do the real thing here
-julia mbldtc_L${L}_theta${thetarun}_${i1}.jl
-rm mbldtc_L${L}_theta${thetarun}_${i1}.jl
+julia mbldtc_h0_L${L}_theta${thetarun}_${i1}.jl
+rm mbldtc_h0_L${L}_theta${thetarun}_${i1}.jl
 
 
 
