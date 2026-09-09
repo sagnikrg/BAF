@@ -4,7 +4,7 @@ cd ~/local/
 
 L=8
 thetarun=0.1
-Itrnumb=1
+Itrnumb=4
 
 
 
