@@ -3,7 +3,7 @@
 cd ~/local/
 
 L=8
-thetarun=0.05
+thetarun=0.15
 Itrnumb=4
 
 
