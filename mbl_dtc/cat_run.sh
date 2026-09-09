@@ -4,9 +4,9 @@
 
 cd ~/local/
 
-L=8
-thetarun=0.35
-Itrnumb=4
+L=10
+thetarun=0.25
+Itrnumb=230
 
 
 
