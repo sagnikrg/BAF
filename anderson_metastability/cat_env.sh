@@ -27,7 +27,7 @@ Arguments		= 8
         
 Universe                = vanilla
 
-Transfer_executable     = 
+Transfer_executable     = True
 Transfer_input_files    = 
 Transfer_output_files   =
 
