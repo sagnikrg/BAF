@@ -2,9 +2,9 @@
 
 cd $BUDDY
 
-L=12
-thetarun=0.2
-Itrnumb=540
+L=8
+thetarun=0.05
+Itrnumb=4
 
 #cd $BUDDY
 
@@ -12,7 +12,7 @@ for (( i1=1; i1<=Itrnumb; i1++ ))
 do
 
 
-cat <<EOF >mbldtc_h0_L${L}_theta${thetarun}_${i1}.jl
+cat <<EOF >mbldtc_L${L}_theta${thetarun}_${i1}.jl
 
 
 #########################################################################
@@ -46,7 +46,7 @@ global entanglement_ee=fill(0.0,length(epsilonlist))
 
 
 
-file=h5open("mbldtc_h0_L${L}_theta_${thetarun}_${i1}.hdf5","cw")
+file=h5open("mbldtc_L${L}_theta_${thetarun}_${i1}.hdf5","cw")
 attrs=attributes(file)
 
 
@@ -83,7 +83,7 @@ attrs=attributes(file)
 
 	# Code
 
-	script_content = read("mbldtc_h0_L${L}_theta${thetarun}_${i1}.jl", String)
+	script_content = read("mbldtc_L${L}_theta${thetarun}_${i1}.jl", String)
 	attrs["[ENV] Code"] = script_content
 
 	# Modules
@@ -109,7 +109,7 @@ attrs=attributes(file)
 
 	# Parameters
 
-	attrs["[Parameters] h"] = "0.0"
+	attrs["[Parameters] h"] = "2pi"
     attrs["[Parameters] J"] = "pi"
 	attrs["[Parameters] L"] = L
 	attrs["[Parameters] theta"] = theta
@@ -147,7 +147,7 @@ for i in 1:length(epsilonlist)
 
 
 		
-        h=rand(L)*0 ;
+        h=rand(L)*2*pi; ;
         J=rand(L-1)*pi;
 
 
