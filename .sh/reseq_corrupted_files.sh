@@ -3,14 +3,14 @@ set -euo pipefail
 
 # -------- Config --------
 DATA_DIR="../../data"                           # where the files are
-BASE_PREFIX="mbldtc_L8_theta_0.0_"    # filename prefix
+BASE_PREFIX="mbldtc_L12_theta_0.35_"    # filename prefix
 EXT="hdf5"                             # extension
 START_ITR=1
 END_ITR=2000
 
 # Size threshold for corrupted (delete if smaller than this)
 # Requirement: "file size is not less than 24 MB" => keep >= 24 MB, delete < 24 MB
-THRESHOLD_MB=20
+THRESHOLD_KB=25924
 OUTPUT_FILE="small_files.txt"
 
 DRY_RUN=0
@@ -20,8 +20,8 @@ if [[ "${1:-}" == "--dry-run" || "${1:-}" == "-n" ]]; then
 fi
 
 # -------- Helpers --------
-bytes_in_mb=$((1024*1024))
-THRESHOLD_BYTES=$((THRESHOLD_MB * bytes_in_mb))
+bytes_in_kb=$((1024))
+THRESHOLD_BYTES=$((THRESHOLD_MB * bytes_in_kb))
 
 filesize_bytes() {
   # cross-platform stat (Linux/macOS)
