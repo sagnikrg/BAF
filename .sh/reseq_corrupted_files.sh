@@ -21,7 +21,7 @@ fi
 
 # -------- Helpers --------
 bytes_in_kb=$((1024))
-THRESHOLD_BYTES=$((THRESHOLD_MB * bytes_in_kb))
+THRESHOLD_BYTES=$((THRESHOLD_KB * bytes_in_kb))
 
 filesize_bytes() {
   # cross-platform stat (Linux/macOS)
