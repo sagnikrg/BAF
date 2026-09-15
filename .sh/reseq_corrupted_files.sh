@@ -3,13 +3,13 @@ set -euo pipefail
 
 # -------- Config --------
 DATA_DIR="../../data"                           # where the files are
-BASE_PREFIX="mbldtc_L12_theta_0.35_"    # filename prefix
+BASE_PREFIX="mbldtc_h0_L12_theta_0.1_"    # filename prefix
 EXT="hdf5"                             # extension
 START_ITR=1
 END_ITR=2000
 
 # Size threshold for corrupted (delete if smaller than this)
-# Requirement: "file size is not less than 24 MB" => keep >= 24 MB, delete < 24 MB
+# Requirement: "file size is not less than 24 KB" => keep >= 24 KB, delete < 24 KB
 THRESHOLD_KB=25924
 OUTPUT_FILE="small_files.txt"
 
@@ -39,7 +39,7 @@ file_path() {
 
 # -------- 1) Delete small/corrupted files and log their indices --------
 : > "$OUTPUT_FILE"
-echo "Scanning ${START_ITR}..${END_ITR} and deleting files < ${THRESHOLD_KB} MB..."
+echo "Scanning ${START_ITR}..${END_ITR} and deleting files < ${THRESHOLD_KB} KB..."
 
 for ((itr=START_ITR; itr<=END_ITR; itr++)); do
   f="$(file_path "$itr")"
@@ -49,9 +49,9 @@ for ((itr=START_ITR; itr<=END_ITR; itr++)); do
   if (( sz < THRESHOLD_BYTES )); then
     echo "$itr" >> "$OUTPUT_FILE"
     if (( DRY_RUN )); then
-      echo "[DRY-RUN] Would delete: $f (size: $((sz/bytes_in_kb)) MB)"
+      echo "[DRY-RUN] Would delete: $f (size: $((sz/bytes_in_kb)) KB)"
     else
-      echo "Deleting: $f (size: $((sz/bytes_in_kb)) MB)"
+      echo "Deleting: $f (size: $((sz/bytes_in_kb)) KB)"
       rm -f -- "$f"
     fi
   fi
