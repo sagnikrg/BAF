@@ -39,7 +39,7 @@ file_path() {
 
 # -------- 1) Delete small/corrupted files and log their indices --------
 : > "$OUTPUT_FILE"
-echo "Scanning ${START_ITR}..${END_ITR} and deleting files < ${THRESHOLD_MB} MB..."
+echo "Scanning ${START_ITR}..${END_ITR} and deleting files < ${THRESHOLD_KB} MB..."
 
 for ((itr=START_ITR; itr<=END_ITR; itr++)); do
   f="$(file_path "$itr")"
