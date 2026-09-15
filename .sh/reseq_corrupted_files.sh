@@ -49,9 +49,9 @@ for ((itr=START_ITR; itr<=END_ITR; itr++)); do
   if (( sz < THRESHOLD_BYTES )); then
     echo "$itr" >> "$OUTPUT_FILE"
     if (( DRY_RUN )); then
-      echo "[DRY-RUN] Would delete: $f (size: $((sz/bytes_in_mb)) MB)"
+      echo "[DRY-RUN] Would delete: $f (size: $((sz/bytes_in_kb)) MB)"
     else
-      echo "Deleting: $f (size: $((sz/bytes_in_mb)) MB)"
+      echo "Deleting: $f (size: $((sz/bytes_in_kb)) MB)"
       rm -f -- "$f"
     fi
   fi
