@@ -16,10 +16,9 @@ function finite_size_eigstat(LList, WList, quantity, cmap)
 
     fig = Figure(resolution = (fig_width, fig_height))
     ax = Axis(fig[1, 1])
-
- 
-    #xlims!(ax, (WList[1], WList[end]))
-    #ylims!(ax, (1e-3, 1e0))
+    
+    ax.xreversed = true
+    xlims!(ax, (WList[1], WList[end]))
     # define a consistent color palette
     pal = cgrad(cmap, 2 * length(LList), categorical = true)
 
@@ -32,8 +31,8 @@ function finite_size_eigstat(LList, WList, quantity, cmap)
                color = col, linewidth = 3, label = "L=$(L)")
     end
 
-    fig[1,2]=axislegend(ax)
-    return ax, fig
+    axislegend(ax)
+    return fig
 end
 
 
@@ -55,7 +54,7 @@ function finite_size_eigstat(LList, WList, quantity, lower, upper, cmap)
     fig = Figure(resolution = (fig_width, fig_height))
     ax = Axis(fig[1, 1])
 
- 
+    ax.xreversed = true
     xlims!(ax, (WList[1], WList[end]))
     #ylims!(ax, (1e-3, 1e0))
     # define a consistent color palette
@@ -77,7 +76,7 @@ function finite_size_eigstat(LList, WList, quantity, lower, upper, cmap)
     end
 
     axislegend(ax)
-    return ax, fig
+    return fig
 end
 
 
@@ -97,7 +96,7 @@ function finite_size_eigstat(LList, WList, quantity, lower_1, upper_1, lower_2, 
     ax = Axis(fig[1, 1], hidedecorations=:all)
 
    
-
+    #ax.xreversed = true
     xlims!(ax, (WList[1], WList[end]))
     ylims!(ax, )
     # define a consistent color palette
