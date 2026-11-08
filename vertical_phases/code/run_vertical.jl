@@ -51,7 +51,7 @@ function run_block(outdir, L, g, r0, r1, thetas)
             h5open(fname, "cw") do f
                 haskey(f, key) && delete_object(f, key)
                 grp = create_group(f, key)
-                for k in (:s1, :s2, :sl, :c1, :m2, :l2, :c2, :hd, :hlog)
+                for k in (:s1, :s2, :sl, :c1, :hd, :hlog)     # the 2D maps of |V| (m2, l2, c2) are not stored, flat
                     grp[String(k)] = getfield(a, k)
                 end
                 at = HDF5.attributes(grp)

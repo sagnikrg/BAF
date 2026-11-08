@@ -2,17 +2,18 @@
 #   realisations r0..r1 of (L, g) split into jobs of `block` realisations each
 #   thetas comma separated, default the 13 of run_vertical.jl (0 .. 1, fine below 0.35)
 # Timing on one laptop core: L=10 ~1.6 s, L=12 ~110 s per diagonalisation, 14 per realisation
+# (L=12 ~26 min per realisation, a job of 2 ~1 h; L=10 jobs of 100 ~40 min; L=8 jobs of 1000 ~15 min)
 #
-# A: g=0.5 fine theta grid, L=8 500, L=10 300, L=12 100 realisations
-8 0.5 1 500 250 1 2 4
-10 0.5 1 300 50 1 2 4
-12 0.5 1 100 1 1 6 4
-# B: g=0.25 and 0.75, L=8 200, L=10 200, L=12 50
-8 0.25 1 200 200 1 2 4
-10 0.25 1 200 50 1 2 4
-12 0.25 1 50 1 1 6 4
-8 0.75 1 200 200 1 2 4
-10 0.75 1 200 50 1 2 4
-12 0.75 1 50 1 1 6 4
-# C (optional, uncomment): L=14, g=0.5, 10 realisations on 7 thetas, 8 threads, ~4 GB per matrix
+# A: g=0.5 fine theta grid, L=8 5000, L=10 2000, L=12 1000 realisations
+8 0.5 1 5000 1000 1 2 4
+10 0.5 1 2000 100 1 2 4
+12 0.5 1 1000 2 1 6 6
+# B: g=0.25 and 0.75, L=8 2000, L=10 1000, L=12 500
+8 0.25 1 2000 1000 1 2 4
+10 0.25 1 1000 100 1 2 4
+12 0.25 1 500 2 1 6 6
+8 0.75 1 2000 1000 1 2 4
+10 0.75 1 1000 100 1 2 4
+12 0.75 1 500 2 1 6 6
+# C (held for later): L=14, g=0.5, 10 realisations on 7 thetas, 8 threads, ~4 GB per matrix
 #14 0.5 1 10 1 8 48 24 0.0,0.05,0.1,0.2,0.35,0.5,1.0
