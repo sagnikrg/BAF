@@ -10,6 +10,11 @@ cat <<EOS >run_file_${name}.sh
 #!/bin/bash
 cd /jwd
 source /etc/profile
+
+# the julia depot of the mbl_dtc jobs (julia 1.9.4, HDF5 0.17.2), same as there
+cp \$BUDDY/BAF/mbl_dtc/.julia/julia-1.9.4-08-08-24.tar.gz ./
+tar -xf julia-1.9.4-08-08-24.tar.gz
+rm -f julia-1.9.4-08-08-24.tar.gz
 module load julia/1.9.4
 
 cp \$BUDDY/BAF/vertical_phases/code/*.jl ./
