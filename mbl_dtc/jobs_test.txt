@@ -1,0 +1,4 @@
+# small test before the full list: bash mbl_dtc/BAF.sh jobs_test.txt
+# L   theta  itr_per_job  njobs   memory_GB
+  8   0.3    2            1       2
+ 10   0.3    1            1       2

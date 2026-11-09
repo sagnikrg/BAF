@@ -1,58 +1,30 @@
 #!/bin/bash
+# creates one run_file_<tag>.sh per job in ~/local (jobs from jobs.txt, see common.sh)
 
-#creates job iteratively 
-
+source "$(cd "$(dirname "${BASH_SOURCE[0]}")" && pwd)/common.sh"
 cd ~/local/
 
-L=12
-thetarun=0.1
-Itrnumb=600
-
-
-
-
-
-
-for (( i1=1; i1<=Itrnumb; i1++ ))
-do
-
-
-
-
-
-cat <<EOF >run_file_mbldtc_h0_L${L}_theta${thetarun}_${i1}.sh
+make_run() {
+local L=$1 th=$2 itr=$3 i=$4 eps=$5 mem=$6 tag=$7
+cat <<EOF >run_file_${tag}.sh
 #!/bin/bash
-     
-  
-     
-# Goes to the job work direcrtory     
-            
-cd /jwd			  
+
+# Goes to the job work directory
+cd /jwd
 source /etc/profile
 
-
-
-#Copies, Extracts and removes the Julia tarball 
-            
+# Copies, extracts and removes the Julia tarball
 cp \$BUDDY/BAF/mbl_dtc/.julia/julia-1.9.4-08-08-24.tar.gz ./
-
-
-
 tar -xf julia-1.9.4-08-08-24.tar.gz
 rm -f julia-1.9.4-08-08-24.tar.gz
 
-lscpu --json | grep "Model name" | awk -F '"' '{print $8}' > model_name.txt
+lscpu --json | grep "Model name" | awk -F '"' '{print \$8}' > model_name.txt
 
-
-#Loads Julia
+# Loads Julia
 module load julia/1.9.4
 
-
-
-
-#Job submission 
-
-cp \$BUDDY/mbldtc_h0_L${L}_theta${thetarun}_${i1}.jl ./
+# the script and the header
+cp \$BUDDY/eigen_win.jl ./
 cp -rf \$BUDDY/BAF/mbl_dtc/.header ./
 
 # set number of threads
@@ -61,22 +33,15 @@ export OMP_NUM_THREADS=1
 export JULIA_NUM_THREADS=1
 
 # Do the real thing here
-julia mbldtc_h0_L${L}_theta${thetarun}_${i1}.jl
-rm mbldtc_h0_L${L}_theta${thetarun}_${i1}.jl
-
-
+julia eigen_win.jl ${L} ${th} ${itr} ${i} ${eps}
+rm eigen_win.jl
 
 # Clean up the working directory
-
-cp  *hdf5 /cephfs/user/sghosh/data/.
+mkdir -p /cephfs/user/sghosh/data/mbl_dtc
+cp *hdf5 /cephfs/user/sghosh/data/mbl_dtc/.
 rm -rf *
 EOF
+}
 
-
-
-
-
-done
-
-
-
+each_job make_run
+echo "cat_run: $(count_jobs) run files in ~/local"

@@ -1,64 +1,49 @@
 #!/bin/bash
+# creates one HTCondor job_file_<tag>.jdl per job in ~/local (jobs from jobs.txt, see common.sh)
 
-#creates job iteratively 
-
+source "$(cd "$(dirname "${BASH_SOURCE[0]}")" && pwd)/common.sh"
 cd ~/local/
+mkdir -p log
 
-
-L=12
-thetarun=0.1
-Itrnumb=600
-
-
-
-
-for (( i1=1; i1<=Itrnumb; i1++ ))
-do
-
-
-
-
-cat <<EOF >job_file_mbldtc_h0_L${L}_theta${thetarun}_${i1}.jdl
+make_jdl() {
+local L=$1 th=$2 itr=$3 i=$4 eps=$5 mem=$6 tag=$7
+cat <<EOF >job_file_${tag}.jdl
 
 #Job Script to be submitted using HTCondor
-        
-Executable              = run_file_mbldtc_h0_L${L}_theta${thetarun}_${i1}.sh
-JobBatchName            = mbldtc: L=${L}, theta=${thetarun}, Itr=${i1}                
-Environment             = ClusterId=\$(ClusterId);Process=\$(Process);SubHost=$ENV(SUBHOST);
-        
+
+Executable              = run_file_${tag}.sh
+JobBatchName            = mbldtc_win: L=${L}, theta=${th}
+Environment             = ClusterId=\$(ClusterId);Process=\$(Process);SubHost=(SUBHOST);
+
 Arguments		= 8
-        
+
 Universe                = vanilla
 
-Transfer_executable     = 
-Transfer_input_files    = 
+Transfer_executable     =
+Transfer_input_files    =
 Transfer_output_files   =
 
 
-Error                   = log/err.mbldtc_h0_L${L}_theta${thetarun}_${i1}
-Output                  = log/out.mbldtc_h0_L${L}_theta${thetarun}_${i1}
-Log                     = log/log.mbldtc_h0_L${L}_theta${thetarun}_${i1}
+Error                   = log/err.${tag}
+Output                  = log/out.${tag}
+Log                     = log/log.${tag}
 
-Request_memory          = 12  GB
+Request_memory          = ${mem}  GB
 Request_cpus            = 1
-        
+
 Request_disk            = 2 GB
 
 +CephFS_IO  = "low"
-        
-+MaxRuntimeHours	= 48
-        
-+ContainerOS            = "Debian11"
+
++MaxRuntimeHours	= 24
+
++ContainerOS            = "Debian12"
 
 # Submit job
-Queue 1        
-            
+Queue 1
+
 EOF
+}
 
-
-
-
-done
-
-
-
+each_job make_jdl
+echo "cat_env: $(count_jobs) jdl files in ~/local"

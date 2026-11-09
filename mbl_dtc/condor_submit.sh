@@ -1,19 +1,11 @@
 #!/bin/bash
+# submits every job of jobs.txt (see common.sh)
 
+source "$(cd "$(dirname "${BASH_SOURCE[0]}")" && pwd)/common.sh"
 cd ~/local/
 
-L=12
-thetarun=0.1
-Itrnumb=600
+submit() { condor_submit "job_file_$7.jdl" > /dev/null || echo "FAILED: $7" >&2; }
 
-
-
-
-
-
-for (( i1=1; i1<=Itrnumb; i1++ ))
-do
-
- condor_submit job_file_mbldtc_h0_L${L}_theta${thetarun}_${i1}.jdl
-
-done
+echo "submitting $(count_jobs) jobs ..."
+each_job submit
+echo "condor_submit: done"
