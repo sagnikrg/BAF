@@ -36,7 +36,7 @@ Request_disk            = 2 GB
 
 +MaxRuntimeHours        = ${hours}
 
-+ContainerOS            = "Debian11"
++ContainerOS            = "Debian12"
 
 # Submit job
 Queue 1
