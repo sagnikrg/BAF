@@ -2,6 +2,8 @@
 
 Figure numbers from the full draft of 2026-11-08. Random h, the noisy circuit of the thesis. Code: sff/code/symmetry_breaking (sb.jl exact diagonalisation of U_F, open and periodic chains; tm.jl short time transfer matrix). Costs are scaled from laptop timings, single thread: diagonalisation without vectors 2.7 s (L=10) and 106 s (L=12), with vectors and order parameters about 165 s (L=12), L=14 extrapolated at about 1.3 h. Output is small (K(t) arrays), goes to sff/rawdata/sb, never to E:.
 
+**Priority (Tony 2026-11-09):** Chapter 7 is practically finished; these wait until E.D.I.T.H. and Vision are through the cluster queue. Order when it comes: J8 (t=4,5 transfer matrix), J3a with a robust estimator, J6, J5, J7, then J3b/J4.
+
 Quick ones: J1, J2 (laptop); J3a, J5, J6, J7 (cluster, each at most about 200 core-h).
 
 ### J0: laptop night of 2026-11-08/09, four lanes (run.sb.jl laneA-D)
