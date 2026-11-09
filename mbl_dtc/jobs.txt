@@ -4,19 +4,24 @@
 # Files: mbldtc_win_L<L>_theta_<theta>_<job>.hdf5, a self contained dataset (V1 window points, option B).
 #
 # L   theta  itr_per_job  njobs   memory_GB
-  8   0.0    250          16      2
-  8   0.05   250          16      2
-  8   0.1    250          16      2
-  8   0.15   250          16      2
-  8   0.2    250          16      2
-  8   0.25   250          16      2
-  8   0.3    250          16      2
- 10   0.0    10           400     2
- 10   0.05   10           400     2
- 10   0.1    10           400     2
- 10   0.15   10           400     2
- 10   0.2    10           400     2
- 10   0.25   10           400     2
- 10   0.3    10           400     2
-# L=12: realisation count still to be decided with Tony (1 itr per job, 12 GB)
-# 12  0.0    1            ?       12
+# L=8, 10: submitted 2026-11-09, commented out so a new BAF.sh run does not submit them twice
+#  8   0.0    250          16      2
+#  8   0.05   250          16      2
+#  8   0.1    250          16      2
+#  8   0.15   250          16      2
+#  8   0.2    250          16      2
+#  8   0.25   250          16      2
+#  8   0.3    250          16      2
+# 10   0.0    10           400     2
+# 10   0.05   10           400     2
+# 10   0.1    10           400     2
+# 10   0.15   10           400     2
+# 10   0.2    10           400     2
+# 10   0.25   10           400     2
+# 10   0.3    10           400     2
+# L=12, first batch (Tony 2026-11-09): only the older theta 0, 0.1, 0.2, 0.3; 1000 / 500 realisations, 1 per job.
+# More realisations and theta 0.05, 0.15, 0.25 later, while the drafts are edited.
+ 12   0.0    1            1000    4
+ 12   0.1    1            500     4
+ 12   0.2    1            500     4
+ 12   0.3    1            500     4
