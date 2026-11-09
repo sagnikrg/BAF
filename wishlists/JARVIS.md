@@ -33,6 +33,7 @@ Quick ones: J1, J2 (laptop); J3a, J5, J6, J7 (cluster, each at most about 200 co
 - **Cost:** J3a (L=8, 10): about 230 core-h, 500 realisations per job, about 45 min each, about 300 jobs. J3b (L=12): about 2800 core-h, 100 realisations per job, about 6 h each, about 480 jobs.
 - **For:** a new figure `fig:gc_lambda_count` (the sharpest test of Garratt and Chalker): lambda(0,t) from the L scaling of K_open, and K_periodic/lambda^L counting the leading eigenvalues, which should be 1 (paramagnet), 2 at even t (time crystal) and t (scrambling). With 300 realisations at L=10 it is pure noise today.
 - **Notes:** J3a is quick and already shows whether J3b is needed at full size
+- **Laptop test 2026-11-09:** 12000 realisations at L=8 and 1500 at L=10 (PM example) are still too noisy for the ratio estimator, since K is heavy tailed per realisation. Before running J3 at full size: switch to an estimator robust to the tails (fit of ln K over L=8,10,12 with bootstrap, or the median), and note that the t=2,3 transfer matrix (J2, J8) already gives lambda(nu,t) exactly at short times.
 
 ### J4: the same at L = 14
 - **Status:** planned, 2026-11-08
