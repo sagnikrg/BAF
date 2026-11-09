@@ -5,10 +5,10 @@ Figure numbers from the full draft of 2026-11-08. Random h, the noisy circuit of
 Quick ones: J1, J2 (laptop); J3a, J5, J6, J7 (cluster, each at most about 200 core-h).
 
 ### J0: laptop night of 2026-11-08/09, four lanes (run.sb.jl laneA-D)
-- **Status:** final for A, B (sff/rawdata/sb/sb_L*_lane*.hdf5), C and D still running on 2026-11-09 morning
+- **Status:** final (sff/rawdata/sb/sb_L*_lane*.hdf5), all four lanes; D finished 2026-11-09 14:29 after a restart (the pause killed it). L=12 with 15 realisations is too noisy for lines (heavy tailed K), shown only as markers in `fig:gc_o2_scan`
 - **Where:** laptop (job queue, 4 x 1 core, Tony's exception for that night)
 - **Parameters:** A: ergodic references theta 0.5, 0.75 at g=0.5, L=8 (2000) and L=10 (300), full + fields; 10000 more L=8 K at the 3 examples. B: L=10 g scan theta=0 with vectors, 300 each. C: 700 more L=10 field realisations at the 3 examples, 1200 more L=10 K at the PM example. D: L=12 with vectors at the 3 examples, 15 each (L=12 runs at ~575 s per realisation with four lanes).
-- **For:** Figs. `fig:gc_o2_profiles`, `fig:gc_o2_time`, `fig:gc_kb` (all updated), the planned `fig:gc_lambda_count`
+- **For:** Figs. `fig:gc_o2_profiles`, `fig:gc_o2_scan` (replaces `fig:gc_o2_time`), `fig:gc_kb`; lambda/count stays in the Outlook (`sec:gc_outlook`)
 
 ### J1: restart of sb_ch7_night (run.sb.jl), the last L=12 point
 - **Status:** dropped 2026-11-08 (40 realisations K only are too few to matter; the point goes into J3b on the cluster)
