@@ -4,8 +4,14 @@ Figure numbers from the full draft of 2026-11-08. Random h, the noisy circuit of
 
 Quick ones: J1, J2 (laptop); J3a, J5, J6, J7 (cluster, each at most about 200 core-h).
 
+### J0: laptop night of 2026-11-08/09, four lanes (run.sb.jl laneA-D)
+- **Status:** final for A, B (sff/rawdata/sb/sb_L*_lane*.hdf5), C and D still running on 2026-11-09 morning
+- **Where:** laptop (job queue, 4 x 1 core, Tony's exception for that night)
+- **Parameters:** A: ergodic references theta 0.5, 0.75 at g=0.5, L=8 (2000) and L=10 (300), full + fields; 10000 more L=8 K at the 3 examples. B: L=10 g scan theta=0 with vectors, 300 each. C: 700 more L=10 field realisations at the 3 examples, 1200 more L=10 K at the PM example. D: L=12 with vectors at the 3 examples, 15 each (L=12 runs at ~575 s per realisation with four lanes).
+- **For:** Figs. `fig:gc_o2_profiles`, `fig:gc_o2_time`, `fig:gc_kb` (all updated), the planned `fig:gc_lambda_count`
+
 ### J1: restart of sb_ch7_night (run.sb.jl), the last L=12 point
-- **Status:** approved (night of 2026-11-07/08), interrupted by the pause at 16:51 on 2026-11-08; restarts when Tony is home. Skips finished tasks.
+- **Status:** dropped 2026-11-08 (40 realisations K only are too few to matter; the point goes into J3b on the cluster)
 - **Where:** laptop (job queue, 1 core)
 - **Parameters:** L=12, theta=0, g=0.95, open and periodic chain, 40 realisations (K only)
 - **Cost:** about 2 core-h, one job
@@ -13,7 +19,7 @@ Quick ones: J1, J2 (laptop); J3a, J5, J6, J7 (cluster, each at most about 200 co
 - **Notes:** quick; on its own too few realisations for the figure, J3 replaces it
 
 ### J2: transfer matrix at t=3 (tm_run.jl 3 200)
-- **Status:** approved (planned after J1), 2026-11-08
+- **Status:** final (sff/data/sb.tm.hdf5, t3), 2026-11-09; in Fig. 7.1 `fig:gc_tm_spectra`
 - **Where:** laptop (job queue, 1 core)
 - **Parameters:** t=3, theta 0 and 0.35, g 0:0.05:1 (42 points), 200 noise samples; exact averages over J and h
 - **Cost:** about 1 core-h, one job
@@ -53,7 +59,7 @@ Quick ones: J1, J2 (laptop); J3a, J5, J6, J7 (cluster, each at most about 200 co
 - **Notes:** quick
 
 ### J7: a cleaner ergodic reference point
-- **Status:** planned, 2026-11-08
+- **Status:** final on the laptop for L=8, 10 (J0 lane A, theta=0.75 g=0.5 is clean: K_b/K = 0.53, 0.34, 0.25); L=12 part still planned, 2026-11-09
 - **Where:** cluster (BAF)
 - **Parameters:** g=0.5, theta = 0.5 and 0.75, L=10 (1000 realisations) and L=12 (300), order parameters and fields of period b
 - **Cost:** about 100 core-h, about 60 jobs
