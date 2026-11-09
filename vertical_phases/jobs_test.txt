@@ -1,0 +1,3 @@
+# L g r0 r1 block cpus memGB hours [thetas]
+# small test before the full run: two jobs of a few minutes, 3 thetas
+8 0.5 1 4 2 1 2 1 0.0,0.1,1.0
