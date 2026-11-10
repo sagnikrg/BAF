@@ -1,0 +1,14 @@
+# V2 (wishlist Vision.md): L=14, 16 with normal POLFED, two antipodal bands per realisation and epsilon (polfed_bands.jl).
+# NOT READY: the epsilon lists eps/L14_theta_<theta>.txt and eps/L16_theta_<theta>.txt come from the crossings of the
+# full L=8, 10, 12 data (V1 + V1.2), and the tarball (TARBALL in common.sh) from Tony. Until then the lines stay commented.
+# Approved counts (Tony 2026-11-10): L=14 x500, L=16 x100, theta 0, 0.1, 0.2, 0.3, ~20 epsilon per theta.
+# L=14: one job = one realisation over all epsilon of a theta; L=16: one realisation in 2 parts of ~10 epsilon.
+# L   theta  realisations  parts  memory_GB  hours  from  set
+# 14   0.0    500           1      2          24
+# 14   0.1    500           1      2          24
+# 14   0.2    500           1      2          24
+# 14   0.3    500           1      2          24
+# 16   0.0    100           2      4          24
+# 16   0.1    100           2      4          24
+# 16   0.2    100           2      4          24
+# 16   0.3    100           2      4          24

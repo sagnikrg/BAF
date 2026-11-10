@@ -16,7 +16,7 @@ Figure numbers from the full draft of 2026-11-08. All random h, the noisy circui
 - **Cost:** ~18k core-h: windows ~6k (theta 0 ~3.5k), grid ~12k (1500 jobs x 41 pts x ~700 s, ~8 h per job, worst ~16 h)
 
 ### V2: L = 14, 16 with POLFED, two antipodal bands (kind 2)
-- **Status:** approved 2026-11-10 (Tony): old theta 0, 0.1, 0.2, 0.3 first, ~20 eps per theta, L=14 x500, L=16 x100 realisations; scripting in BAF/V2
+- **Status:** approved 2026-11-10 (Tony): old theta 0, 0.1, 0.2, 0.3 first, ~20 eps per theta, L=14 x500, L=16 x100 realisations. Scripted in BAF/mbl_dtc_polfed (polfed_bands.jl, two bands at phi=0, pi, nev=64; checked against full diagonalisation at L=8, exact to 1e-14, inner half of each band complete). Waits for: the tarball (julia 1.11.7, Tony), the eps lists from the full L=8-12 data, then jobs_test.txt on BAF
 - **Where:** cluster (BAF)
 - **Parameters:** L=14, 16 (L=18 postponed), one non-uniform epsilon list per theta, theta 0-0.3; fewer realisations than L=12; two bands per realisation (around E and E+pi); same J, h per realisation across epsilon from a disorder table made up front; jobs split over epsilon.
 - **Cost:** ~14k core-h (L=14 ~4.7k at ~7-8 min per realisation and eps, L=16 ~9.3k at ~70 min, BAF = 2x laptop); L=14 jobs = 1 realisation x all eps of a theta (~2.5 h), L=16 jobs = 1 realisation x ~10 eps (~12 h).
