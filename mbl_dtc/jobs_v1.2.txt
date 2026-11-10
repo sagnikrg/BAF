@@ -1,9 +1,19 @@
 # V1.2 (Tony 2026-11-10): more L=12 realisations on the window points of the old theta,
 # +1000 for theta 0 and +500 for 0.1, 0.2, 0.3. Job numbers continue after V1 (1-1000 / 1-500),
 # so file names, tags and logs do not collide:  bash mbl_dtc/BAF.sh jobs_v1.2.txt
-# with V1: theta 0 -> 2000, theta 0.1/0.2/0.3 -> 1000 realisations per window point
+# with V1: theta 0 -> 2000, theta 0.1/0.2/0.3 -> 1000 realisations per window point (set win)
 # L   theta  itr_per_job  njobs   memory_GB  from
  12   0.0    1            2000    4          1001
  12   0.1    1            1000    4          501
  12   0.2    1            1000    4          501
  12   0.3    1            1000    4          501
+# the old 0.025 grid (41 points, eps/grid.txt) at L=12, +500 for the theta that have ~500 there today,
+# job numbers 501-1000 after the 500 of the old runs; files mbldtc_grid_L12_theta_<theta>_<job>.hdf5
+# (theta 0 stays at its 4066, theta 0.05 at its 1996)
+# L   theta  itr_per_job  njobs   memory_GB  from  set
+ 12   0.1    1            1000    4          501   grid
+ 12   0.15   1            1000    4          501   grid
+ 12   0.2    1            1000    4          501   grid
+ 12   0.25   1            1000    4          501   grid
+ 12   0.3    1            1000    4          501   grid
+ 12   0.35   1            1000    4          501   grid

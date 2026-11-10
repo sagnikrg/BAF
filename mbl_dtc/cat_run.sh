@@ -5,7 +5,7 @@ source "$(cd "$(dirname "${BASH_SOURCE[0]}")" && pwd)/common.sh"
 cd ~/local/
 
 make_run() {
-local L=$1 th=$2 itr=$3 i=$4 eps=$5 mem=$6 tag=$7
+local L=$1 th=$2 itr=$3 i=$4 eps=$5 mem=$6 tag=$7 set=$8
 cat <<EOF >run_file_${tag}.sh
 #!/bin/bash
 
@@ -33,7 +33,7 @@ export OMP_NUM_THREADS=1
 export JULIA_NUM_THREADS=1
 
 # Do the real thing here
-julia eigen_win.jl ${L} ${th} ${itr} ${i} ${eps} > julia_${tag}.log 2>&1
+julia eigen_win.jl ${L} ${th} ${itr} ${i} ${eps} ${set} > julia_${tag}.log 2>&1
 echo "julia exit code \$?" >> julia_${tag}.log
 rm eigen_win.jl
 

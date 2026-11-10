@@ -10,10 +10,10 @@ Figure numbers from the full draft of 2026-11-08. All random h, the noisy circui
 - **For:** the crossings and projected boundaries of Fig. 2.4 `fig:lsr_phase_portrait`, Fig. 3.5 `fig:phase_portraits` and Fig. 3.24 `fig:phase_portraits_gap`; the crossing errors are set by realisations (sigma_c 0.013-0.05), so this sharpens all three.
 - **Notes:** the closing points at theta >= 0.1 rest on ~500 realisations at L=12 today; those rows first.
 
-### V1.2: more L=12 realisations on the V1 window points (old theta)
-- **Status:** scripted 2026-11-10 (Tony), mbl_dtc/jobs_v1.2.txt, 2500 jobs
-- **Parameters:** L=12, +1000 at theta 0 (jobs 1001-2000), +500 at 0.1, 0.2, 0.3 (jobs 501-1000), same eps lists as V1; with V1: 2000 / 1000 per window point
-- **Cost:** ~6k core-h (theta 0 ~3.5k: 1000 x 18 pts x ~700 s; 0.1 ~1.8k, 0.2 ~1k, 0.3 ~0.4k)
+### V1.2: more L=12 realisations, window points and the old grid
+- **Status:** scripted 2026-11-10 (Tony), mbl_dtc/jobs_v1.2.txt, 5500 jobs; local test passed (julia 1.9.4, both sets)
+- **Parameters:** L=12, window points (set win): +1000 at theta 0 (jobs 1001-2000), +500 at 0.1, 0.2, 0.3 (jobs 501-1000) -> 2000 / 1000 per point. Old 0.025 grid (set grid, 41 points, eps/grid.txt): +500 at theta 0.1, 0.15, 0.2, 0.25, 0.3, 0.35 (jobs 501-1000) -> ~1000 each; theta 0 stays at 4066, 0.05 at 1996.
+- **Cost:** ~30k core-h: windows ~6k (theta 0 ~3.5k), grid ~24k (3000 jobs x 41 pts x ~700 s, ~8 h per job, worst ~16 h)
 
 ### V2: L = 14, 16 with POLFED, two antipodal bands (kind 2)
 - **Status:** approved 2026-11-10 (Tony): old theta 0, 0.1, 0.2, 0.3 first, ~20 eps per theta, L=14 x500, L=16 x100 realisations; scripting in BAF/V2

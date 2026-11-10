@@ -1,7 +1,8 @@
-# small test before the full list: bash mbl_dtc/BAF.sh jobs_test.txt
-# one epsilon scan of 1 realisation each, on the 4 epsilon of theta = 0.3 (0.0125, 0.0375, 0.9625, 0.9875)
-# expected: mbldtc_win_L8_theta_0.3_1.hdf5 and mbldtc_win_L10_theta_0.3_1.hdf5 in data/mbl_dtc,
-#           julia_<tag>.log ending in "julia exit code 0" in data/mbl_dtc/logs
-# L   theta  itr_per_job  njobs   memory_GB
+# small test before a full list: bash mbl_dtc/BAF.sh jobs_test.txt
+# win: one epsilon scan of 1 realisation on the 4 epsilon of theta = 0.3; grid: the 41 points of eps/grid.txt at L=8
+# expected in data/mbl_dtc: mbldtc_win_L8_theta_0.3_1.hdf5, mbldtc_win_L10_theta_0.3_1.hdf5, mbldtc_grid_L8_theta_0.1_1.hdf5,
+#           and julia_<tag>.log ending in "julia exit code 0" in data/mbl_dtc/logs
+# L   theta  itr_per_job  njobs   memory_GB  from  set
   8   0.3    1            1       2
  10   0.3    1            1       2
+  8   0.1    1            1       2          1     grid

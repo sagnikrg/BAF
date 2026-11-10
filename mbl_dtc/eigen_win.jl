@@ -3,7 +3,9 @@
 # window points of the epsilon scan (thesis wishlist V1, option B)
 #
 #   julia eigen_win.jl L theta itr job eps
-#     eps: comma separated epsilon list (epsilon = 1-g), from eps/theta_<theta>.txt
+#   julia eigen_win.jl L theta itr job eps [set]
+#     eps: comma separated epsilon list (epsilon = 1-g), from eps/theta_<theta>.txt or eps/grid.txt
+#     set: win (default, the window points) or grid (the old 0.025 grid), only names the file
 #
 # Same physics and file layout as the production random h runs of 2026-09
 # (mbldtc_L8_theta_*.hdf5 on E:), with two changes:
@@ -57,13 +59,14 @@ Itrnumb=parse(Int, ARGS[3]);
 job=parse(Int, ARGS[4]);
 epsilonstr=split(ARGS[5], ",");
 epsilonlist=parse.(Float64, epsilonstr);
+set= length(ARGS) >= 6 ? ARGS[6] : "win";
 Ntot=2^L;
 
 global levelspacing=fill(0.0,length(epsilonlist))
 global entanglement_ee=fill(0.0,length(epsilonlist))
 
 
-file=h5open("mbldtc_win_L$(L)_theta_$(thetastr)_$(job).hdf5","cw")
+file=h5open("mbldtc_$(set)_L$(L)_theta_$(thetastr)_$(job).hdf5","cw")
 attrs=attributes(file)
 
 
@@ -79,7 +82,7 @@ attrs=attributes(file)
 	attrs["[ENV] Code"] = read(@__FILE__, String)
 	attrs["[ENV] Modules"] = string(Pkg.installed())
 	attrs["[ENV] Julia Environment"] = "julia-1.9.4-08-08-24.tar.gz"
-	attrs["METADATA"] = "Window points of the epsilon scan (thesis wishlist V1) of the MBL-DTC Unitary for L=$(L) and theta=$(theta), random h. The data contains the eigenvalues and antipodal gaps for each realisation, disorder averaged level spacing ratio, disorder averaged eigenstate entanglement entropy and disorder averaged histograms of the diagonal, pi-diagonal and various offdiagonal elements of the Lazarides diagram."
+	attrs["METADATA"] = (set == "grid" ? "Old 0.025 grid of the epsilon scan, more realisations (thesis wishlist V1.2)" : "Window points of the epsilon scan (thesis wishlist V1)")*" of the MBL-DTC Unitary for L=$(L) and theta=$(theta), random h. The data contains the eigenvalues and antipodal gaps for each realisation, disorder averaged level spacing ratio, disorder averaged eigenstate entanglement entropy and disorder averaged histograms of the diagonal, pi-diagonal and various offdiagonal elements of the Lazarides diagram."
 	attrs["Author"] = "Sagnik Ghosh"
 	attrs["Cluster"] = "BAF"
 	attrs["[Parameters] h"] = "2pi"
