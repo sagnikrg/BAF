@@ -59,7 +59,7 @@ Figure numbers from the full Bonn draft of 2026-11-08 (14:35). Random h, the noi
 - **Notes:** quick, needs a jobs list with just those ranges
 
 ### E6: check of the G_res ceiling with a Haar random drive (QUICK)
-- **Status:** queued on the laptop (vp_haar, vp_haar_A-C, 2026-11-10): L=8 200, L=10 100, L=12 200 in four lanes, out vertical_phases/plotdata/haar_check*.hdf5
+- **Status:** final (vertical_phases/plotdata/haar_check*.hdf5), 2026-11-10: L=8/10/12 with 200/100/36; estimator exact for a Haar drive, the overshoot is the circuit's peak at dphi->0; in Ch4 (ad79ef2)
 - **Where:** laptop (job queue)
 - **Parameters:** U_0 of the real circuit at g=0.5, V replaced by a Haar random unitary; L=8, 10, 12 with 200, 100, 20 realisations; same estimator (window |dphi|<2pi/96)
 - **Cost:** ~1 core-h
