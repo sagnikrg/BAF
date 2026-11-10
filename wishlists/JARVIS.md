@@ -4,7 +4,7 @@ Figure numbers from the full draft of 2026-11-08. Random h, the noisy circuit of
 
 **Priority (Tony 2026-11-09):** Chapter 7 is practically finished; these wait until E.D.I.T.H. and Vision are through the cluster queue. Order when it comes: J8 (t=4,5 transfer matrix), J3a with a robust estimator, J6, J5, J7, then J3b/J4.
 
-**Scripted 2026-11-10:** J3a, J3b, J4, J5, J6, J7 in `BAF/symmetry_breaking/jobs.txt` (2109 jobs), test `jobs_test.txt` (3 jobs, ~2 min), returned files go to `E:/sb` (test in `E:/sb/baf_test`), checked with `sff/code/symmetry_breaking/baf_check.jl`.
+**Scripted 2026-11-10:** J3a, J3b, J4, J5, J6, J7 in `BAF/symmetry_breaking/jobs.txt` (2109 jobs), test `jobs_test.txt` (3 jobs, ~2 min), returned files go to `E:/symmetry_breaking` (test in `E:/symmetry_breaking/baf_test`), checked with `sff/code/symmetry_breaking/baf_check.jl`.
 
 Quick ones: J1, J2 (laptop); J3a, J5, J6, J7 (cluster, each at most about 200 core-h).
 
