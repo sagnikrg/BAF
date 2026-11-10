@@ -11,9 +11,9 @@ Figure numbers from the full draft of 2026-11-08. All random h, the noisy circui
 - **Notes:** the closing points at theta >= 0.1 rest on ~500 realisations at L=12 today; those rows first.
 
 ### V1.2: more L=12 realisations, window points and the old grid
-- **Status:** scripted 2026-11-10 (Tony), mbl_dtc/jobs_v1.2.txt, 5500 jobs; local test passed (julia 1.9.4, both sets)
-- **Parameters:** L=12, window points (set win): +1000 at theta 0 (jobs 1001-2000), +500 at 0.1, 0.2, 0.3 (jobs 501-1000) -> 2000 / 1000 per point. Old 0.025 grid (set grid, 41 points, eps/grid.txt): +500 at theta 0.1, 0.15, 0.2, 0.25, 0.3, 0.35 (jobs 501-1000) -> ~1000 each; theta 0 stays at 4066, 0.05 at 1996.
-- **Cost:** ~30k core-h: windows ~6k (theta 0 ~3.5k), grid ~24k (3000 jobs x 41 pts x ~700 s, ~8 h per job, worst ~16 h)
+- **Status:** scripted 2026-11-10 (Tony), mbl_dtc/jobs_v1.2.txt, 4000 jobs; local test passed (julia 1.9.4, both sets)
+- **Parameters:** L=12, window points (set win): +1000 at theta 0 (jobs 1001-2000), +500 at 0.1, 0.2, 0.3 (jobs 501-1000) -> 2000 / 1000 per point. Old 0.025 grid (set grid, 41 points, eps/grid.txt): +500 at theta 0.1, 0.2, 0.3 (jobs 501-1000) -> ~1000 each, matching their window points (no apples and oranges); theta 0 stays at 4066 on the grid, 2000 on the windows.
+- **Cost:** ~18k core-h: windows ~6k (theta 0 ~3.5k), grid ~12k (1500 jobs x 41 pts x ~700 s, ~8 h per job, worst ~16 h)
 
 ### V2: L = 14, 16 with POLFED, two antipodal bands (kind 2)
 - **Status:** approved 2026-11-10 (Tony): old theta 0, 0.1, 0.2, 0.3 first, ~20 eps per theta, L=14 x500, L=16 x100 realisations; scripting in BAF/V2

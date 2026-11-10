@@ -7,13 +7,10 @@
  12   0.1    1            1000    4          501
  12   0.2    1            1000    4          501
  12   0.3    1            1000    4          501
-# the old 0.025 grid (41 points, eps/grid.txt) at L=12, +500 for the theta that have ~500 there today,
+# the old 0.025 grid (41 points, eps/grid.txt) at L=12, +500 at theta 0.1, 0.2, 0.3 -> ~1000, as on their window points,
 # job numbers 501-1000 after the 500 of the old runs; files mbldtc_grid_L12_theta_<theta>_<job>.hdf5
 # (theta 0 stays at its 4066, theta 0.05 at its 1996)
 # L   theta  itr_per_job  njobs   memory_GB  from  set
  12   0.1    1            1000    4          501   grid
- 12   0.15   1            1000    4          501   grid
  12   0.2    1            1000    4          501   grid
- 12   0.25   1            1000    4          501   grid
  12   0.3    1            1000    4          501   grid
- 12   0.35   1            1000    4          501   grid
