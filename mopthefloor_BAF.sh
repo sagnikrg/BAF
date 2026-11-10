@@ -1,7 +1,7 @@
 #!/usr/bin/env bash
 #########
 # mopthefloor_BAF.sh: clean up the files the BAF scripts generated, once the queue is empty.
-# Run by hand on the cluster:   bash mopthefloor_BAF.sh          (lists, asks, then deletes)
+# Run by hand on the cluster:   bash mopthefloor_BAF.sh          (asks for a key phrase, lists, asks, then deletes)
 #                               bash mopthefloor_BAF.sh --logs   (also empties ~/local/log)
 # Deletes only generated files, never the scripts or anything tracked in git:
 #   ~/local/run_file_*.sh, ~/local/job_file_*.jdl
@@ -18,8 +18,17 @@ files=( ~/local/run_file_*.sh ~/local/job_file_*.jdl
         "$BUDDY"/mbldtc_L*.jl "$BUDDY"/eigen_win.jl "$BUDDY"/anderson_metastability_L*.jl
         "$BUDDY"/Ilattice_L_*.jl "$BUDDY"/opo_fp_*.jl )
 (( logs )) && files+=( ~/local/log/err.* ~/local/log/out.* ~/local/log/log.* )
+ex=(); for f in "${files[@]}"; do [[ -f "$f" ]] && ex+=( "$f" ); done   # eigen_win.jl is no glob: keep only what exists
+files=( ${ex[@]+"${ex[@]}"} )
 
-if (( ${#files[@]} == 0 )); then echo "Floor is already clean."; exit 0; fi
+# only the files of one run: their names carry its key phrase (e.g. sb, vertical, mbldtc); empty = all
+read -r -p "Key phrase of the run to mop (e.g. sb; empty = everything): " key
+if [[ -n "$key" ]]; then
+  keep=(); for f in "${files[@]}"; do [[ "$(basename "$f")" == *"$key"* ]] && keep+=( "$f" ); done
+  files=( ${keep[@]+"${keep[@]}"} )
+fi
+
+if (( ${#files[@]} == 0 )); then echo "Floor is already clean${key:+ for \"$key\"}."; exit 0; fi
 
 if command -v condor_q >/dev/null && [[ -n "$(condor_q -nobatch -format '%d\n' ClusterId 2>/dev/null)" ]]; then
   echo "WARNING: you still have jobs in the queue (condor_q); running jobs need their run_file and \$BUDDY/*.jl."
