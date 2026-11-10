@@ -10,3 +10,4 @@ run_file_*.sh
 julia_*.log
 *.out
 *.err
+jobs_missing.txt
