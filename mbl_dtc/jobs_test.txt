@@ -1,4 +1,7 @@
 # small test before the full list: bash mbl_dtc/BAF.sh jobs_test.txt
+# one epsilon scan of 1 realisation each, on the 4 epsilon of theta = 0.3 (0.0125, 0.0375, 0.9625, 0.9875)
+# expected: mbldtc_win_L8_theta_0.3_1.hdf5 and mbldtc_win_L10_theta_0.3_1.hdf5 in data/mbl_dtc,
+#           julia_<tag>.log ending in "julia exit code 0" in data/mbl_dtc/logs
 # L   theta  itr_per_job  njobs   memory_GB
-  8   0.3    2            1       2
+  8   0.3    1            1       2
  10   0.3    1            1       2

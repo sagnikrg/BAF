@@ -22,7 +22,33 @@ using StatsBase             #   For Statistics
 using HDF5                  #   For Saving Data
 
 
-include(".header/Header.jl")
+# The header is loaded without its plotting dependency: functions/histgram.jl has `using CairoMakie`
+# (back since the header syncs of 2026-10-29/11-05), and CairoMakie is not in the julia 1.9.4 depot of
+# the cluster. So `using CairoMakie` is dropped, and the pure plotting files (*_plots.jl, which use the
+# L"..." strings of Makie) are not included; the other plot functions are defined but never called here.
+function nomakie(ex)
+    if ex isa Expr && ex.head == :using && any(a -> a isa Expr && a.args == [:CairoMakie], ex.args)
+        return nothing
+    elseif ex isa Expr && ex.head == :call && ex.args[1] == :include && length(ex.args) == 2 &&
+           ex.args[2] isa String && endswith(ex.args[2], "_plots.jl")
+        return nothing
+    elseif ex isa Expr && ex.head == :call && ex.args[1] == :include && length(ex.args) == 2
+        return Expr(:call, :include, :nomakie, ex.args[2])
+    end
+    return ex
+end
+include(nomakie, ".header/Header.jl")
+
+# The two argument LazadiresDiagram of the production runs (header of 2026-08-31, commit 2ee4e53), from the
+# eigenpairs already computed; the header since the sync of 2026-10-29 only has LazadiresDiagram(U), which
+# would diagonalise U a second time. phase_ordered_eigvecs(EigA,Eigvec) is still in the header.
+function LazadiresDiagram(EigA, Eigvec)
+    EigvecNew=phase_ordered_eigvecs(EigA,Eigvec)[2];
+    localdim=length(eigvals(Z));
+    dim=convert(Int64,floor(log(size(EigvecNew)[1])/log(localdim)))
+    Xi=copy(kron(Z,kron_power(I(localdim),(dim-1))));
+    return real.(conj(transpose(EigvecNew))*Xi*EigvecNew)
+end
 
 L=parse(Int, ARGS[1]);
 thetastr=ARGS[2];
