@@ -78,3 +78,5 @@ Quick ones: J1, J2 (laptop); J3a, J5, J6, J7 (cluster, each at most about 200 co
 - **Cost:** not known until the code exists
 - **For:** Fig. 7.1 `fig:gc_tm_spectra`, more columns. Leading eigenvalues per sector of the infinite chain at t=4 and the odd t=5: the mod two of the time crystal in its cleanest form.
 - **Notes:** the strongest figure of the chapter if it works
+
+2026-11-10 first return: L8 complete (44/44); L10 109/300 files on E: (191 missing, no L10 job left running). Plan (Tony): wait until L12/L14 are in and Vision's queue is through, then `bash symmetry_breaking/missing.sh > symmetry_breaking/jobs_rerun.txt`, find out why they went missing, and rerun them.
