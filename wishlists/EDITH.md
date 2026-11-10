@@ -11,7 +11,7 @@ Figure numbers from the full Bonn draft of 2026-11-08 (14:35). Random h, the noi
 - **Notes:** old file layout, same seeds as E2/E3, never mix the two in one data folder
 
 ### E2a: g = 0.5, fine theta grid, L = 8 and 10 (QUICK)
-- **Status:** queued (submitted by Tony 2026-11-09 with `bash vertical_phases/BAF.sh`, jobs.txt of 165dae5, Debian12 in 47b8cab; test run jobs_test.txt passed)
+- **Status:** final (raw `E:/vertical_phases`, reduced `vertical_phases/plotdata/vertical_cluster.hdf5`), 2026-11-10; 13 of the L=10 jobs missing (L=10: 600/1400/700 of 1000/2000/1000 at g=0.25/0.5/0.75), enough for the figures
 - **Where:** cluster (BAF)
 - **Parameters:** g=0.5, 13 thetas; L=8 5000 realisations (jobs of 1000), L=10 2000 (jobs of 100)
 - **Cost:** ~17 core-h; 25 jobs, longest ~45 min
@@ -19,7 +19,7 @@ Figure numbers from the full Bonn draft of 2026-11-08 (14:35). Random h, the noi
 - **Notes:** quick, can go any time
 
 ### E2b: g = 0.5, fine theta grid, L = 12
-- **Status:** queued (submitted by Tony 2026-11-09 with `bash vertical_phases/BAF.sh`, jobs.txt of 165dae5, Debian12 in 47b8cab; test run jobs_test.txt passed)
+- **Status:** final (raw `E:/vertical_phases`, reduced `vertical_phases/plotdata/vertical_cluster.hdf5`), 2026-11-10; 13 of the L=10 jobs missing (L=10: 600/1400/700 of 1000/2000/1000 at g=0.25/0.5/0.75), enough for the figures
 - **Where:** cluster (BAF)
 - **Parameters:** g=0.5, 13 thetas, L=12, 1000 realisations (jobs of 2)
 - **Cost:** ~430 core-h; 500 jobs of ~1 h, 6 GB each
@@ -27,7 +27,7 @@ Figure numbers from the full Bonn draft of 2026-11-08 (14:35). Random h, the noi
 - **Notes:** many short jobs, can fill gaps between long ones
 
 ### E3a: g = 0.25 and 0.75, L = 8 and 10 (QUICK)
-- **Status:** queued (submitted by Tony 2026-11-09 with `bash vertical_phases/BAF.sh`, jobs.txt of 165dae5, Debian12 in 47b8cab; test run jobs_test.txt passed)
+- **Status:** final (raw `E:/vertical_phases`, reduced `vertical_phases/plotdata/vertical_cluster.hdf5`), 2026-11-10; 13 of the L=10 jobs missing (L=10: 600/1400/700 of 1000/2000/1000 at g=0.25/0.5/0.75), enough for the figures
 - **Where:** cluster (BAF)
 - **Parameters:** g=0.25 and 0.75, 13 thetas; L=8 2000 each (jobs of 1000), L=10 1000 each (jobs of 100)
 - **Cost:** ~15 core-h; 24 jobs, longest ~45 min
@@ -35,7 +35,7 @@ Figure numbers from the full Bonn draft of 2026-11-08 (14:35). Random h, the noi
 - **Notes:** quick
 
 ### E3b: g = 0.25 and 0.75, L = 12
-- **Status:** queued (submitted by Tony 2026-11-09 with `bash vertical_phases/BAF.sh`, jobs.txt of 165dae5, Debian12 in 47b8cab; test run jobs_test.txt passed)
+- **Status:** final (raw `E:/vertical_phases`, reduced `vertical_phases/plotdata/vertical_cluster.hdf5`), 2026-11-10; 13 of the L=10 jobs missing (L=10: 600/1400/700 of 1000/2000/1000 at g=0.25/0.5/0.75), enough for the figures
 - **Where:** cluster (BAF)
 - **Parameters:** g=0.25 and 0.75, 13 thetas, L=12, 500 realisations each (jobs of 2)
 - **Cost:** ~430 core-h; 500 jobs of ~1 h, 6 GB each
