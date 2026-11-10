@@ -43,7 +43,7 @@ Figure numbers from the full Bonn draft of 2026-11-08 (14:35). Random h, the noi
 - **Notes:** lower priority than E2b
 
 ### E4: L = 14 at g = 0.5
-- **Status:** planned (held for later by Tony, 2026-11-08); commented out in jobs.txt
+- **Status:** approved and scripted (Tony 2026-11-10, full go), `bash vertical_phases/BAF.sh jobs_E4.txt`: 20 realisations, one per job, 8 threads, 64 GB, 48 h; thetas 0, 0.025, 0.05, 0.1, 0.2, 0.35, 0.5, 1
 - **Where:** cluster (BAF)
 - **Parameters:** L=14, g=0.5, theta 0, 0.05, 0.1, 0.2, 0.35, 0.5, 1; 10 realisations, one per job, 8 threads
 - **Cost:** estimate ~5 h per job on 8 threads (~40 core-h each, ~400 core-h total), 48 GB per job; 10 jobs
@@ -51,7 +51,7 @@ Figure numbers from the full Bonn draft of 2026-11-08 (14:35). Random h, the noi
 - **Notes:** memory heavy (~4 GB per dense matrix); after the L=12 runs
 
 ### E5: the 13 missing L = 10 jobs of E2/E3 (QUICK)
-- **Status:** planned, 2026-11-10
+- **Status:** approved and scripted (2026-11-10), `bash vertical_phases/BAF.sh jobs_E5.txt` (13 jobs)
 - **Where:** cluster (BAF)
 - **Parameters:** the L=10 blocks of 100 not in E:/vertical_phases (g=0.25: 4, g=0.5: 6, g=0.75: 3); same seeds, so they complete the planned 1000/2000/1000
 - **Cost:** ~9 core-h; 13 jobs of ~40 min
@@ -59,7 +59,7 @@ Figure numbers from the full Bonn draft of 2026-11-08 (14:35). Random h, the noi
 - **Notes:** quick, needs a jobs list with just those ranges
 
 ### E6: check of the G_res ceiling with a Haar random drive (QUICK)
-- **Status:** planned, 2026-11-10
+- **Status:** queued on the laptop (vp_haar, vp_haar_A-C, 2026-11-10): L=8 200, L=10 100, L=12 200 in four lanes, out vertical_phases/plotdata/haar_check*.hdf5
 - **Where:** laptop (job queue)
 - **Parameters:** U_0 of the real circuit at g=0.5, V replaced by a Haar random unitary; L=8, 10, 12 with 200, 100, 20 realisations; same estimator (window |dphi|<2pi/96)
 - **Cost:** ~1 core-h
@@ -67,9 +67,17 @@ Figure numbers from the full Bonn draft of 2026-11-08 (14:35). Random h, the noi
 - **Notes:** settles one sentence in the text
 
 ### E7: coarse (g, theta) map at L = 8, 10 (optional)
-- **Status:** planned, 2026-11-10 (Outlook material; Tony: weight competition stays an idea in the thesis)
+- **Status:** approved and scripted (2026-11-10), `bash vertical_phases/BAF.sh jobs_E7.txt` (448 jobs): g=0.05..0.95 step 0.1 without 0.25/0.75 (from E3); L=8 1000, L=10 500, L=12 100 per g; ~470 core-h
 - **Where:** cluster (BAF)
 - **Parameters:** g=0.05..0.95 in steps of 0.1, the 13 thetas; L=8 500, L=10 200 realisations
 - **Cost:** ~16 core-h; ~30 jobs, longest ~40 min
 - **For:** the Outlook `sec:vertical_outlook` (largest overlap and S_half over the (g, theta) plane); not a thesis figure unless Tony wants one
 - **Notes:** quick
+
+### E8: double the g = 0.5 statistics at L = 10 and 12
+- **Status:** approved and scripted (Tony 2026-11-10, "bigger better realisations"), `bash vertical_phases/BAF.sh jobs_E8.txt` (520 jobs)
+- **Where:** cluster (BAF)
+- **Parameters:** g=0.5, 13 thetas; L=10 r2001-4000 (jobs of 100), L=12 r1001-2000 (jobs of 2); new seeds
+- **Cost:** ~450 core-h; 500 L=12 jobs of ~1 h, 20 L=10 jobs of ~40 min
+- **For:** Fig. 4.2-4.6 at g=0.5 (`fig:vertical_V_G`, `fig:vertical_G_res` b., `fig:vertical_pdelta`, `fig:vertical_peak`, `fig:vertical_measures`): smaller bands, L=12 at 2000 realisations
+- **Notes:** reduce together with E2 (reduce_vertical.jl dedupes by seed)
