@@ -2,3 +2,11 @@
 
 *.bat
 #*gz
+
+# generated per run (cat_*.sh / create_*.sh write them to ~/local and $BUDDY, outside this repo;
+# these lines only catch a script that is run from inside the repo by mistake)
+job_file_*.jdl
+run_file_*.sh
+julia_*.log
+*.out
+*.err
