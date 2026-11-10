@@ -1,0 +1,5 @@
+# kind L theta g r0 r1 block cpus memGB hours
+# the ~2 minute test: one job of each kind at L=8
+full 8 0.0 0.95 1 20 20 1 2 1
+scan 8 0.0 0.05 1 200 200 1 2 1
+kb 8 0.35 0.5 1 20 20 1 2 1
