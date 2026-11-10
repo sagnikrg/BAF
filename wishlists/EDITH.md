@@ -49,3 +49,27 @@ Figure numbers from the full Bonn draft of 2026-11-08 (14:35). Random h, the noi
 - **Cost:** estimate ~5 h per job on 8 threads (~40 core-h each, ~400 core-h total), 48 GB per job; 10 jobs
 - **For:** one more size in Fig. 4.2-4.4 for the finite size part of the key idea
 - **Notes:** memory heavy (~4 GB per dense matrix); after the L=12 runs
+
+### E5: the 13 missing L = 10 jobs of E2/E3 (QUICK)
+- **Status:** planned, 2026-11-10
+- **Where:** cluster (BAF)
+- **Parameters:** the L=10 blocks of 100 not in E:/vertical_phases (g=0.25: 4, g=0.5: 6, g=0.75: 3); same seeds, so they complete the planned 1000/2000/1000
+- **Cost:** ~9 core-h; 13 jobs of ~40 min
+- **For:** Fig. 4.2-4.5 (`fig:vertical_G_res`, `fig:vertical_pdelta`, `fig:vertical_peak`, `fig:vertical_measures`), L=10 bands only
+- **Notes:** quick, needs a jobs list with just those ranges
+
+### E6: check of the G_res ceiling with a Haar random drive (QUICK)
+- **Status:** planned, 2026-11-10
+- **Where:** laptop (job queue)
+- **Parameters:** U_0 of the real circuit at g=0.5, V replaced by a Haar random unitary; L=8, 10, 12 with 200, 100, 20 realisations; same estimator (window |dphi|<2pi/96)
+- **Cost:** ~1 core-h
+- **For:** Fig. 4.3 `fig:vertical_G_res`: whether the 10% overshoot of L=12 above 2^L/(2pi)^2 at theta=0.5-0.75 is the near degenerate spike at dphi->0 (Fig. 4.2 `fig:vertical_V_G`) or the estimator
+- **Notes:** settles one sentence in the text
+
+### E7: coarse (g, theta) map at L = 8, 10 (optional)
+- **Status:** planned, 2026-11-10 (Outlook material; Tony: weight competition stays an idea in the thesis)
+- **Where:** cluster (BAF)
+- **Parameters:** g=0.05..0.95 in steps of 0.1, the 13 thetas; L=8 500, L=10 200 realisations
+- **Cost:** ~16 core-h; ~30 jobs, longest ~40 min
+- **For:** the Outlook `sec:vertical_outlook` (largest overlap and S_half over the (g, theta) plane); not a thesis figure unless Tony wants one
+- **Notes:** quick
