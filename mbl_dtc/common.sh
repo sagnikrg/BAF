@@ -3,6 +3,7 @@
 # each_job <function>  calls  <function> L theta itr job eps mem tag   for every job of every line of jobs.txt
 # optional 6th column 'from': first job number of the line (default 1), to resubmit the tail of a line
 # optional 7th column 'set': win (default, eps/theta_<theta>.txt) or grid (the old 0.025 grid, eps/grid.txt);
+#   test / testgrid: the same lists for jobs_test.txt, with their own file names, so a test never overwrites data;
 #   it names the files mbldtc_<set>_L<L>_theta_<theta>_<job>.hdf5, so the two sets never collide
 
 MBL_DIR="$(cd "$(dirname "${BASH_SOURCE[0]}")" && pwd)"
@@ -13,7 +14,11 @@ each_job() {
   while read -r L th itr nj mem from set _; do
     [[ -z "${L:-}" || "$L" == \#* ]] && continue
     set=${set:-win}
-    if [[ $set == grid ]]; then ef="$MBL_DIR/eps/grid.txt"; else set=win; ef="$MBL_DIR/eps/theta_${th}.txt"; fi
+    case $set in
+      win|test)          ef="$MBL_DIR/eps/theta_${th}.txt" ;;
+      grid|testgrid)     ef="$MBL_DIR/eps/grid.txt" ;;
+      *) echo "ERROR: set must be win, grid, test or testgrid, not $set" >&2; exit 1 ;;
+    esac
     if [[ ! -f "$ef" ]]; then
       echo "ERROR: no epsilon list $ef" >&2; exit 1
     fi
