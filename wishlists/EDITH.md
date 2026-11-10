@@ -3,7 +3,7 @@
 Figure numbers from the full Bonn draft of 2026-11-08 (14:35). Random h, the noisy circuit of the thesis, vertical_phases code (`code/run_vertical.jl`, copy in `BAF/vertical_phases/code`). One realisation = U_0 (theta=0, same disorder) plus U_F at every theta of the scan, all dense; default theta grid 0, 0.025, 0.05, 0.075, 0.1, 0.15, 0.2, 0.25, 0.3, 0.35, 0.5, 0.75, 1 (13 values). Jobs are generated from `BAF/vertical_phases/jobs.txt`. Timings are from one laptop core: L=10 ~25 s, L=12 ~26 min per realisation.
 
 ### E1: night run, g = 0.25, 0.5, 0.75, theta 0-1 (8 values)
-- **Status:** final (`vertical_phases/data/vertical_unitary/`), 2026-11-08
+- **Status:** final (raw moved to `E:/vertical_phases/night_2026-11-07/L*` on 2026-11-10, old layout, not read by reduce_vertical.jl), 2026-11-08
 - **Where:** laptop (job queue, vp_night)
 - **Parameters:** theta 0, 0.05, 0.1, 0.2, 0.35, 0.5, 0.75, 1; g=0.5: L=8, 10, 12 with 200, 100, 30; g=0.25, 0.75: L=8, 10 with 200, 60
 - **Cost:** 9.3 h on one core
