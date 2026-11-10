@@ -11,9 +11,9 @@ Figure numbers from the full draft of 2026-11-08. All random h, the noisy circui
 - **Notes:** the closing points at theta >= 0.1 rest on ~500 realisations at L=12 today; those rows first.
 
 ### V2: L = 14, 16 with POLFED, two antipodal bands (kind 2)
-- **Status:** approved in outline (2026-11-07), not scripted yet
+- **Status:** approved 2026-11-10 (Tony): old theta 0, 0.1, 0.2, 0.3 first, ~20 eps per theta, L=14 x500, L=16 x100 realisations; scripting in BAF/V2
 - **Where:** cluster (BAF)
 - **Parameters:** L=14, 16 (L=18 postponed), one non-uniform epsilon list per theta, theta 0-0.3; fewer realisations than L=12; two bands per realisation (around E and E+pi); same J, h per realisation across epsilon from a disorder table made up front; jobs split over epsilon.
-- **Cost:** jobs up to ~36 h each (MaxRuntimeHours 60); total to be estimated when scripting.
+- **Cost:** ~14k core-h (L=14 ~4.7k at ~7-8 min per realisation and eps, L=16 ~9.3k at ~70 min, BAF = 2x laptop); L=14 jobs = 1 realisation x all eps of a theta (~2.5 h), L=16 jobs = 1 realisation x ~10 eps (~12 h).
 - **For:** the band gap and eta crossings (Fig. 3.23 `fig:band_gap_median`, Fig. 3.20 `fig:psd_scalar`) and the time crystal boundaries of Fig. 3.24 `fig:phase_portraits_gap`, against Fig. 2.4 `fig:lsr_phase_portrait`. This decides whether the DTC boundary is distinct from the MBL one (the backbone of the thesis and of the flagship paper).
 - **Notes:** the longest share of the cluster; only quantities the thesis plots.
