@@ -13,9 +13,9 @@
 POL_DIR="$(cd "$(dirname "${BASH_SOURCE[0]}")" && pwd)"
 JOBS="${JOBS:-$POL_DIR/jobs.txt}"
 
-# the julia tarball of the jobs (built by Tony on BAF, julia 1.11 with ITensors, ITensorMPS, Arpack, ToeplitzMatrices, HDF5)
-TARBALL="${TARBALL:-julia-1.11.7-polfed.tar.gz}"
-JULIA_MODULE="${JULIA_MODULE:-julia/1.11.7}"
+# the julia tarball of the jobs (built by Tony on BAF, julia 1.11.1 (no 1.11.7 module on BAF) with ITensors, ITensorMPS, Arpack, ToeplitzMatrices, HDF5)
+TARBALL="${TARBALL:-julia-1.11.1-polfed.tar.gz}"
+JULIA_MODULE="${JULIA_MODULE:-julia/1.11.1}"
 
 each_job() {
   local fn=$1 L th nr parts mem hours from set only ef ne per j a b eps r
