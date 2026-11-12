@@ -13,3 +13,7 @@
 # 16   0.1    100           4      4          24
 # 16   0.2    100           4      4          24
 # 16   0.3    100           4      4          24
+# the scrambling reference theta=1, g=0.5 (Tony 2026-11-12, for the example plots of Chapter 3), one epsilon, so one part;
+# its epsilon lists are ready (eps/L14_theta_1.0.txt, eps/L16_theta_1.0.txt), it can go with the rest of V2
+# 14   1.0    500           1      2          24
+# 16   1.0    100           1      4          24

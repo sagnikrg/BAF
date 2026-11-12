@@ -1,0 +1,13 @@
+# V1.3 (Tony 2026-11-12): rerun of the old grids that the scan of 2026-11-12 found made with the older brickwall
+# (the same detuning noise on every gate), at the four theta of the thesis only; the old files are deleted.
+# Theta 0.05, 0.15, 0.25, 0.35 come back later with the finer theta scan; the h=0 sets are not part of it.
+#   bash mbl_dtc/BAF.sh jobs_v1.3.txt          (after V2; test first with jobs_test.txt)
+# L   theta  itr_per_job  njobs   memory_GB  from  set
+ 12   0.0    1            2000    4          1     grid
+ 10   0.2    10           400     2          1     grid
+# the scrambling reference theta=1, g=0.5 (eps/scr.txt), for the example plots of Chapter 3 in place of theta=0.35;
+# realisations as on the window points: L=8 4000 (250 per job), L=10 4000 (10 per job), L=12 2000
+# L   theta  itr_per_job  njobs   memory_GB  from  set
+  8   1.0    250          16      2          1     scr
+ 10   1.0    10           400     2          1     scr
+ 12   1.0    1            2000    4          1     scr

@@ -2,9 +2,10 @@
 # set test / testgrid: same physics as win / grid, but files and logs are named mbldtc_test_* / mbldtc_testgrid_*,
 # so a test can never overwrite production files in data/mbl_dtc (delete them after looking)
 # test: one epsilon scan of 1 realisation on the 4 epsilon of theta = 0.3; testgrid: the 41 points of eps/grid.txt at L=8
-# expected in data/mbl_dtc: mbldtc_test_L8_theta_0.3_1.hdf5, mbldtc_test_L10_theta_0.3_1.hdf5, mbldtc_testgrid_L8_theta_0.1_1.hdf5,
+# expected in data/mbl_dtc: mbldtc_test_L8_theta_0.3_1.hdf5, mbldtc_test_L10_theta_0.3_1.hdf5, mbldtc_testgrid_L8_theta_0.1_1.hdf5, mbldtc_testscr_L8_theta_1.0_1.hdf5 (V1.3),
 #           and julia_<tag>.log ending in "julia exit code 0" in data/mbl_dtc/logs
 # L   theta  itr_per_job  njobs   memory_GB  from  set
   8   0.3    1            1       2          1     test
  10   0.3    1            1       2          1     test
   8   0.1    1            1       2          1     testgrid
+  8   1.0    1            1       2          1     testscr

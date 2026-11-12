@@ -2,7 +2,8 @@
 # Shared by cat_run.sh, cat_env.sh, cat_jl.sh, condor_submit.sh: reads jobs.txt once, so the four never disagree.
 # each_job <function>  calls  <function> L theta itr job eps mem tag   for every job of every line of jobs.txt
 # optional 6th column 'from': first job number of the line (default 1), to resubmit the tail of a line
-# optional 7th column 'set': win (default, eps/theta_<theta>.txt) or grid (the old 0.025 grid, eps/grid.txt);
+# optional 7th column 'set': win (default, eps/theta_<theta>.txt), grid (the old 0.025 grid, eps/grid.txt)
+#   or scr (the scrambling reference point, eps/scr.txt, V1.3);
 #   test / testgrid: the same lists for jobs_test.txt, with their own file names, so a test never overwrites data;
 #   it names the files mbldtc_<set>_L<L>_theta_<theta>_<job>.hdf5, so the two sets never collide
 
@@ -17,7 +18,8 @@ each_job() {
     case $set in
       win|test)          ef="$MBL_DIR/eps/theta_${th}.txt" ;;
       grid|testgrid)     ef="$MBL_DIR/eps/grid.txt" ;;
-      *) echo "ERROR: set must be win, grid, test or testgrid, not $set" >&2; exit 1 ;;
+      scr|testscr)       ef="$MBL_DIR/eps/scr.txt" ;;
+      *) echo "ERROR: set must be win, grid, scr, test, testgrid or testscr, not $set" >&2; exit 1 ;;
     esac
     if [[ ! -f "$ef" ]]; then
       echo "ERROR: no epsilon list $ef" >&2; exit 1

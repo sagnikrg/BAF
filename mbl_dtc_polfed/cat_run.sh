@@ -31,6 +31,7 @@ cp -rf \$BUDDY/BAF/mbl_dtc_polfed/.header ./
 export OPENBLAS_NUM_THREADS=1
 export OMP_NUM_THREADS=1
 export JULIA_NUM_THREADS=1
+export JULIA_PKG_OFFLINE=true
 
 # Do the real thing here
 julia polfed_bands.jl ${L} ${th} ${r} ${j} ${eps} 64 ${set} > julia_${tag}.log 2>&1
