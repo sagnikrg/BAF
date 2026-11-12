@@ -81,3 +81,11 @@ Figure numbers from the full Bonn draft of 2026-11-08 (14:35). Random h, the noi
 - **Cost:** ~450 core-h; 500 L=12 jobs of ~1 h, 20 L=10 jobs of ~40 min
 - **For:** Fig. 4.2-4.6 at g=0.5 (`fig:vertical_V_G`, `fig:vertical_G_res` b., `fig:vertical_pdelta`, `fig:vertical_peak`, `fig:vertical_measures`): smaller bands, L=12 at 2000 realisations
 - **Notes:** reduce together with E2 (reduce_vertical.jl dedupes by seed)
+
+### E9: Lambda paths, LSR (Ch4 "Trying a simple parametrisation")
+- **Status:** queued on the laptop (Tony 2026-11-12, night, 4 single-core lanes vp_lambda_A-D), output `vertical_phases/plotdata/lambda/`
+- **Where:** laptop (job queue); cluster later only if Tony books it
+- **Parameters:** theta = 1 - Lambda, g = 0.5 +- Lambda/2 (dtc / mbl path), Lambda 0..1 step 0.05, one disorder draw per realisation for all 41 points; L=8 3000, L=10 1000, L=12 ~25 (open ranges r1-200, resumable)
+- **Cost:** L=8 ~1.5 s, L=10 ~52 s, L=12 ~40 min per realisation (41 dense diagonalisations); ~32 core-h tonight
+- **For:** new section of Ch4 (figure of <r> vs Lambda for both paths, crossings in L, asymmetry); L=12 statistics are the weak point, cluster later
+- **Notes:** full spectrum ratio (interior points have no sectors); Lambda = 1 is the special edge theta = 0
