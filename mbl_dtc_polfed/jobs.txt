@@ -1,19 +1,19 @@
 # V2 (wishlist Vision.md): L=14, 16 with normal POLFED, two antipodal bands per realisation and epsilon (polfed_bands.jl).
 # NOT READY: the epsilon lists eps/L14_theta_<theta>.txt and eps/L16_theta_<theta>.txt come from the crossings of the
 # full L=8, 10, 12 data (V1 + V1.2), and the tarball (TARBALL in common.sh) from Tony. Until then the lines stay commented.
-# Approved counts (Tony 2026-11-10): L=14 x500, L=16 x100, theta 0, 0.1, 0.2, 0.3, ~20 epsilon per theta.
+# Approved counts (Tony 2026-11-10, raised 2026-11-12): L=14 x1000, L=16 x200, theta 0, 0.1, 0.2, 0.3, ~20 epsilon per theta.
 # L=14: one job = one realisation over all epsilon of a theta (~2.5 h on BAF); L=16: one realisation in 4 parts of ~5 epsilon
 # (~10 h; laptop timing 2026-11-10: L=14 ~200 s per epsilon for both bands, L=16 extrapolated ~1 h, BAF ~2x slower).
 # L   theta  realisations  parts  memory_GB  hours  from  set
-# 14   0.0    500           1      2          24
-# 14   0.1    500           1      2          24
-# 14   0.2    500           1      2          24
-# 14   0.3    500           1      2          24
-# 16   0.0    100           4      4          24
-# 16   0.1    100           4      4          24
-# 16   0.2    100           4      4          24
-# 16   0.3    100           4      4          24
+# 14   0.0    1000           1      2          24
+# 14   0.1    1000           1      2          24
+# 14   0.2    1000           1      2          24
+# 14   0.3    1000           1      2          24
+# 16   0.0    200           4      4          24
+# 16   0.1    200           4      4          24
+# 16   0.2    200           4      4          24
+# 16   0.3    200           4      4          24
 # the scrambling reference theta=1, g=0.5 (Tony 2026-11-12, for the example plots of Chapter 3), one epsilon, so one part;
 # its epsilon lists are ready (eps/L14_theta_1.0.txt, eps/L16_theta_1.0.txt), it can go with the rest of V2
-# 14   1.0    500           1      2          24
-# 16   1.0    100           1      4          24
+# 14   1.0    1000           1      2          24
+# 16   1.0    200           1      4          24

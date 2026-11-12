@@ -16,10 +16,10 @@ Figure numbers from the full draft of 2026-11-08. All random h, the noisy circui
 - **Cost:** ~18k core-h: windows ~6k (theta 0 ~3.5k), grid ~12k (1500 jobs x 41 pts x ~700 s, ~8 h per job, worst ~16 h)
 
 ### V2: L = 14, 16 with POLFED, two antipodal bands (kind 2)
-- **Status:** approved 2026-11-10 (Tony): old theta 0, 0.1, 0.2, 0.3 first, ~20 eps per theta, L=14 x500, L=16 x100 realisations. Scripted in BAF/mbl_dtc_polfed (polfed_bands.jl, two bands at phi=0, pi, nev=64; checked against full diagonalisation at L=8, exact to 1e-14, inner half of each band complete). Waits for: the tarball (julia 1.11.7, Tony), the eps lists from the full L=8-12 data, then jobs_test.txt on BAF
+- **Status:** approved 2026-11-10 (Tony): old theta 0, 0.1, 0.2, 0.3 first, ~20 eps per theta, L=14 x1000, L=16 x200 realisations (raised by Tony 2026-11-12: POLFED gives 128 levels per realisation, safe rather than sorry, a top-up later would wait for the priority to recover). Scripted in BAF/mbl_dtc_polfed (polfed_bands.jl, two bands at phi=0, pi, nev=64; checked against full diagonalisation at L=8, exact to 1e-14, inner half of each band complete). Waits for: the tarball (julia 1.11.7, Tony), the eps lists from the full L=8-12 data, then jobs_test.txt on BAF
 - **Where:** cluster (BAF)
 - **Parameters:** L=14, 16 (L=18 postponed), one non-uniform epsilon list per theta, theta 0-0.3; fewer realisations than L=12; two bands per realisation (around E and E+pi); same J, h per realisation across epsilon from a disorder table made up front; jobs split over epsilon.
-- **Cost:** ~20k core-h (measured on the laptop 2026-11-10, nev=64: L=14 ~200 s per realisation and eps for both bands -> ~7 min on BAF -> ~4.7k; L=16 extrapolated ~1 h laptop -> ~2 h on BAF -> ~15k); L=14 jobs = 1 realisation x all eps of a theta (~2.5 h), L=16 jobs = 1 realisation x ~5 eps (~10 h).
+- **Cost:** ~40k core-h at the raised counts with ~20 eps per theta, ~24k with ~12 eps concentrated at the crossings (was ~20k at x500/x100; measured on the laptop 2026-11-10, nev=64: L=14 ~200 s per realisation and eps for both bands -> ~7 min on BAF -> ~4.7k; L=16 extrapolated ~1 h laptop -> ~2 h on BAF -> ~15k); L=14 jobs = 1 realisation x all eps of a theta (~2.5 h), L=16 jobs = 1 realisation x ~5 eps (~10 h).
 - **For:** the band gap and eta crossings (Fig. 3.23 `fig:band_gap_median`, Fig. 3.20 `fig:psd_scalar`) and the time crystal boundaries of Fig. 3.24 `fig:phase_portraits_gap`, against Fig. 2.4 `fig:lsr_phase_portrait`. This decides whether the DTC boundary is distinct from the MBL one (the backbone of the thesis and of the flagship paper).
 - **Notes:** the longest share of the cluster; only quantities the thesis plots.
 
@@ -29,4 +29,4 @@ Figure numbers from the full draft of 2026-11-08. All random h, the noisy circui
 - **Parameters:** set grid (eps/grid.txt, 41 points): L=12 theta 0, 2000 jobs x 1; L=10 theta 0.2, 400 jobs x 10. Scrambling reference theta=1, g=0.5 (set scr, eps/scr.txt): L=8 4000 (16 x 250), L=10 4000 (400 x 10), L=12 2000.
 - **Cost:** ~17.6k (L=12 theta 0) + ~0.6k (L=10 theta 0.2) + ~0.5k (scr) core-h, ~19k total.
 - **For:** the FSS at theta 0 (Sec. fss), every theta=0 scan of Ch. 3 at L=12, Fig. 2.4/3.5/3.25 at theta 0.2, and the scrambling examples of Ch. 3 (in place of theta=0.35, g=0.5).
-- **V2 too:** theta=1, g=0.5 at L=14 x500 and L=16 x100 (mbl_dtc_polfed/jobs.txt, eps lists ready), 600 jobs, ~0.3k core-h.
+- **V2 too:** theta=1, g=0.5 at L=14 x1000 and L=16 x200 (mbl_dtc_polfed/jobs.txt, eps lists ready), 1200 jobs, ~0.6k core-h.
