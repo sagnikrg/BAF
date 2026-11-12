@@ -22,3 +22,10 @@ Figure numbers from the full draft of 2026-11-08. All random h, the noisy circui
 - **Cost:** ~20k core-h (measured on the laptop 2026-11-10, nev=64: L=14 ~200 s per realisation and eps for both bands -> ~7 min on BAF -> ~4.7k; L=16 extrapolated ~1 h laptop -> ~2 h on BAF -> ~15k); L=14 jobs = 1 realisation x all eps of a theta (~2.5 h), L=16 jobs = 1 realisation x ~5 eps (~10 h).
 - **For:** the band gap and eta crossings (Fig. 3.23 `fig:band_gap_median`, Fig. 3.20 `fig:psd_scalar`) and the time crystal boundaries of Fig. 3.24 `fig:phase_portraits_gap`, against Fig. 2.4 `fig:lsr_phase_portrait`. This decides whether the DTC boundary is distinct from the MBL one (the backbone of the thesis and of the flagship paper).
 - **Notes:** the longest share of the cluster; only quantities the thesis plots.
+
+### V1.3: rerun the five old grids that are a different circuit
+- **Status:** PROPOSED 2026-11-12, waits for Tony
+- **Why:** the old 0.025 grids of L=10 theta 0.05, 0.15, 0.2 and L=12 theta 0, 0.05 (rawdata/eigen, 2024) were made with the older brickwall, in which the detuning noise delh is drawn once and reused on every gate; everything else (2026-09, V1, V1.2) uses circuit_dtc with delh per gate (stored [ENV] Code checked). They are left out of the merged analysis (merged.jl OLD_MODEL), so L=12 theta 0 is only the 18 window points and L=12 theta 0.05 has nothing.
+- **Parameters:** mbl_dtc set grid (eps/grid.txt, 41 points), same code as V1.2: L=12 theta 0 jobs 1-2000 (matching its windows), theta 0.05 jobs 1-1000; L=10 theta 0.05, 0.15, 0.2 at 10 realisations per job, 400 jobs each (4000 realisations, as L=10 elsewhere). Needs a new set name (e.g. grid) only where it does not collide: L=12 theta 0 and 0.05 have no grid files yet; L=10 has none.
+- **Cost:** L=12 ~8.8 h per job (41 points, measured on the V1.2 grid): theta 0 ~17.6k, theta 0.05 ~8.8k core-h; L=10 ~1.4 h per job of 10: ~1.7k. Total ~28k core-h (theta 0 at L=12 alone 17.6k; 1000 jobs there would halve it).
+- **For:** Fig. 2.4, 3.5, 3.25 and every theta=0 scan of Ch. 3 at L=12, and the FSS of the new section at theta 0 (today on the windows only).
