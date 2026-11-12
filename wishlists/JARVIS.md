@@ -80,3 +80,5 @@ Quick ones: J1, J2 (laptop); J3a, J5, J6, J7 (cluster, each at most about 200 co
 - **Notes:** the strongest figure of the chapter if it works
 
 2026-11-10 first return: L8 complete (44/44); L10 109/300 files on E: (191 missing, no L10 job left running). Plan (Tony): wait until L12/L14 are in and Vision's queue is through, then `bash symmetry_breaking/missing.sh > symmetry_breaking/jobs_rerun.txt`, find out why they went missing, and rerun them.
+
+2026-11-12 rerun scripted: symmetry_breaking/jobs_rerun.txt (1450 jobs: all missing L10 full/kb/scan; L12 full and kb at the examples; L12 scan only at g=0.75,0.85,0.95 and theta=0.35 - the PM scan points are done, count D=1 from the L=8,10,12 fit). Blocks halved, MaxRuntimeHours x3, L12 memory 6 GB, since the losses grew with the job length (L8 100%, L10 36%, L12 17%, L14 11% returned). Expected ~3000 core h. Optional after it: jobs_rerun_L14.txt (534 jobs, one realisation each, 16 GB, ~1600 core h).
