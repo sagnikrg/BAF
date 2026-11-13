@@ -1,5 +1,5 @@
 #!/bin/bash
-# Shared by cat_run.sh, cat_env.sh, cat_jl.sh, condor_submit.sh, check.sh: reads the job list once, so they never disagree.
+# Shared by cat_batch.sh, condor_submit.sh and check.sh: reads the job list once, so they never disagree.
 #
 # Job list line:   L  theta  realisations  parts  memory_GB  hours  [from]  [set]
 #   realisations : realisations r = from..realisations (from defaults to 1)

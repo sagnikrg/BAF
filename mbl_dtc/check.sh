@@ -6,7 +6,8 @@
 #   bash mbl_dtc/BAF.sh jobs_missing.txt                             (submits exactly the missing ones)
 #
 #   done   : julia_<tag>.log in data/mbl_dtc/logs ends in "julia exit code 0" (and, with --since, is newer than that)
-#   queue  : run_file_<tag>.sh is the executable of a job in condor_q (idle, running or held)
+#   queue  : a job in condor_q (idle, running or held) with this tag: the last of its Arguments (batches of cat_batch.sh),
+#            or its executable run_file_<tag>.sh (the old layout of one file per job)
 #   failed : a log with another exit code, and not in the queue
 #   lost   : no (new enough) log and not in the queue: never submitted, cut off, or died before the log was copied
 #
@@ -29,11 +30,11 @@ source "$here/common.sh"
 LOGS=/cephfs/user/sghosh/data/mbl_dtc/logs
 out="$here/jobs_missing.txt"
 
-# tags of the jobs in the queue (from the executable run_file_<tag>.sh), and the held ones
-if ! queued=$(condor_q "$USER" -af Cmd JobStatus); then
+# tags of the jobs in the queue (last argument of a batch job, or the old executable run_file_<tag>.sh), and the held ones
+if ! queued=$(condor_q "$USER" -af Cmd JobStatus Arguments); then
   echo "ERROR: condor_q did not answer, nothing written (try again in a few minutes)" >&2; exit 1
 fi
-inq=$(echo "$queued" | awk 'NF{n=split($1,p,"/"); f=p[n]; sub(/^run_file_/,"",f); sub(/\.sh$/,"",f); print f}')
+inq=$(echo "$queued" | awk 'NF{n=split($1,p,"/"); f=p[n]; if (f ~ /^run_file_/) { sub(/^run_file_/,"",f); sub(/\.sh$/,"",f); print f } else print $NF}')
 held=$(echo "$queued" | awk '$2==5' | wc -l)
 
 # logs newer than --since

@@ -1,5 +1,5 @@
 #!/bin/bash
-# Shared by cat_run.sh, cat_env.sh, cat_jl.sh, condor_submit.sh: reads jobs.txt once, so the four never disagree.
+# Shared by cat_batch.sh, condor_submit.sh and check.sh: reads jobs.txt once, so they never disagree.
 # each_job <function>  calls  <function> L theta itr job eps mem tag   for every job of every line of jobs.txt
 # optional 6th column 'from': first job number of the line (default 1), to resubmit the tail of a line
 # optional 7th column 'set': win (default, eps/theta_<theta>.txt), grid (the old 0.025 grid, eps/grid.txt)
