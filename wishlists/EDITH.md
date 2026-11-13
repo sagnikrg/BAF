@@ -83,9 +83,17 @@ Figure numbers from the full Bonn draft of 2026-11-08 (14:35). Random h, the noi
 - **Notes:** reduce together with E2 (reduce_vertical.jl dedupes by seed)
 
 ### E9: Lambda paths, LSR (Ch4 "Trying a simple parametrisation")
-- **Status:** queued on the laptop (Tony 2026-11-12, night, 4 single-core lanes vp_lambda_A-D), output `vertical_phases/plotdata/lambda/`
+- **Status:** queued on the laptop (Tony 2026-11-12, night, 4 single-core lanes vp_lambda_A-D), raw `E:/vertical_phases/lambda_scan/L*`, logs `vertical_phases/plotdata/lambda/`
 - **Where:** laptop (job queue); cluster later only if Tony books it
 - **Parameters:** theta = 1 - Lambda, g = 0.5 +- Lambda/2 (dtc / mbl path), Lambda 0..1 step 0.05, one disorder draw per realisation for all 41 points; L=8 3000, L=10 1000, L=12 ~25 (open ranges r1-200, resumable)
 - **Cost:** L=8 ~1.5 s, L=10 ~52 s, L=12 ~40 min per realisation (41 dense diagonalisations); ~32 core-h tonight
 - **For:** new section of Ch4 (figure of <r> vs Lambda for both paths, crossings in L, asymmetry); L=12 statistics are the weak point, cluster later
 - **Notes:** full spectrum ratio (interior points have no sectors); Lambda = 1 is the special edge theta = 0
+
+### E10: symmetry resolved theta scans at g = 0 and g = 1 (shared data)
+- **Status:** running on the laptop (Tony 2026-11-13), 4 lanes vp_sym_S1-S4; raw `E:/mbl_dtc_symmetry_resolved/L8, L10` (for everyone), reduced + plots `vertical_phases/plotdata/symlines`, `plots/symlines_*`
+- **Where:** laptop (job queue)
+- **Parameters:** `BAF/mbl_dtc/eigen_sym.jl` (eigen_win layout + sector spectrum), g=0 resolved by m (attribute Symmetry = ztot), g=1 by the perfect kick (Symmetry = perfect_kick); Vision's fine theta grid (24 points, 0-1); L=8 200, L=10 100 per line
+- **Cost:** L=10 ~40 s, L=8 ~5 s per realisation; ~3 core-h
+- **For:** Tony's question whether the single-parameter lines g=1 (pure DTC -> scrambling) and g=0 (PM-MBL -> scrambling) give proper crossovers; plots first, chapter text depending on the result
+- **Notes:** also usable by Vision (half_chain_ee_ends on the fine grid)
