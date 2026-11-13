@@ -6,8 +6,10 @@
  12   0.0    1            2000    4          1     grid
  10   0.2    10           400     2          1     grid
 # the scrambling reference theta=1, g=0.5 (eps/scr.txt), for the example plots of Chapter 3 in place of theta=0.35;
-# realisations as on the window points: L=8 4000 (250 per job), L=10 4000 (10 per job), L=12 2000
+# realisations as on the window points: L=8 4000 (250 per job), L=10 4000 (200 per job), L=12 2000 (20 per job)
+# job lengths from the old grid files on E: (L12 1 x 41 eps 7.6 h, L10 10 x 41 eps 3.2 h): grid L12 ~8 h, grid L10 ~3 h,
+# scr L8 ~10 min, L10 ~1.5 h, L12 ~4 h (one epsilon, so the scr realisations are merged into 1-10 h jobs)
 # L   theta  itr_per_job  njobs   memory_GB  from  set
   8   1.0    250          16      2          1     scr
- 10   1.0    10           400     2          1     scr
- 12   1.0    1            2000    4          1     scr
+ 10   1.0    200          20      2          1     scr
+ 12   1.0    20           100     4          1     scr
