@@ -47,7 +47,7 @@ export JULIA_NUM_THREADS=1
 
 # Do the real thing here
 julia eigen_win.jl \$L \$th \$itr \$i \$eps \$set > julia_\$tag.log 2>&1
-echo "julia exit code \$?" >> julia_\$tag.log
+ec=\$?; echo "julia exit code \$ec" >> julia_\$tag.log
 rm eigen_win.jl
 
 # Clean up the working directory
@@ -55,6 +55,7 @@ mkdir -p /cephfs/user/sghosh/data/mbl_dtc/logs
 cp julia_\$tag.log /cephfs/user/sghosh/data/mbl_dtc/logs/.
 cp *hdf5 /cephfs/user/sghosh/data/mbl_dtc/.
 rm -rf *
+exit \$ec   # the job exit code is julia's (not that of the last cp/rm)
 EOF
 }
 

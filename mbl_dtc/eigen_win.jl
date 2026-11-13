@@ -197,3 +197,4 @@ end
 
 	attrs["Time Elapsed"]=time_taken
 close(file)
+println("maxrss_MB ", round(Sys.maxrss()/2^20, digits=1))   # peak memory of this job (condor samples MemoryUsage too rarely for short jobs)

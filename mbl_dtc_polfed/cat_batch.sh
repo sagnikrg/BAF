@@ -47,7 +47,7 @@ export JULIA_PKG_OFFLINE=true
 
 # Do the real thing here
 julia polfed_bands.jl \$L \$th \$r \$j \$eps 64 \$set > julia_\$tag.log 2>&1
-echo "julia exit code \$?" >> julia_\$tag.log
+ec=\$?; echo "julia exit code \$ec" >> julia_\$tag.log
 rm polfed_bands.jl
 
 # Clean up the working directory
@@ -55,6 +55,7 @@ mkdir -p /cephfs/user/sghosh/data/mbl_dtc_polfed/logs
 cp julia_\$tag.log /cephfs/user/sghosh/data/mbl_dtc_polfed/logs/.
 cp *hdf5 /cephfs/user/sghosh/data/mbl_dtc_polfed/.
 rm -rf *
+exit \$ec   # the job exit code is julia's (not that of the last cp/rm)
 EOF
 }
 
