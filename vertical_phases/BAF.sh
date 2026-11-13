@@ -1,10 +1,11 @@
 #!/usr/bin/env bash
 #########
-# BAF.sh of vertical_phases (one per folder, run from anywhere):
+# BAF.sh of vertical_phases (one per folder, run from anywhere), batch submit as HOWTO_cluster.md:
 #   bash vertical_phases/BAF.sh                 all jobs of jobs.txt
-#   bash vertical_phases/BAF.sh jobs_test.txt   the small test (2 short jobs)
-#   add --dry to write the run and job files into ~/local without submitting
-# Pulls both BAF copies, writes ~/local/run_file_*.sh and job_file_*.jdl, submits.
+#   bash vertical_phases/BAF.sh jobs_E8.txt    one job list (E4, E5, E7, E8, test)
+#   add --dry to write the batches into ~/local/batches without submitting (and let condor_submit -dry-run expand them)
+# Pulls both BAF copies, mops the batches whose jobs are all gone from condor_q, writes one batch per (L, g)
+# with cat_batch.sh, submits.
 #########
 set -euo pipefail
 here=$(cd "$(dirname "$0")" && pwd)
@@ -18,14 +19,17 @@ if [[ $dry == 0 ]]; then
   git pull
   ( cd "$BUDDY/BAF/" && git pull )
 fi
-mkdir -p ~/local/log
+bash "$here/../mopthefloor_BAF.sh" --yes || echo "(mop skipped)"
 
-bash "$here/cat_run.sh"
-bash "$here/cat_env.sh"
-bash "$here/cat_jl.sh"
+bash "$here/cat_batch.sh"
 if [[ $dry == 0 ]]; then
   bash "$here/condor_submit.sh"
 else
-  echo "dry run: files in ~/local, nothing submitted"
+  if command -v condor_submit >/dev/null; then
+    for B in $(cat ~/local/batches/.last); do
+      ( cd ~/local/batches/$B && condor_submit -dry-run dry.txt job.jdl >/dev/null && echo "dry-run $B: $(grep -c '^Args\|^Arguments' dry.txt) jobs expanded, first: $(grep -m1 '^Arguments\|^Args' dry.txt)" )
+    done
+  fi
+  echo "dry run: batches in ~/local/batches, nothing submitted"
 fi
 echo "Done."
