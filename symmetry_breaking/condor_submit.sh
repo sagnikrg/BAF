@@ -1,9 +1,18 @@
 #!/bin/bash
-here=$(cd "$(dirname "$0")" && pwd)
-cd ~/local/
-grep -v '^\s*#' "${JOBS:-$here/jobs.txt}" | grep -v '^\s*$' | while read -r kind L th g r0 r1 block cpus mem hours; do
-for (( a=r0; a<=r1; a+=block )); do
-b=$(( a+block-1 )); (( b>r1 )) && b=$r1
-condor_submit job_file_sb_${kind}_L${L}_th${th}_g${g}_r${a}-${b}.jdl
+# submits the batches cat_batch.sh wrote last (~/local/batches/.last), one condor_submit per batch
+# (a submit file is all or nothing: if one fails after 3 retries 60 s apart we stop there; the batches before it are in,
+#  resubmit the rest by giving their job list lines alone)
+
+LB=~/local/batches
+mapfile -t BS < "$LB/.last"
+echo "submitting ${#BS[@]} batches ..."
+for B in "${BS[@]}"; do
+  ok=0
+  for t in 1 2 3 4; do
+    if ( cd "$LB/$B" && condor_submit job.jdl ); then ok=1; break; fi
+    [[ $t -lt 4 ]] && { echo "retry $t: $B" >&2; sleep 60; }
+  done
+  (( ok )) || { echo "FAILED, stopping at batch $B; the batches before it are submitted" >&2; exit 1; }
+  sleep 2
 done
-done
+echo "condor_submit: done"
