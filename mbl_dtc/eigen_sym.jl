@@ -107,6 +107,15 @@ attrs=attributes(file)
 # Code:
 ######################################
 
+# half chain entropy; gesdd (divide and conquer) fails to converge on some g = 1 eigenvectors (LAPACKException(1)),
+# then the slower QR iteration
+function ee_safe(v, L)
+    M = reshape(v, 2^(L÷2), 2^(L-L÷2))
+    S = try svdvals(M) catch; svd(M; alg = LinearAlgebra.QRIteration()).S end
+    p = S[S .> 1e-10].^2
+    -sum(p .* log.(p))
+end
+
 time_taken= @elapsed begin
 
 hist0()=(fill(0,2000), fill(0,2000), fill(0,16,2000), fill(0,16,2000))
@@ -161,7 +170,7 @@ for itr in 1:Itrnumb
 
         ee=0.0
         for j in 1:Ntot
-            ee+=EntanglementEntropy(eigvecA[:,j], L)
+            ee+=ee_safe(eigvecA[:,j], L)
         end
         entanglement_ee[i]+=ee
         file[eg*"/Itr$(itr)/ee"]=ee/Ntot
