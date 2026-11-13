@@ -1,8 +1,10 @@
 # small test of V2 before the full list: bash mbl_dtc_polfed/BAF.sh jobs_test.txt
 # set test: files and logs named mbldtc_test_*, never the names of production jobs
-# L=8: 1 realisation, its 3 epsilon split into 2 jobs (tests the split); L=12: 1 realisation, 1 epsilon (tests the time)
-# expected in data/mbl_dtc_polfed: mbldtc_test_L8_theta_0.1_r1_1.hdf5, ..._r1_2.hdf5, mbldtc_test_L12_theta_0.1_r1_1.hdf5,
+# L=8: 1 realisation, its 3 epsilon split into 2 jobs (tests the split); L=12: 1 realisation, 1 epsilon (tests the time);
+# L=14: 1 realisation at theta=1, g=0.5 (one epsilon, ~5-10 min), to measure the memory of a production size
+# expected in data/mbl_dtc_polfed: mbldtc_test_L8_theta_0.1_r1_1.hdf5, ..._r1_2.hdf5, mbldtc_test_L12_theta_0.1_r1_1.hdf5, mbldtc_test_L14_theta_1.0_r1_1.hdf5,
 #           and julia_<tag>.log ending in "julia exit code 0" in data/mbl_dtc_polfed/logs
 # L   theta  realisations  parts  memory_GB  hours  from  set
   8   0.1    1             2      2          1      1     test
  12   0.1    1             1      2          2      1     test
+ 14   1.0    1             1      2          2      1     test
