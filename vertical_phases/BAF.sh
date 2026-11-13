@@ -19,7 +19,8 @@ if [[ $dry == 0 ]]; then
   git pull
   ( cd "$BUDDY/BAF/" && git pull )
 fi
-bash "$here/../mopthefloor_BAF.sh" --yes || echo "(mop skipped)"
+# mop OFF (Tony 2026-11-13: it removed the files of queued V2 batches); run mopthefloor_BAF.sh by hand only
+# bash "$here/../mopthefloor_BAF.sh" --yes || echo "(mop skipped)"
 
 bash "$here/cat_batch.sh"
 if [[ $dry == 0 ]]; then
