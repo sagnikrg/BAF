@@ -35,3 +35,13 @@ Existing info lattice data (mbl_dtc/code/info_lattice) is L=8 only, mostly at th
 - **Where:** BAF; before any submission, rewrite BAF/Info_lattice_fisher_information (still the 2024 one jdl per job scripts) into the batch layout of HOWTO_cluster.md (template mbl_dtc_polfed/cat_batch.sh), interactive test, dry run
 - **Parameters:** g = 0.9, 0.95, 1; theta 0-0.3; h=0 and random; L=12, 14, 16
 - **Cost:** not estimated yet
+
+### K6: reference qubit probe at the example and Kitaev points
+- **Status:** final (data/majorana/gh_edge.hdf5), 2026-11-13, about 7 min on 1 core
+- **Parameters:** L=8 (50), L=10 (30) realisations; R on edge and bulk qubit; t=100..200
+- **For:** Fig. fig:gh_probe_classes (Ch5 Sec. gh_probe)
+
+### K7: reference qubit probe g scans
+- **Status:** final (data/majorana/gh_scan.hdf5), 2026-11-13; 6 threads at the office, L=10 theta=0.4 single thread at home (27 min)
+- **Parameters:** g = 0:0.05:1, theta = 0..0.4, fields on; L=8 (50), L=10 (30)
+- **For:** Fig. fig:gh_probe_scan; L=12+ (time evolution only) is the natural next run for the probe chapter
