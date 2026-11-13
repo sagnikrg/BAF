@@ -91,9 +91,9 @@ Figure numbers from the full Bonn draft of 2026-11-08 (14:35). Random h, the noi
 - **Notes:** full spectrum ratio (interior points have no sectors); Lambda = 1 is the special edge theta = 0
 
 ### E10: symmetry resolved theta scans at g = 0 and g = 1 (shared data)
-- **Status:** running on the laptop (Tony 2026-11-13), 4 lanes vp_sym_S1-S4; raw `E:/mbl_dtc_symmetry_resolved/L8, L10` (for everyone), reduced + plots `vertical_phases/plotdata/symlines`, `plots/symlines_*`
+- **Status:** L=8/10 DONE 2026-11-13 (g=1: 100/78, g=0: 100/100 realisations; 4 killed files kept as *.corrupt), in Ch4 as fig:vertical_symlines(_ee). L=12 WANTED (Tony 2026-11-13: add to the plot later); raw `E:/mbl_dtc_symmetry_resolved/L8, L10` (for everyone), reduced + plots `vertical_phases/plotdata/symlines`, `plots/symlines_*`
 - **Where:** laptop (job queue)
 - **Parameters:** `BAF/mbl_dtc/eigen_sym.jl` (eigen_win layout + sector spectrum), g=0 resolved by m (attribute Symmetry = ztot), g=1 by the perfect kick (Symmetry = perfect_kick); Vision's fine theta grid (24 points, 0-1); L=8 200, L=10 100 per line
-- **Cost:** L=10 ~40 s, L=8 ~5 s per realisation; ~3 core-h
+- **Cost:** measured with EE + Lazarides-Luitz histograms: L=8 ~35 s, L=10 ~4.5 min per realisation (24 thetas). L=12 estimate ~4-5 h per realisation single threaded (dense 4096, x~64), so 50 realisations per line ~ 450 core-h: cluster, not laptop
 - **For:** Tony's question whether the single-parameter lines g=1 (pure DTC -> scrambling) and g=0 (PM-MBL -> scrambling) give proper crossovers; plots first, chapter text depending on the result
 - **Notes:** also usable by Vision (half_chain_ee_ends on the fine grid)
