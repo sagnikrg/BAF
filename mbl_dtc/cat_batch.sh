@@ -20,7 +20,8 @@ make_run() {   # $1 = batch
 cat <<EOF
 #!/bin/bash
 # one job of batch $1, arguments: L theta itr job eps(: separated) set tag
-L=\$1; th=\$2; itr=\$3; i=\$4; eps=\${5//:/,}; set=\$6; tag=\$7
+# (r, j and not itr, i: /etc/profile below loops with i and unsets it, which shifted every argument of V1.3)
+L=\$1; th=\$2; r=\$3; j=\$4; eps=\${5//:/,}; set=\$6; tag=\$7
 
 # Goes to the job work directory (never go on anywhere else, the end of this script empties it)
 cd /jwd || exit 1
@@ -46,7 +47,7 @@ export OMP_NUM_THREADS=1
 export JULIA_NUM_THREADS=1
 
 # Do the real thing here
-julia eigen_win.jl \$L \$th \$itr \$i \$eps \$set > julia_\$tag.log 2>&1
+julia eigen_win.jl "\$L" "\$th" "\$r" "\$j" "\$eps" "\$set" > julia_\$tag.log 2>&1
 ec=\$?; echo "julia exit code \$ec" >> julia_\$tag.log
 rm eigen_win.jl
 
