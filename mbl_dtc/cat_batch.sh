@@ -68,7 +68,7 @@ Executable              = run.sh
 JobBatchName            = mbldtc_$6: L=$2, theta=$3
 Environment             = ClusterId=\$(ClusterId);Process=\$(Process);SubHost=(SUBHOST);
 
-Arguments               = "\$(L) \$(th) \$(itr) \$(i) \$(eps) \$(set) \$(tag)"
+Arguments               = "\$(L) \$(th) \$(r) \$(j) \$(eps) \$(set) \$(tag)"
 
 Universe                = vanilla
 
@@ -93,7 +93,7 @@ Request_disk            = 2 GB
 +ContainerOS            = "Debian12"
 
 # Submit the jobs, one per line of items.txt
-Queue L,th,itr,i,eps,set,tag from items.txt
+Queue L,th,r,j,eps,set,tag from items.txt
 
 EOF
 }
