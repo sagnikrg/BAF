@@ -1,0 +1,4 @@
+# the BAF test of V2.1 (set v21): one job, L=14 theta=0 realisation 1 (outside the production range 1001-3000), part 1 (15 eps, ~11 h)
+# expected in data/mbl_dtc_polfed: mbldtc_v21_L14_theta_0.0_r1_1.hdf5 and its julia log ending in "julia exit code 0"
+# L   theta  realisations  parts  memory_GB  hours  from  set  part
+ 14   0.0    1              2      2          24     1     v21  1

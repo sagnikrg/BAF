@@ -1,0 +1,6 @@
+# V2.1 part L=16 (Tony 2026-11-14, see jobs_v2.1_L14.txt): same grid and set v21, realisations 201-1200 (new circuits), 1000 per point.
+# One job = one (realisation, eps): ~2.3 h on BAF for both bands (median band 4000 s, max 12000 s on V2); 60000 jobs, ~138k core-h.
+#   bash ~/local/BAF/mbl_dtc_polfed/BAF.sh jobs_v2.1_L16.txt --dry   then without --dry
+# L   theta  realisations  parts  memory_GB  hours  from  set
+ 16   0.0    1200           30     3          24     201   v21
+ 16   0.1    1200           30     3          24     201   v21

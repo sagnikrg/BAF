@@ -1,0 +1,8 @@
+# V2.1 part L=14 (Tony 2026-11-14: the full V2.1, L=14 and L=16 as two separate job lists): fine grid dg=0.01 over both crossover regions,
+# theta 0 (g 0.14-0.28, 0.77-0.91) and 0.1 (g 0.06-0.20, 0.83-0.97), 30 eps per theta (eps/v21/), set v21 (own file names, never overwrites V2).
+# Realisations 1001-3000: new circuits (the seed is fixed by L and r, so r<=1000 would repeat V2's), 2000 per point; merge with V2 where the points agree.
+# One job = one realisation x 15 eps (~11 h on BAF at 0.73 h per eps for both bands), 2 parts per realisation; 8000 jobs, ~88k core-h.
+#   bash ~/local/BAF/mbl_dtc_polfed/BAF.sh jobs_v2.1_L14.txt --dry   then without --dry
+# L   theta  realisations  parts  memory_GB  hours  from  set
+ 14   0.0    3000           2      2          24     1001  v21
+ 14   0.1    3000           2      2          24     1001  v21

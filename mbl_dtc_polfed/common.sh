@@ -5,7 +5,8 @@
 #   realisations : realisations r = from..realisations (from defaults to 1)
 #   parts        : jobs per realisation; the epsilon list eps/L<L>_theta_<theta>.txt is cut into this many contiguous parts
 #   hours        : MaxRuntimeHours of the jobs
-#   set          : polfed (default) or test: names the files mbldtc_<set>_..., so a test never overwrites production data
+#   set          : polfed (default), test, or v21 (V2.1, its own eps lists eps/v21/L<L>_theta_<theta>.txt): names the files
+#                  mbldtc_<set>_..., so a test or V2.1 never overwrites V2 data
 #   part         : only this part of each realisation (default all; check.sh writes one line per missing job with it)
 #
 # each_job <function>  calls  <function> L theta r part eps mem hours tag set parts   for every job
@@ -23,8 +24,8 @@ each_job() {
     [[ -z "${L:-}" || "$L" == \#* ]] && continue
     from=${from:-1}; [[ "$from" =~ ^[0-9]+$ ]] || from=1
     set=${set:-polfed}
-    [[ $set == polfed || $set == test ]] || { echo "ERROR: set must be polfed or test, not $set" >&2; exit 1; }
-    ef="$POL_DIR/eps/L${L}_theta_${th}.txt"
+    [[ $set == polfed || $set == test || $set == v21 ]] || { echo "ERROR: set must be polfed, test or v21, not $set" >&2; exit 1; }
+    ef="$POL_DIR/eps/L${L}_theta_${th}.txt"; [[ $set == v21 ]] && ef="$POL_DIR/eps/v21/L${L}_theta_${th}.txt"
     [[ -f "$ef" ]] || { echo "ERROR: no epsilon list $ef" >&2; exit 1; }
     IFS=',' read -r -a E <<< "$(tr -d ' \r\n' < "$ef")"
     ne=${#E[@]}; per=$(( (ne + parts - 1) / parts ))
