@@ -5,15 +5,24 @@
 #   ~/local/batches/<B>/items.txt   one line per job: L theta r part eps(: separated) set tag
 #   ~/local/batches/<B>/log/        err/out of the jobs and one cluster log
 #   $BUDDY/batches/<B>/polfed_bands.jl   the julia script of this batch (a snapshot, so a later git pull never changes running jobs)
-# <B> = mbldtc_<set>_L<L>_theta<theta>_<stamp> (set polfed or test); mopthefloor_BAF.sh removes a batch once none of its jobs is in condor_q.
+# <B> = mbldtc_<set>_L<L>_theta<theta>_<stamp> (set polfed, test or v21); mopthefloor_BAF.sh removes a batch once none of its jobs is in condor_q.
+# Split (2026-11-15): a (set, L, theta) with more than MAXITEMS jobs (default 10000) is written as parts
+#   <B>_p1, <B>_p2, ... of at most MAXITEMS jobs each, one condor_submit each. A submit file is all or nothing, and the
+#   schedd refuses one above MAX_JOBS_PER_SUBMISSION (HTCondor default 20000): the V2.1 L=16 batches (30000 jobs) never got in.
+#   The parts keep the prefix mbldtc_<set>_L<L>_theta<theta>_ that rm_jobs.sh, check.sh and restore_batches.sh match.
 # The list of the batches written is in ~/local/batches/.last (read by condor_submit.sh).
 
 source "$(cd "$(dirname "${BASH_SOURCE[0]}")" && pwd)/common.sh"
 STAMP="${STAMP:-$(date +%Y%m%d-%H%M%S)}"
-LB=~/local/batches; RB="$BUDDY/batches"
+MAXITEMS="${MAXITEMS:-10000}"
+LB="${LB:-$HOME/local/batches}"; RB="$BUDDY/batches"
 mkdir -p "$LB" "$RB"
 : > "$LB/.last"
-declare -A MEM
+declare -A MEM CNT NDONE
+
+# first pass: the number of jobs of every (set, L, theta), to know whether it has to be split
+count_base() { local B="mbldtc_${9}_L${1}_theta${2}_${STAMP}"; CNT[$B]=$(( ${CNT[$B]:-0} + 1 )); }
+each_job count_base
 
 make_run() {   # $1 = batch
 cat <<EOF
@@ -100,14 +109,19 @@ EOF
 
 add_job() {
   local L=$1 th=$2 r=$3 j=$4 eps=$5 mem=$6 hours=$7 tag=$8 set=$9
-  local B="mbldtc_${set}_L${L}_theta${th}_${STAMP}" d
+  local base="mbldtc_${set}_L${L}_theta${th}_${STAMP}" B d p np
+  B=$base
+  if (( ${CNT[$base]} > MAXITEMS )); then
+    p=$(( ${NDONE[$base]:-0} / MAXITEMS + 1 )); np=$(( (${CNT[$base]} + MAXITEMS - 1) / MAXITEMS )); B="${base}_p${p}"
+  fi
+  NDONE[$base]=$(( ${NDONE[$base]:-0} + 1 ))
   d="$LB/$B"
   if [[ -z "${MEM[$B]:-}" ]]; then
     MEM[$B]="$mem/$hours"
     mkdir -p "$d/log" "$RB/$B"
     cp "$POL_DIR/polfed_bands.jl" "$RB/$B/polfed_bands.jl"
     make_run "$B" > "$d/run.sh"; chmod +x "$d/run.sh"
-    make_jdl "$B" "$L" "$th" "$mem" "$hours" > "$d/job.jdl"
+    make_jdl "$B" "$L" "$th${p:+ (part $p/$np)}" "$mem" "$hours" > "$d/job.jdl"
     : > "$d/items.txt"
     echo "$B" >> "$LB/.last"
   elif [[ "${MEM[$B]}" != "$mem/$hours" ]]; then
