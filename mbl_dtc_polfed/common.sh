@@ -34,7 +34,7 @@ each_job() {
         [[ -n "${only:-}" && "$only" != "$j" ]] && continue
         a=$(( (j-1)*per )); (( a >= ne )) && break
         b=$(( a+per < ne ? a+per : ne ))
-        eps=$(IFS=','; echo "${E[*]:a:b-a}")
+        printf -v eps '%s,' "${E[@]:a:b-a}"; eps=${eps%,}   # no subshell per job (the cat of 60000 jobs was too slow)
         "$fn" "$L" "$th" "$r" "$j" "$eps" "$mem" "$hours" "mbldtc_${set}_L${L}_theta${th}_r${r}_${j}" "$set" "$parts"
       done
     done

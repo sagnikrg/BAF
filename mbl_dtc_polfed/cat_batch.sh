@@ -115,6 +115,7 @@ add_job() {
     p=$(( ${NDONE[$base]:-0} / MAXITEMS + 1 )); np=$(( (${CNT[$base]} + MAXITEMS - 1) / MAXITEMS )); B="${base}_p${p}"
   fi
   NDONE[$base]=$(( ${NDONE[$base]:-0} + 1 ))
+  [[ -n "${ONLY_PART:-}" && "${p:-1}" != "$ONLY_PART" ]] && return 0   # ONLY_PART=n: write only part n (L16/p1_theta0.0.sh)
   d="$LB/$B"
   if [[ -z "${MEM[$B]:-}" ]]; then
     MEM[$B]="$mem/$hours"
