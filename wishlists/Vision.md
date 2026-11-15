@@ -44,3 +44,10 @@ Figure numbers from the full draft of 2026-11-08. All random h, the noisy circui
 - **Status:** planned 2026-11-14 (Tony): V2's points again with more realisations; polfed_bands.jl now also stores the undersampled Lazarides lists, so these come from V2.2 only. Everything else uses V2 + V2.2 together; the Lazarides statistics only V2.2's realisations ("which I can live with"). Counts and cost to be set; realisations after V2's (and V2.1's) so they are new circuits.
 - **Where:** cluster (BAF)
 - **For:** the Lazarides diagrams, histograms, kurtosis and KL of Ch3 at L=14, 16 (undersampled), and more statistics at the V2 points of every Ch3 quantity.
+
+### V2.1s: raw Lazarides elements at L = 8, 10 (12 pending) on the V2.1 grid (kind 1, local)
+- **Status:** QUEUED 2026-11-15 (Tony: "directly go with the code... and queue the sim... for 8, 10... 2000 and 1000 realisations... V2.1 grid... theta 0.0, 0.1"); running on the laptop since 2026-11-15 12:30 (jobq laz_L8_L10, 6 lanes). L=12: BAF or local (n), Tony decides after L=8,10.
+- **Code:** mbl_dtc/eigen_laz.jl = eigen_win.jl with the Lazarides histograms replaced by the raw Float32 lists per realisation (Itr<n>/Lazarides/diag, pi_diag, offdiag, offdiag_k, pi_offdiag, pi_offdiag_k; header functions, phase ordered eigenvectors); jobs_laz_local.txt, run_laz_local.sh.
+- **Parameters:** theta 0.0, 0.1; the 30 eps of BAF/mbl_dtc_polfed/eps/v21 per theta; L=8 2000 (20 jobs x 100), L=10 1000 (40 jobs x 25) realisations.
+- **Cost (timed locally):** ~1 s (L=8), ~7 s (L=10) per (realisation, eps): ~33 + ~117 core-h, ~25 h on 6 lanes; ~11 + ~22 GB on E:/mbl_dtc/rawdata/lazarides/L8, L10.
+- **For:** the eigenstate-to-eigenstate fluctuations delta (H3) and per-element statistics of the Lazarides section of Ch3 at L=8..16 on one grid (lazarides-offdiag-dtc-plan).
