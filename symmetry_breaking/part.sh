@@ -1,5 +1,5 @@
 #!/bin/bash
-# Fine run of Chapter 7 (J.A.R.V.I.S., Tony 2026-11-17), one part at a time (every part < 10000 jobs, < 1 GB output except p4 ~6 GB):
+# Fine run of Chapter 7 (J.A.R.V.I.S., Tony 2026-11-17), one part at a time (every part < 10000 jobs, < 1 GB output except p4 ~9 GB):
 #   bash ~/local/BAF/symmetry_breaking/part.sh <1|2|3|4>
 #   p1 L=14 scan | p2 L=12 scan, fine g | p3 L=12 full + kb | p4 L=8, L=10
 # Download and clear the output of a part from /cephfs/user/sghosh/data/symmetry_breaking before the one after next goes in.

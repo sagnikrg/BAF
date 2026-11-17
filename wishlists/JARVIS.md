@@ -102,6 +102,6 @@ Quick ones: J1, J2 (laptop); J3a, J5, J6, J7 (cluster, each at most about 200 co
 - **p2** L=12 scan to 4000 on g=0.05:0.025:0.95 at theta=0 (37 points; fills the holes of the old points): 6492 jobs of 20, 4 GB, 10 h
 - **p3** L=12 full to 2000 on g=0.05:0.05:0.95 (examples to 5000), kb L=12 at the four examples to 5000: 8615 jobs of 8, 6 GB, 10 h
 - **p4** L=8 scan 20000 / full 2000 on the fine grid; L=10 doubled: scan 20000, full 10000 (grid + examples), kb 4000: 6662 jobs, 2 GB, 2-4 h
-- **Cost:** about 69000 core-h (measured s/realisation from the files on E:); output about 8 GB in all (4-10 KB per realisation)
+- **Cost:** about 69000 core-h (measured s/realisation from the files on E:); output about 10 GB in all (p1 0.06, p2 0.56, p3 0.64, p4 8.9 GB; 4-10 KB per realisation)
 - **For:** Figs. 7.7, 7.8 (`fig:gc_o2_profiles`, `fig:gc_o2_scan`), 7.9 (`fig:gc_kb`), 7.10 (`fig:gc_lambda_count`), and the odd times 7.11, 7.12
 - **Code changes:** run_sb.jl names g with 3 digits (0.825), batch names carry "(part n)"; checked locally with cat_batch (counts, names), not on BAF (Tony's call)
