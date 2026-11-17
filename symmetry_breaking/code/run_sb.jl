@@ -50,7 +50,7 @@ function o2_profile(lam, V, L)
     out1, outh
 end
 
-gs = string(round(g, digits=2))
+gs = string(round(g, digits=3))   # 3 digits: the fine grid has g = 0.825 etc. (2-digit names unchanged)
 name = "$(kind)/theta$(th)/g$(gs)"
 file = joinpath(outdir, "sb_L$(L)_$(kind)_theta$(th)_g$(gs)_r$(r0)-$(r1).hdf5")
 nr = r1 - r0 + 1

@@ -1,0 +1,28 @@
+# FINE part 3/4 (J.A.R.V.I.S., Tony 2026-11-17): L=12 full to 2000 on g=0.05:0.05:0.95 (order parameters along g), the four examples to 5000; kb L=12 at the four examples to 5000
+# kind L theta g r0 r1 block cpus memGB hours; r ranges = only the realisations not yet on E: (seed hashes r, so no duplicates)
+# blocks from the measured s/realisation (max): L12 scan 968 x20, full 2722 x8, kb 2529 x8, L14 42600 x1, all under the hours
+full 12 0.0 0.05 1001 5000 8 1 6 10
+full 12 0.0 0.1 1 2000 8 1 6 10
+full 12 0.0 0.15 1 2000 8 1 6 10
+full 12 0.0 0.2 1 2000 8 1 6 10
+full 12 0.0 0.25 1 2000 8 1 6 10
+full 12 0.0 0.3 1 2000 8 1 6 10
+full 12 0.0 0.35 1 2000 8 1 6 10
+full 12 0.0 0.4 1 2000 8 1 6 10
+full 12 0.0 0.45 1 2000 8 1 6 10
+full 12 0.0 0.5 1 2000 8 1 6 10
+full 12 0.0 0.55 1 2000 8 1 6 10
+full 12 0.0 0.6 1 2000 8 1 6 10
+full 12 0.0 0.65 1 2000 8 1 6 10
+full 12 0.0 0.7 1 2000 8 1 6 10
+full 12 0.0 0.75 1 2000 8 1 6 10
+full 12 0.0 0.8 1 2000 8 1 6 10
+full 12 0.0 0.85 1 2000 8 1 6 10
+full 12 0.0 0.9 1 2000 8 1 6 10
+full 12 0.0 0.95 1001 5000 8 1 6 10
+full 12 0.35 0.5 1001 5000 8 1 6 10
+full 12 0.75 0.5 301 5000 8 1 6 10
+kb 12 0.0 0.05 501 5000 8 1 6 10
+kb 12 0.0 0.95 501 5000 8 1 6 10
+kb 12 0.35 0.5 501 5000 8 1 6 10
+kb 12 0.75 0.5 301 5000 8 1 6 10

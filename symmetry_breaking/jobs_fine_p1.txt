@@ -1,0 +1,15 @@
+# FINE part 1/4 (J.A.R.V.I.S., Tony 2026-11-17): L=14 scan to 1000 (count, lambda fit L=8..14): theta=0 g=0.05,0.75,0.85,0.9,0.95 and the scrambling point
+# kind L theta g r0 r1 block cpus memGB hours; r ranges = only the realisations not yet on E: (seed hashes r, so no duplicates)
+# blocks from the measured s/realisation (max): L12 scan 968 x20, full 2722 x8, kb 2529 x8, L14 42600 x1, all under the hours
+scan 14 0.0 0.05 22 22 1 1 16 14
+scan 14 0.0 0.05 54 54 1 1 16 14
+scan 14 0.0 0.05 106 106 1 1 16 14
+scan 14 0.0 0.05 121 121 1 1 16 14
+scan 14 0.0 0.05 123 123 1 1 16 14
+scan 14 0.0 0.05 127 127 1 1 16 14
+scan 14 0.0 0.05 201 1000 1 1 16 14
+scan 14 0.0 0.75 1 1000 1 1 16 14
+scan 14 0.0 0.85 1 1000 1 1 16 14
+scan 14 0.0 0.9 1 1000 1 1 16 14
+scan 14 0.0 0.95 201 1000 1 1 16 14
+scan 14 0.35 0.5 201 1000 1 1 16 14

@@ -84,14 +84,24 @@ Quick ones: J1, J2 (laptop); J3a, J5, J6, J7 (cluster, each at most about 200 co
 2026-11-12 rerun scripted: symmetry_breaking/jobs_rerun.txt (1450 jobs: all missing L10 full/kb/scan; L12 full and kb at the examples; L12 scan only at g=0.75,0.85,0.95 and theta=0.35 - the PM scan points are done, count D=1 from the L=8,10,12 fit). Blocks halved, MaxRuntimeHours x3, L12 memory 6 GB, since the losses grew with the job length (L8 100%, L10 36%, L12 17%, L14 11% returned). Expected ~3000 core h. Optional after it: jobs_rerun_L14.txt (534 jobs, one realisation each, 16 GB, ~1600 core h).
 
 ### J9: L <= 12 for finer and cleaner Ch7 figures (Tony 2026-11-14: "open to more realisations")
-- **Status:** scripted 2026-11-14, `symmetry_breaking/jobs_p1.txt` (2313 jobs in 11 batches), to be queued by Tony
+- **Status:** SUPERSEDED by J11 (2026-11-17), never queued; was scripted 2026-11-14, `symmetry_breaking/jobs_p1.txt` (2313 jobs in 11 batches), to be queued by Tony
 - **Parameters:** fine g grid at theta=0, g=0.6,0.7,0.8,0.9: scan L=8 (20000), L=10 (10000), L=12 (4000), full L=8 (2000), L=10 (1300); kb L=12 at the four examples to 2000; full L=12 at the examples to 2000 (ergodic 1300)
 - **Cost:** about 5400 core-h (measured s/realisation from the 2026-11-14 return), jobs 1-6 h, MaxRuntimeHours 2-10
 - **For:** Figs. 7.7-7.11 (`fig:gc_o2_profiles`, `fig:gc_o2_scan`, `fig:gc_kb`, `fig:gc_lambda_count`, `fig:gc_odd_times`): the crossover of the count and of the odd times on a twice finer grid, L=12 field response and profiles with bands
 
 ### J10: L = 14 scan
-- **Status:** scripted 2026-11-14, `symmetry_breaking/jobs_p2_L14.txt` (2706 jobs, one realisation each, 2 batches)
+- **Status:** SUPERSEDED by J11 (2026-11-17), never queued; was scripted 2026-11-14, `symmetry_breaking/jobs_p2_L14.txt` (2706 jobs, one realisation each, 2 batches)
 - **Parameters:** g=0.95 and theta=0.35 g=0.5 to 1000; g=0.85 500, g=0.75 300 (new); g=0.05: the 6 lost jobs + 300
 - **Cost:** about 13500 core-h (median 5.0 h, p90 7.9 h, max 11.8 h per job; MaxRuntimeHours 14), 16 GB until measured
 - **For:** `fig:gc_lambda_count` (count at L=14), `fig:gc_odd_times` (fourth size along g)
 - **Memory:** before queuing, the measured peaks of the 2026-11-12 rerun (`condor_history $USER -limit 3000 -af JobBatchName MemoryUsage`) set the requests (x1.3)
+
+### J11: the fine Ch7 run (Tony 2026-11-17: "fine" 7.7, 7.9, 7.10, about two days at 2000 cores, no BAF test, straight in)
+- **Status:** scripted 2026-11-17, `symmetry_breaking/part.sh <1..4>` with `jobs_fine_p1..p4.txt`, to be queued by Tony one part at a time (download and clear each part's output)
+- **p1** L=14 scan to 1000 at theta=0 g=0.05, 0.75, 0.85, 0.9, 0.95 and theta=0.35 g=0.5: 5406 jobs, 1 realisation each, 16 GB, 14 h
+- **p2** L=12 scan to 4000 on g=0.05:0.025:0.95 at theta=0 (37 points; fills the holes of the old points): 6492 jobs of 20, 4 GB, 10 h
+- **p3** L=12 full to 2000 on g=0.05:0.05:0.95 (examples to 5000), kb L=12 at the four examples to 5000: 8615 jobs of 8, 6 GB, 10 h
+- **p4** L=8 scan 20000 / full 2000 on the fine grid; L=10 doubled: scan 20000, full 10000 (grid + examples), kb 4000: 6662 jobs, 2 GB, 2-4 h
+- **Cost:** about 69000 core-h (measured s/realisation from the files on E:); output about 8 GB in all (4-10 KB per realisation)
+- **For:** Figs. 7.7, 7.8 (`fig:gc_o2_profiles`, `fig:gc_o2_scan`), 7.9 (`fig:gc_kb`), 7.10 (`fig:gc_lambda_count`), and the odd times 7.11, 7.12
+- **Code changes:** run_sb.jl names g with 3 digits (0.825), batch names carry "(part n)"; checked locally with cat_batch (counts, names), not on BAF (Tony's call)

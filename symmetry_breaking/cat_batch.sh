@@ -61,7 +61,7 @@ cat <<EOF
 #Job Script to be submitted using HTCondor (one batch: all jobs of items.txt)
 
 Executable              = run.sh
-JobBatchName            = sb $2: L=$3, theta=$4
+JobBatchName            = sb $2: L=$3, theta=$4${PART:+ (part $PART)}
 Environment             = ClusterId=\$(ClusterId);Process=\$(Process);SubHost=(SUBHOST);
 
 Arguments               = "\$(kind) \$(L) \$(th) \$(g) \$(a) \$(b) \$(tag)"
