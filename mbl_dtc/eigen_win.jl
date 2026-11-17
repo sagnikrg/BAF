@@ -82,7 +82,7 @@ attrs=attributes(file)
 	attrs["[ENV] Code"] = read(@__FILE__, String)
 	attrs["[ENV] Modules"] = string(Pkg.installed())
 	attrs["[ENV] Julia Environment"] = "julia-1.9.4-08-08-24.tar.gz"
-	attrs["METADATA"] = (occursin("scr",set) ? "Scrambling reference point theta=1, g=0.5 (thesis wishlist V1.3)" : occursin("grid",set) ? "Old 0.025 grid of the epsilon scan, more realisations (thesis wishlist V1.2)" : "Window points of the epsilon scan (thesis wishlist V1)")*" of the MBL-DTC Unitary for L=$(L) and theta=$(theta), random h. The data contains the eigenvalues and antipodal gaps for each realisation, disorder averaged level spacing ratio, disorder averaged eigenstate entanglement entropy and disorder averaged histograms of the diagonal, pi-diagonal and various offdiagonal elements of the Lazarides diagram."
+	attrs["METADATA"] = (occursin("scr",set) ? "Scrambling reference point theta=1, g=0.5 (thesis wishlist V1.3)" : set=="v21" ? "The fine epsilon grid of V2.1 around the two crossovers, full ED (thesis wishlist V2.1 L=12, slopes at the crossings)" : occursin("grid",set) ? "Old 0.025 grid of the epsilon scan, more realisations (thesis wishlist V1.2)" : "Window points of the epsilon scan (thesis wishlist V1)")*" of the MBL-DTC Unitary for L=$(L) and theta=$(theta), random h. The data contains the eigenvalues and antipodal gaps for each realisation, disorder averaged level spacing ratio, disorder averaged eigenstate entanglement entropy and disorder averaged histograms of the diagonal, pi-diagonal and various offdiagonal elements of the Lazarides diagram."
 	attrs["Author"] = "Sagnik Ghosh"
 	attrs["Cluster"] = "BAF"
 	attrs["[Parameters] h"] = "2pi"

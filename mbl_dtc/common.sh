@@ -19,7 +19,8 @@ each_job() {
       win|test)          ef="$MBL_DIR/eps/theta_${th}.txt" ;;
       grid|testgrid)     ef="$MBL_DIR/eps/grid.txt" ;;
       scr|testscr)       ef="$MBL_DIR/eps/scr.txt" ;;
-      *) echo "ERROR: set must be win, grid, scr, test, testgrid or testscr, not $set" >&2; exit 1 ;;
+      v21)               ef="$MBL_DIR/eps/v21_theta_${th}.txt" ;;   # V2.1 fine grid of L=14,16 (BAF/mbl_dtc_polfed/eps/v21), full ED at L=12
+      *) echo "ERROR: set must be win, grid, scr, v21, test, testgrid or testscr, not $set" >&2; exit 1 ;;
     esac
     if [[ ! -f "$ef" ]]; then
       echo "ERROR: no epsilon list $ef" >&2; exit 1

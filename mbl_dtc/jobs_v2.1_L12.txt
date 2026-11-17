@@ -1,0 +1,6 @@
+# V2.1 L=12 (Tony 2026-11-17): full ED at L=12 on the fine grid of V2.1 (eps/v21_theta_0.0.txt, the 30 eps of L=14,16 at theta=0),
+# so that L=8..16 sit on the same points around both crossovers (slopes of <r> at the crossings, Ch2 Sec. fss); set v21, own file names.
+# One job = one realisation x 30 eps (~5.5 h on BAF from V1.3: 7.6 h for 41 eps); 500 jobs, ~2.8k core-h. No BAF test (Tony).
+#   bash ~/local/BAF/mbl_dtc/BAF.sh jobs_v2.1_L12.txt
+# L   theta  itr_per_job  njobs   memory_GB  from  set
+ 12   0.0    1            500     4          1     v21
