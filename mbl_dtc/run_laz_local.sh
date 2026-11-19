@@ -17,7 +17,7 @@ one() {
   f="mbldtc_laz_L${L}_theta_${th}_${job}"; log="$OUT/logs/$f.log"
   grep -q maxrss_MB "$log" 2>/dev/null && return 0
   rm -f "$OUT/L$L/$f.hdf5"
-  cd "$OUT/L$L" && julia +1.9.4 --startup-file=no "$HERE/eigen_laz.jl" $L $th $itr $job $eps laz > "$log" 2>&1
+  cd "$OUT/L$L" && julia +1.9.4 --startup-file=no "$HERE/eigen_laz.jl" $L $th $itr $job $eps laz >| "$log" 2>&1
   echo "$(date '+%F %T') $f exit $?" >> "$OUT/logs/progress.txt"
 }
 export -f one
