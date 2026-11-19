@@ -6,6 +6,7 @@
 #   bash run_laz_local.sh [NLANES] [LIST]   (default 6, jobs_laz_local.txt; lines "#R ..." are the later runs, skipped)
 # A line "WAIT <file stem>" holds its lane until that job (started elsewhere) has finished. Calls jobq done laz_L8_L10 at the end.
 NL=${1:-6}
+JQ=${3:-laz_L8_L10}   # jobq name to close at the end
 LIST="${2:-$(cd "$(dirname "$0")" && pwd)/jobs_laz_local.txt}"
 HERE="$(cd "$(dirname "$0")" && pwd)"
 OUT=/e/mbl_dtc/rawdata/lazarides
@@ -18,10 +19,10 @@ one() {
   f="mbldtc_laz_L${L}_theta_${th}_${job}"; log="$OUT/logs/$f.log"
   grep -q maxrss_MB "$log" 2>/dev/null && return 0
   mkdir -p "$RAW/L$L/theta_$th"; rm -f "$RAW/L$L/theta_$th/$f.hdf5"
-  cd "$RAW/L$L/theta_$th" && julia +1.9.4 --startup-file=no "$HERE/eigen_laz.jl" $L $th $itr $job $eps laz >| "$log" 2>&1
+  cd "$RAW/L$L/theta_$th" && julia --startup-file=no "$HERE/eigen_laz.jl" $L $th $itr $job $eps laz >| "$log" 2>&1
   echo "$(date '+%F %T') $f exit $?" >> "$OUT/logs/progress.txt"
 }
 export -f one
 grep -v '^\s*#' "$LIST" | grep -v '^\s*$' | xargs -d '\n' -P "$NL" -I{} bash -c 'one "$@"' _ {}
 echo "$(date '+%F %T') all done" >> "$OUT/logs/progress.txt"
-powershell -NoProfile -ExecutionPolicy Bypass -File 'C:\Users\Ritam\.jobq\jobq.ps1' done laz_L8_L10
+powershell -NoProfile -ExecutionPolicy Bypass -File 'C:\Users\Ritam\.jobq\jobq.ps1' done $JQ
