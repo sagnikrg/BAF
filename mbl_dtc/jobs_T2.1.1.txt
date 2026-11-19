@@ -1,0 +1,25 @@
+# T2.1.1 (Tony 2026-11-19, simulation plan): L=12 to the realisation cap for #_1 (eig) and #_2 (Lazarides diagonals) at theta=0.0 (2000)
+# and theta=0.1, 0.2, 0.3 (1500), on the points that exist now (0.025 grid "grid", 41 eps; window points "win", eps/theta_<theta>.txt).
+# eigen_win.jl as V1.2/V1.3 (eig, <r>, EE, gaps, Lazarides histograms); one job = one realisation x all eps of the set; no BAF test (Tony).
+# Realisations = (cap - have now, + the diag shortfall of the grid points at 0.2: 3, at 0.3: 18) x 1.07, rounded up (Tony: 7% spare for corrupt files).
+# Job numbers continue after the files on E: (grid/win theta=0: 2000, theta>0: 1000).
+#   theta  set   have  need  +7%   jobs
+#   0.0    grid  1991     9    10  2001-2010
+#   0.0    win   1999     1     2  2001-2002
+#   0.1    grid   998   502   538  1001-1538
+#   0.1    win    999   501   537  1001-1537
+#   0.2    grid   995   508   544  1001-1544
+#   0.2    win   1000   500   535  1001-1535
+#   0.3    grid   960   558   598  1001-1598
+#   0.3    win   1000   500   535  1001-1535
+# 3299 jobs in 8 batches (one per set and theta); grid ~7.6 h per job, win ~0.19 h per eps; ~16.2k core-h.
+#   bash ~/local/BAF/mbl_dtc/BAF.sh jobs_T2.1.1.txt
+# L   theta  itr_per_job  njobs   memory_GB  from  set
+ 12   0.0    1            2010    4          2001  grid
+ 12   0.0    1            2002    4          2001  win
+ 12   0.1    1            1538    4          1001  grid
+ 12   0.1    1            1537    4          1001  win
+ 12   0.2    1            1544    4          1001  grid
+ 12   0.2    1            1535    4          1001  win
+ 12   0.3    1            1598    4          1001  grid
+ 12   0.3    1            1535    4          1001  win
