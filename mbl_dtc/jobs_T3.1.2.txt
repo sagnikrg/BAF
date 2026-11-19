@@ -1,0 +1,8 @@
+# T3.1.2 alone (L=10 fine theta scan), see jobs_T3.txt
+# L   theta  itr_per_job  njobs   memory_GB  from  set
+ 10   0.025  50           40      2          1     t3
+ 10   0.075  50           40      2          1     t3
+ 10   0.125  50           40      2          1     t3
+ 10   0.175  50           40      2          1     t3
+ 10   0.225  50           40      2          1     t3
+ 10   0.275  50           40      2          1     t3
