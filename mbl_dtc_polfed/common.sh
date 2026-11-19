@@ -7,7 +7,9 @@
 #   hours        : MaxRuntimeHours of the jobs
 #   set          : polfed (default), test, or v21 (V2.1, its own eps lists eps/v21/L<L>_theta_<theta>.txt): names the files
 #                  mbldtc_<set>_..., so a test or V2.1 never overwrites V2 data
-#   part         : only this part of each realisation (default all; check.sh writes one line per missing job with it)
+#   part         : only this part of each realisation (default all, or '-'; check.sh writes one line per missing job with it)
+#   eps          : optional 10th column, an explicit comma separated epsilon list instead of the file (T2.2/T2.3, Tony 2026-11-19:
+#                  per point realisation counts; each line of a theta has its own r block, so the tags never collide)
 #
 # each_job <function>  calls  <function> L theta r part eps mem hours tag set parts   for every job
 
@@ -19,15 +21,20 @@ TARBALL="${TARBALL:-julia-1.11.1-polfed.tar.gz}"
 JULIA_MODULE="${JULIA_MODULE:-julia/1.11.1}"
 
 each_job() {
-  local fn=$1 L th nr parts mem hours from set only ef ne per j a b eps r
-  while read -r L th nr parts mem hours from set only _; do
+  local fn=$1 L th nr parts mem hours from set only xeps ef ne per j a b eps r
+  while read -r L th nr parts mem hours from set only xeps _; do
     [[ -z "${L:-}" || "$L" == \#* ]] && continue
     from=${from:-1}; [[ "$from" =~ ^[0-9]+$ ]] || from=1
     set=${set:-polfed}
-    [[ $set == polfed || $set == test || $set == v21 ]] || { echo "ERROR: set must be polfed, test or v21, not $set" >&2; exit 1; }
+    [[ $set == polfed || $set == test || $set == v21 || $set == t22 || $set == t23 ]] || { echo "ERROR: set must be polfed, test, v21, t22 or t23, not $set" >&2; exit 1; }
+    [[ "${only:-}" == "-" ]] && only=
     ef="$POL_DIR/eps/L${L}_theta_${th}.txt"; [[ $set == v21 ]] && ef="$POL_DIR/eps/v21/L${L}_theta_${th}.txt"
-    [[ -f "$ef" ]] || { echo "ERROR: no epsilon list $ef" >&2; exit 1; }
-    IFS=',' read -r -a E <<< "$(tr -d ' \r\n' < "$ef")"
+    if [[ -n "${xeps:-}" ]]; then
+      IFS=',' read -r -a E <<< "${xeps//$'\r'/}"
+    else
+      [[ -f "$ef" ]] || { echo "ERROR: no epsilon list $ef" >&2; exit 1; }
+      IFS=',' read -r -a E <<< "$(tr -d ' \r\n' < "$ef")"
+    fi
     ne=${#E[@]}; per=$(( (ne + parts - 1) / parts ))
     for (( r=from; r<=nr; r++ )); do
       for (( j=1; j<=parts; j++ )); do

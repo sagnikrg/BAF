@@ -1,0 +1,16 @@
+# T2.2 (Tony 2026-11-19, simulation plan): L=14 fine grid (V2 + V2.1 points) up to eig 2000 and Lazarides diagonals 1000 (#_1, #_2),
+# plus theta=0 eps 0.35, 0.65, 0.95 (new) and theta=1 g=0.5; other L14 points ignored. polfed_bands.jl (two bands, raw Lazarides lists), set t22.
+# New realisations per point = max(2000 - eig, 1000 - diag); V2 stored no diagonals. r from 3001 per theta, one r block per line (seed 100000 L + r).
+# One job = one realisation x <= 15 eps (0.73 h per eps). 7598 jobs, ~30k core-h.
+#   bash ~/local/BAF/mbl_dtc_polfed/BAF.sh jobs_T2.2.txt --dry   then without --dry
+# L   theta  realisations  parts  memory_GB  hours  from  set  part  eps
+ 14   0.0    5000   1      2          24     3001  t22   -     0.35,0.65,0.95
+ 14   0.0    6021   1      2          24     5001  t22   -     0.025,0.05,0.155,0.5
+ 14   0.0    6111   1      2          24     6022  t22   -     0.09,0.11,0.12,0.14,0.15,0.16,0.17,0.19,0.2,0.22,0.23
+ 14   0.0    6189   1      2          24     6112  t22   -     0.73,0.74,0.75,0.77,0.78,0.79,0.81,0.82,0.83,0.85,0.86
+ 14   0.1    4000   1      2          24     3001  t22   -     0.18,0.5,0.78
+ 14   0.1    4214   1      2          24     4001  t22   -     0.04,0.05,0.07,0.08,0.1,0.11,0.13,0.14,0.16,0.17
+ 14   0.1    4409   1      2          24     4215  t22   -     0.8,0.81,0.83,0.84,0.85,0.87,0.88,0.89,0.91,0.92,0.93
+ 14   0.2    4000   1      2          24     3001  t22   -     0.01,0.03,0.05,0.07,0.09,0.12,0.5,0.88,0.92,0.95,0.98
+ 14   0.3    4000   1      2          24     3001  t22   -     0.01,0.025,0.05,0.1,0.2,0.5,0.8,0.9,0.95,0.98
+ 14   1.0    4000   1      2          24     3001  t22   -     0.5
