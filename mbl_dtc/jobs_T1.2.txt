@@ -1,4 +1,4 @@
-# T1.2.1 + T1.2.2 (Tony 2026-11-19, simulation plan): L=10 to the cap; eigen_laz.jl, L theta itr job eps; job numbers from 101 (1-100 are the V2.1 laz runs, incl. unfinished theta=0.1 files)
+# T1.2.1 + T1.2.2 (Tony 2026-11-19, simulation plan): L=10 to the cap; eigen_win.jl (histograms + full diag/pi_diag lists, Tony 2026-11-19), L theta itr job eps; job numbers from 101 (1-100 are the V2.1 laz runs, incl. unfinished theta=0.1 files)
 # run: bash run_htc.sh jobs_T1.2.txt T1_2_L10   (dispatcher: lanes from ~/.jobq/lanes_T1.2, RAM <= 75%)
 # T1.2.1: L=10 #_1 (eig to the cap; #_2 = 0): theta=0 24 V2.1 pts +3000, theta=0.1 24 pts +1720, theta=0 18 V1 window pts +20
 10 0.0 10 101 0.09,0.11,0.12,0.13,0.14,0.16,0.17,0.18,0.19,0.21,0.22,0.23,0.72,0.73,0.74,0.76,0.77,0.78,0.79,0.81,0.82,0.83,0.84,0.86

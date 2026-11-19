@@ -1,4 +1,5 @@
 #########################################################################
+# 2026-11-19 (Tony, T list): also stores the full diag and pi_diag of the Lazarides diagram per realisation (Itr<n>/Lazarides), for delta.
 # Computing Eigenstatistics of the MBL-DTC Unitary (random h)
 # window points of the epsilon scan (thesis wishlist V1, option B)
 #
@@ -82,7 +83,7 @@ attrs=attributes(file)
 	attrs["[ENV] Code"] = read(@__FILE__, String)
 	attrs["[ENV] Modules"] = string(Pkg.installed())
 	attrs["[ENV] Julia Environment"] = "julia-1.9.4-08-08-24.tar.gz"
-	attrs["METADATA"] = (occursin("scr",set) ? "Scrambling reference point theta=1, g=0.5 (thesis wishlist V1.3)" : set=="v21" ? "The fine epsilon grid of V2.1 around the two crossovers, full ED (thesis wishlist V2.1 L=12, slopes at the crossings)" : set=="t3" ? "Fine theta scan T3: 9 epsilon around each of the two crossovers at a theta between the 0.05 steps, full ED (phase boundary)" : occursin("grid",set) ? "Old 0.025 grid of the epsilon scan, more realisations (thesis wishlist V1.2)" : "Window points of the epsilon scan (thesis wishlist V1)")*" of the MBL-DTC Unitary for L=$(L) and theta=$(theta), random h. The data contains the eigenvalues and antipodal gaps for each realisation, disorder averaged level spacing ratio, disorder averaged eigenstate entanglement entropy and disorder averaged histograms of the diagonal, pi-diagonal and various offdiagonal elements of the Lazarides diagram."
+	attrs["METADATA"] = (occursin("scr",set) ? "Scrambling reference point theta=1, g=0.5 (thesis wishlist V1.3)" : set=="v21" ? "The fine epsilon grid of V2.1 around the two crossovers, full ED (thesis wishlist V2.1 L=12, slopes at the crossings)" : set=="laz" ? "The V2.1 epsilon grid at small L (T1.2, local)" : set=="t3" ? "Fine theta scan T3: 9 epsilon around each of the two crossovers at a theta between the 0.05 steps, full ED (phase boundary)" : occursin("grid",set) ? "Old 0.025 grid of the epsilon scan, more realisations (thesis wishlist V1.2)" : "Window points of the epsilon scan (thesis wishlist V1)")*" of the MBL-DTC Unitary for L=$(L) and theta=$(theta), random h. The data contains the eigenvalues and antipodal gaps for each realisation, disorder averaged level spacing ratio, disorder averaged eigenstate entanglement entropy and disorder averaged histograms of the diagonal, pi-diagonal and various offdiagonal elements of the Lazarides diagram, and (from 2026-11-19) the full diagonal and pi-diagonal of the Lazarides diagram per realisation in quasienergy order (Itr<n>/Lazarides/diag, pi_diag)."
 	attrs["Author"] = "Sagnik Ghosh"
 	attrs["Cluster"] = "BAF"
 	attrs["[Parameters] h"] = "2pi"
@@ -171,6 +172,11 @@ for i in 1:length(epsilonlist)
 			histogram_offdiag[j,:] .+=histgram_interval(offdiag(Corr,j), -1:0.001:1)
 			histogram_pi_offdiag[j,:] .+=histgram_interval(pi_offdiag(Corr,j), -1:0.001:1)
 		end
+
+		# the full diagonal and pi diagonal in quasienergy order, per realisation (Tony 2026-11-19, T list): for the
+		# eigenstate to eigenstate fluctuations delta, delta_pi, which the histograms cannot give; same layout as eigen_laz.jl
+		file[eg*"/Itr$(itr)/Lazarides/diag"]=Float32.(diag(Corr))
+		file[eg*"/Itr$(itr)/Lazarides/pi_diag"]=Float32.(pi_diag(Corr))
 
 		## Itr loop ends here
 	end
