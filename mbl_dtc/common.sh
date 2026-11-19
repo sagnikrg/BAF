@@ -6,13 +6,14 @@
 #   or scr (the scrambling reference point, eps/scr.txt, V1.3);
 #   test / testgrid: the same lists for jobs_test.txt, with their own file names, so a test never overwrites data;
 #   it names the files mbldtc_<set>_L<L>_theta_<theta>_<job>.hdf5, so the two sets never collide
+# optional 8th column 'epsfile': another epsilon list in eps/ for this line (T4.1, Tony 2026-11-19: part of a set's points)
 
 MBL_DIR="$(cd "$(dirname "${BASH_SOURCE[0]}")" && pwd)"
 JOBS="${JOBS:-$MBL_DIR/jobs.txt}"
 
 each_job() {
-  local fn=$1 L th itr nj mem from set eps i ef
-  while read -r L th itr nj mem from set _; do
+  local fn=$1 L th itr nj mem from set xef eps i ef
+  while read -r L th itr nj mem from set xef _; do
     [[ -z "${L:-}" || "$L" == \#* ]] && continue
     set=${set:-win}
     case $set in
@@ -22,6 +23,7 @@ each_job() {
       v21)               ef="$MBL_DIR/eps/v21_theta_${th}.txt" ;;   # V2.1 fine grid of L=14,16 (BAF/mbl_dtc_polfed/eps/v21), full ED at L=12
       *) echo "ERROR: set must be win, grid, scr, v21, test, testgrid or testscr, not $set" >&2; exit 1 ;;
     esac
+    [[ -n "${xef:-}" ]] && ef="$MBL_DIR/eps/$xef"
     if [[ ! -f "$ef" ]]; then
       echo "ERROR: no epsilon list $ef" >&2; exit 1
     fi
