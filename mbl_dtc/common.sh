@@ -20,8 +20,9 @@ each_job() {
       win|test)          ef="$MBL_DIR/eps/theta_${th}.txt" ;;
       grid|testgrid)     ef="$MBL_DIR/eps/grid.txt" ;;
       scr|testscr)       ef="$MBL_DIR/eps/scr.txt" ;;
-      v21)               ef="$MBL_DIR/eps/v21_theta_${th}.txt" ;;   # V2.1 fine grid of L=14,16 (BAF/mbl_dtc_polfed/eps/v21), full ED at L=12
-      *) echo "ERROR: set must be win, grid, scr, v21, test, testgrid or testscr, not $set" >&2; exit 1 ;;
+      v21)               ef="$MBL_DIR/eps/v21_theta_${th}.txt" ;;
+      t3)                ef="$MBL_DIR/eps/t3_theta_${th}.txt" ;;    # T3 fine theta scan (Tony 2026-11-19): 9 eps around each crossing   # V2.1 fine grid of L=14,16 (BAF/mbl_dtc_polfed/eps/v21), full ED at L=12
+      *) echo "ERROR: set must be win, grid, scr, v21, t3, test, testgrid or testscr, not $set" >&2; exit 1 ;;
     esac
     [[ -n "${xef:-}" ]] && ef="$MBL_DIR/eps/$xef"
     if [[ ! -f "$ef" ]]; then
