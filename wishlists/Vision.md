@@ -51,3 +51,6 @@ Figure numbers from the full draft of 2026-11-08. All random h, the noisy circui
 - **Parameters:** theta 0.0, 0.1; the 30 eps of BAF/mbl_dtc_polfed/eps/v21 per theta; L=8 2000 (20 jobs x 100), L=10 1000 (40 jobs x 25) realisations.
 - **Cost (timed locally):** ~1 s (L=8), ~7 s (L=10) per (realisation, eps): ~33 + ~117 core-h, ~25 h on 6 lanes; ~11 + ~22 GB on E:/mbl_dtc/rawdata/lazarides/L8, L10.
 - **For:** the eigenstate-to-eigenstate fluctuations delta (H3) and per-element statistics of the Lazarides section of Ch3 at L=8..16 on one grid (lazarides-offdiag-dtc-plan).
+
+### V-h0: rerun of the h = 0 sets on the current circuit (kept for the very end)
+- **Status:** parked (Tony 2026-11-19): eigen_h0 L=8, 10, 12 theta 0 and L=12 theta 0.3 are the older brickwall and still in use (h=0 panels of Fig. 2.4, the h=0 portrait); the odd theta h=0 rows are thin (~420/150/13 at L=8/10/12). Rerun only if time at the very end. Not part of the T list (BAF/../.jobq plan).
