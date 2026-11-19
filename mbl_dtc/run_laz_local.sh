@@ -9,15 +9,16 @@ NL=${1:-6}
 LIST="${2:-$(cd "$(dirname "$0")" && pwd)/jobs_laz_local.txt}"
 HERE="$(cd "$(dirname "$0")" && pwd)"
 OUT=/e/mbl_dtc/rawdata/lazarides
-mkdir -p "$OUT/L8" "$OUT/L10" "$OUT/logs"
-export OPENBLAS_NUM_THREADS=1 JULIA_NUM_THREADS=1 OMP_NUM_THREADS=1 HERE OUT
+RAW=/e/mbl_dtc/rawdata/eigen   # output in $RAW/L<L>/theta_<th> (2026-11-19 layout), logs stay in $OUT/logs
+mkdir -p "$OUT/logs"
+export OPENBLAS_NUM_THREADS=1 JULIA_NUM_THREADS=1 OMP_NUM_THREADS=1 HERE OUT RAW
 one() {
   if [[ $1 == WAIT* ]]; then until grep -q maxrss_MB "$OUT/logs/${1#WAIT }.log" 2>/dev/null; do sleep 30; done; return 0; fi
   read -r L th itr job eps <<< "$1"
   f="mbldtc_laz_L${L}_theta_${th}_${job}"; log="$OUT/logs/$f.log"
   grep -q maxrss_MB "$log" 2>/dev/null && return 0
-  rm -f "$OUT/L$L/$f.hdf5"
-  cd "$OUT/L$L" && julia +1.9.4 --startup-file=no "$HERE/eigen_laz.jl" $L $th $itr $job $eps laz >| "$log" 2>&1
+  mkdir -p "$RAW/L$L/theta_$th"; rm -f "$RAW/L$L/theta_$th/$f.hdf5"
+  cd "$RAW/L$L/theta_$th" && julia +1.9.4 --startup-file=no "$HERE/eigen_laz.jl" $L $th $itr $job $eps laz >| "$log" 2>&1
   echo "$(date '+%F %T') $f exit $?" >> "$OUT/logs/progress.txt"
 }
 export -f one
