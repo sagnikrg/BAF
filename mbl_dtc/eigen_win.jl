@@ -53,6 +53,19 @@ function LazadiresDiagram(EigA, Eigvec)
     return real.(conj(transpose(EigvecNew))*Xi*EigvecNew)
 end
 
+# Fast binning (Tony 2026-11-20): the same counts as histgram_interval of the header (bins a <= x < b on the same
+# edges), but by searchsortedlast instead of a scan over all 2000 bins with a push per element; at L=8 the old
+# binning was 2/3 of the run time. Checked bit identical on L=8 (5 realisations) and L=10 (2) of all 34 lists,
+# plus values on, next to and outside the edges (scratchpad test_fastbin.jl, 2026-11-20).
+function fast_hist(data, intervals)
+    n=zeros(Int,length(intervals)-1); nb=length(n)
+    for x in data
+        i=searchsortedlast(intervals, x)
+        (1 <= i <= nb && intervals[i] <= x < intervals[i+1]) && (n[i]+=1)
+    end
+    return n
+end
+
 L=parse(Int, ARGS[1]);
 thetastr=ARGS[2];
 theta=parse(Float64, thetastr);
@@ -165,12 +178,12 @@ for i in 1:length(epsilonlist)
 
 		Corr=LazadiresDiagram(eigA,eigvecA);
 
-		histogram_diag .+=histgram_interval(diag(Corr), -1:0.001:1)
-		histogram_pi_diag .+=histgram_interval(pi_diag(Corr), -1:0.001:1)
+		histogram_diag .+=fast_hist(diag(Corr), -1:0.001:1)
+		histogram_pi_diag .+=fast_hist(pi_diag(Corr), -1:0.001:1)
 
 		for j in 1:16
-			histogram_offdiag[j,:] .+=histgram_interval(offdiag(Corr,j), -1:0.001:1)
-			histogram_pi_offdiag[j,:] .+=histgram_interval(pi_offdiag(Corr,j), -1:0.001:1)
+			histogram_offdiag[j,:] .+=fast_hist(offdiag(Corr,j), -1:0.001:1)
+			histogram_pi_offdiag[j,:] .+=fast_hist(pi_offdiag(Corr,j), -1:0.001:1)
 		end
 
 		# the full diagonal and pi diagonal in quasienergy order, per realisation (Tony 2026-11-19, T list): for the
