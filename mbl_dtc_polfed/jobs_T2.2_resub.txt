@@ -1,0 +1,13 @@
+# T2.2 resubmission (Tony 2026-11-20): the theta 0.0, 0.1, 0.2 lines of jobs_T2.2.txt, which never showed up in condor_q
+# (theta 0.3 and 1.0 ran). Same lines, same r blocks and tags as jobs_T2.2.txt, so nothing collides with what is on E:.
+# 5598 jobs in 3 batches (theta 0.0: 3189, 0.1: 1409, 0.2: 1000), ~15k core-h.
+#   bash ~/local/BAF/mbl_dtc_polfed/BAF.sh jobs_T2.2_resub.txt   (BAF.sh pulls both copies itself; --dry only writes the batches)
+# L   theta  realisations  parts  memory_GB  hours  from  set  part  eps
+ 14   0.0    5000   1      2          24     3001  t22   -     0.35,0.65,0.95
+ 14   0.0    6021   1      2          24     5001  t22   -     0.025,0.05,0.155,0.5
+ 14   0.0    6111   1      2          24     6022  t22   -     0.09,0.11,0.12,0.14,0.15,0.16,0.17,0.19,0.2,0.22,0.23
+ 14   0.0    6189   1      2          24     6112  t22   -     0.73,0.74,0.75,0.77,0.78,0.79,0.81,0.82,0.83,0.85,0.86
+ 14   0.1    4000   1      2          24     3001  t22   -     0.18,0.5,0.78
+ 14   0.1    4214   1      2          24     4001  t22   -     0.04,0.05,0.07,0.08,0.1,0.11,0.13,0.14,0.16,0.17
+ 14   0.1    4409   1      2          24     4215  t22   -     0.8,0.81,0.83,0.84,0.85,0.87,0.88,0.89,0.91,0.92,0.93
+ 14   0.2    4000   1      2          24     3001  t22   -     0.01,0.03,0.05,0.07,0.09,0.12,0.5,0.88,0.92,0.95,0.98
