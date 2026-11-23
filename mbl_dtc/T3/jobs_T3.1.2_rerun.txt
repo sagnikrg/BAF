@@ -1,5 +1,5 @@
 # T3.1.2 RERUN (Tony 2026-11-23): the L=10 fine theta jobs of jobs_T3.1.2.txt with no output on E: (missing) or a truncated file.
-# Same job numbers (the truncated files are deleted before the new ones come back). No log copy to $BUDDY (rule of 2026-11-23).
+# Same job numbers (the truncated files are deleted before the new ones come back). No log copy to $BUDDY (rule of 2026-11-23). +7% spare (Tony): jobs 41-43 per theta (2150 per point).
 # Submit: bash ~/local/BAF/mbl_dtc/T3/submit_T3.1.2_rerun.sh
 # L   theta  itr_per_job  njobs(last job)  memory_GB  from  set
  10   0.025  50            16              2           16   t3
@@ -25,3 +25,9 @@
  10   0.275  50            31              2           31   t3
  10   0.275  50            33              2           33   t3
  10   0.275  50            38              2           38   t3
+ 10   0.025  50            43              2           41   t3
+ 10   0.075  50            43              2           41   t3
+ 10   0.125  50            43              2           41   t3
+ 10   0.175  50            43              2           41   t3
+ 10   0.225  50            43              2           41   t3
+ 10   0.275  50            43              2           41   t3
