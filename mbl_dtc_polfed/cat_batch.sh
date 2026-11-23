@@ -60,8 +60,8 @@ ec=\$?; echo "julia exit code \$ec" >> julia_\$tag.log
 rm polfed_bands.jl
 
 # Clean up the working directory
-mkdir -p /cephfs/user/sghosh/data/mbl_dtc_polfed/logs
-cp julia_\$tag.log /cephfs/user/sghosh/data/mbl_dtc_polfed/logs/.
+# no log copy to the cluster drive any more (Tony 2026-11-23: its file-number limit); the tail goes to the job's out file in ~/local/batches/<B>/log
+tail -3 julia_\$tag.log
 cp *hdf5 /cephfs/user/sghosh/data/mbl_dtc_polfed/.
 rm -rf *
 exit \$ec   # the job exit code is julia's (not that of the last cp/rm)
