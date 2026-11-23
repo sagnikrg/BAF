@@ -105,3 +105,4 @@ Quick ones: J1, J2 (laptop); J3a, J5, J6, J7 (cluster, each at most about 200 co
 - **Cost:** about 69000 core-h (measured s/realisation from the files on E:); output about 10 GB in all (p1 0.06, p2 0.56, p3 0.64, p4 8.9 GB; 4-10 KB per realisation)
 - **For:** Figs. 7.7, 7.8 (`fig:gc_o2_profiles`, `fig:gc_o2_scan`), 7.9 (`fig:gc_kb`), 7.10 (`fig:gc_lambda_count`), and the odd times 7.11, 7.12
 - **Code changes:** run_sb.jl names g with 3 digits (0.825), batch names carry "(part n)"; checked locally with cat_batch (counts, names), not on BAF (Tony's call)
+- **2026-11-23 return:** 25141 of 27175 files on E:/symmetry_breaking; 2034 lost because $BUDDY hit its file-number limit (L10 full 1766, L10 kb 90, L12 kb theta=0.75 120, L14 scan 58). Rerun: `part.sh rerun` (jobs_fine_rerun.txt, ~1815 core-h), queued first by Tony.

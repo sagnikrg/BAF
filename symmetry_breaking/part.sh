@@ -1,6 +1,6 @@
 #!/bin/bash
 # Fine run of Chapter 7 (J.A.R.V.I.S., Tony 2026-11-17), one part at a time (every part < 10000 jobs, < 1 GB output except p4 ~9 GB):
-#   bash ~/local/BAF/symmetry_breaking/part.sh <1|2|3|4>
+#   bash ~/local/BAF/symmetry_breaking/part.sh <1|2|3|4|rerun>   (rerun = jobs_fine_rerun.txt, the lost output of 2026-11-23)
 #   p1 L=14 scan | p2 L=12 scan, fine g | p3 L=12 full + kb | p4 L=8, L=10
 # Download and clear the output of a part from /cephfs/user/sghosh/data/symmetry_breaking before the one after next goes in.
 # 1. stops if this part is already in condor_q (JobBatchName "... (part <n>)")
@@ -8,7 +8,7 @@
 # 3. guard: dry-run of every batch, 7 arguments per job, one job per item; then condor_submit.sh (3 retries per batch)
 set -uo pipefail
 here=$(cd "$(dirname "$0")" && pwd); P="${1:?part 1..4}"
-J="$here/jobs_fine_p$P.txt"; [[ -f "$J" ]] || { echo "STOP: no $J" >&2; exit 1; }
+J="$here/jobs_fine_p$P.txt"; [[ -f "$J" ]] || J="$here/jobs_fine_$P.txt"; [[ -f "$J" ]] || { echo "STOP: no jobs_fine_p$P.txt or jobs_fine_$P.txt" >&2; exit 1; }
 
 if condor_q -batch 2>/dev/null | grep -q "^.*sb .*(part $P)"; then echo "STOP: part $P is already in condor_q"; exit 0; fi
 
