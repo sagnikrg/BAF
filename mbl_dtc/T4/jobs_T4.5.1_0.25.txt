@@ -1,0 +1,4 @@
+# T4.5.1_0.25 (Tony 2026-11-23, simulation plan): theta 0.25 grid, after T4.3: delta 1000 -> 2000, +1070 (+7%).
+# 1070 jobs, one batch. eigen_win.jl; one job = 1 realisation(s) x all eps of the line. Submit: bash ~/local/BAF/mbl_dtc/T4/submit_T4.5.1_0.25.sh
+# L   theta  itr_per_job  njobs(last job)  memory_GB  from  set   [epsfile]
+ 12   0.25   1      2140  4    1071  grid

@@ -1,0 +1,5 @@
+# T4.6.1 all batches (each has its own job file and submit script in T4/); read by grid_tally.jl. Do not submit this file, use T4/submit_*.sh.
+# L   theta  itr_per_job  njobs(last job)  memory_GB  from  set   [epsfile]
+ 12   0.0    1      4150  4    2011  grid
+ 12   0.0    1      4142  4    2003  win
+ 12   0.0    1      4280  4    2141  v21   v21_theta_0.0_offgrid.txt

@@ -1,0 +1,4 @@
+# T4.4 (Tony 2026-11-23, simulation plan): theta 1.0 g 0.5, delta 0 -> 2000: 2140 realisations (+7%), 20 per job, jobs 101-207 after the 100 of V1.3.
+# 107 jobs, one batch. eigen_win.jl; one job = 20 realisation(s) x all eps of the line. Submit: bash ~/local/BAF/mbl_dtc/T4/submit_T4.4.sh
+# L   theta  itr_per_job  njobs(last job)  memory_GB  from  set   [epsfile]
+ 12   1.0    20      207  4     101  scr

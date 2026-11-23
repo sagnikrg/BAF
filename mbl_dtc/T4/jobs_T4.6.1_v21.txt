@@ -1,0 +1,4 @@
+# T4.6.1_v21 (Tony 2026-11-23, simulation plan): theta 0 V2.1 off-grid (24 eps), after T4.1: 2000 -> 4000: +2140 (+7%).
+# 2140 jobs, one batch. eigen_win.jl; one job = 1 realisation(s) x all eps of the line. Submit: bash ~/local/BAF/mbl_dtc/T4/submit_T4.6.1_v21.sh
+# L   theta  itr_per_job  njobs(last job)  memory_GB  from  set   [epsfile]
+ 12   0.0    1      4280  4    2141  v21   v21_theta_0.0_offgrid.txt

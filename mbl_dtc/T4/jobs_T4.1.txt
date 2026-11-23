@@ -1,0 +1,4 @@
+# T4.1 (Tony 2026-11-23, simulation plan): theta 0, the 24 V2.1 points off the 0.025 grid, 0 -> 2000 (+7%); the lost V2.1 L12 folded in (jobs 1-2140).
+# 2140 jobs, one batch. eigen_win.jl; one job = 1 realisation(s) x all eps of the line. Submit: bash ~/local/BAF/mbl_dtc/T4/submit_T4.1.sh
+# L   theta  itr_per_job  njobs(last job)  memory_GB  from  set   [epsfile]
+ 12   0.0    1      2140  4       1  v21   v21_theta_0.0_offgrid.txt
