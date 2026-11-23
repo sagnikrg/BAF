@@ -48,8 +48,8 @@ export JULIA_PKG_OFFLINE=true
 julia code/run_sb.jl ./out \$kind \$L \$th \$g \$a \$b > julia_\$tag.log 2>&1
 echo "julia exit code \$?" >> julia_\$tag.log
 
-mkdir -p /cephfs/user/sghosh/data/symmetry_breaking/logs
-cp julia_\$tag.log /cephfs/user/sghosh/data/symmetry_breaking/logs/.
+# no log copy to the cluster drive any more (Tony 2026-11-23: its file-number limit); the tail goes to the job's out file in ~/local/batches/<B>/log
+tail -3 julia_\$tag.log
 cp out/*.hdf5 /cephfs/user/sghosh/data/symmetry_breaking/.
 rm -rf *
 EOF
