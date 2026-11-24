@@ -1,6 +1,7 @@
 # T2.3 part 2 RERUN (Tony 2026-11-23): the realisations of jobs_T2.3_p2.txt whose output never reached E: (cluster drive hit
 # its file-number limit). One line per contiguous r block of missing files, same tags as the original (the files did not exist).
 # Jobs copy no logs to $BUDDY any more (cat_batch.sh, rule of 2026-11-23). Submit: bash ~/local/BAF/mbl_dtc_polfed/BAF.sh jobs_T2.3_p2_rerun.txt
+# 2026-11-24 (Tony): theta 0.0 only (3863 jobs); its theta 0.1 lines (whole r blocks, nothing of them on E:) moved to p3, with the other theta 0.1.
 # L theta to parts mem hours from set only eps
  16   0.0    11131  1  3  24   11131  t23  -  0.23
  16   0.0    11302  1  3  24   11302  t23  -  0.23
@@ -346,8 +347,3 @@
  16   0.0    15992  1  3  24   15727  t23  -  0.09
  16   0.0    16257  1  3  24   15993  t23  -  0.22
  16   0.0    16521  1  3  24   16258  t23  -  0.2
- 16   0.1     2200  1  3  24    1201  t23  -  0.18
- 16   0.1     3200  1  3  24    2201  t23  -  0.5
- 16   0.1     4200  1  3  24    3201  t23  -  0.78
- 16   0.1     4725  1  3  24    4201  t23  -  0.81
- 16   0.1     5250  1  3  24    4726  t23  -  0.91
