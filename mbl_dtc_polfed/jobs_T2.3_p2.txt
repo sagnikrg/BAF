@@ -1,4 +1,4 @@
-# T2.3 part 2/6 (Tony 2026-11-19, simulation plan): L=16 fine grid (V2 + V2.1 points) up to eig 1000 and Lazarides diagonals 1000,
+# T2.3 part 2/8 (Tony 2026-11-19, simulation plan): L=16 fine grid (V2 + V2.1 points) up to eig 1000 and Lazarides diagonals 1000,
 # plus theta=0 eps 0.35, 0.65, 0.95 and theta=1 g=0.5. polfed_bands.jl, set t23; new realisations per point = 1000 - diag; r from 1201 per theta, one r block per line.
 # One job = one (realisation, eps), ~2.3 h. This part: theta 0.0, 0.1, 9506 jobs (at most 10000 per submission, Tony); submit the parts one after the other.
 #   bash ~/local/BAF/mbl_dtc_polfed/BAF.sh jobs_T2.3_p2.txt --dry   then without --dry
