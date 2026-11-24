@@ -22,3 +22,10 @@ condor_ql
 ```
 
 Remove the older line `export PATH=/home/sghosh/physik/local/condor_ql:$PATH` from `~/.bashrc`, so that this copy is the one that runs.
+
+## batch_time_left
+
+`batch_time_left [pattern]` (asks for the pattern when not given; part of the batch name, case insensitive) prints, per matching batch in the queue (all schedds), done / running / idle / held and the time until the last job ends:
+- some jobs finished: the job time is the mean wall time of the finished jobs (condor_history of the batch's schedd and clusters);
+- none finished yet: the job time is the requested MaxRuntimeHours ("raw", an upper bound).
+Running jobs need the job time minus what they already ran; idle jobs start as the currently running slots free up. Held jobs are not counted. It is on the PATH with condor_ql (same folder); `chmod +x` it once after the pull.

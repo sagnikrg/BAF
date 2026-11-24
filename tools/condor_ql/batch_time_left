@@ -1,0 +1,77 @@
+#!/cvmfs/software.physik.uni-bonn.de/common/miniforge/24.7.1-0-py312/bin/python3
+"""batch_time_left: how long until the matching batches are through (sghosh 2026-11-24, BAF/tools/condor_ql).
+
+  batch_time_left [pattern] [-u user]     the pattern is asked for when not given; part of the batch name is enough
+                                          (case insensitive), e.g. "T2.3 p3", "L=16", "vertical_phases"
+
+For every batch in the queue (all schedds) whose JobBatchName contains the pattern:
+  - jobs already finished (condor_history of that schedd and cluster): their mean wall time is the time of one job
+    ("measured"); running jobs need that minus what they already ran, idle jobs the full time;
+  - nothing finished yet: the job time is the requested MaxRuntimeHours ("raw", an upper bound);
+  - the slots are the jobs running now; the idle ones start as slots free up (list scheduling).
+Held jobs are listed but not counted in the time."""
+import subprocess, json, os, sys, argparse
+from datetime import datetime, timedelta
+
+ap = argparse.ArgumentParser(description=__doc__, formatter_class=argparse.RawDescriptionHelpFormatter)
+ap.add_argument("pattern", nargs="?", help="part of the batch name")
+ap.add_argument("-u", "--user", default=os.environ.get("USER", "sghosh"))
+a = ap.parse_args()
+pat = a.pattern if a.pattern else input("batch name pattern (part is enough): ").strip()
+if not pat:
+    sys.exit("no pattern given")
+
+def run(cmd):
+    p = subprocess.run(cmd, stdout=subprocess.PIPE, stderr=subprocess.PIPE, text=True)
+    return json.loads(p.stdout) if p.returncode == 0 and len(p.stdout) > 10 else []
+
+q = run(["condor_q", "-json", "--global", "-submitter", a.user, "-af:hj", "ClusterId", "ProcId", "GlobalJobId", "JobStatus",
+         "JobBatchName", "JobCurrentStartDate", "ServerTime", "MaxRuntimeHours", "TotalSubmitProcs"])
+B = {}
+for j in q:
+    name = j.get("JobBatchName") or "ID: %s" % j["ClusterId"]
+    if pat.lower() not in name.lower():
+        continue
+    schedd = str(j.get("GlobalJobId", "?")).split("#")[0]
+    b = B.setdefault((schedd, name), {"cl": {}, "run": [], "idle": 0, "held": 0, "tmax": float(j.get("MaxRuntimeHours") or 0)})
+    b["cl"][j["ClusterId"]] = j.get("TotalSubmitProcs") or 0
+    st = j.get("JobStatus")
+    if st == 2:
+        b["run"].append(max(0.0, (j.get("ServerTime", 0) - (j.get("JobCurrentStartDate") or j.get("ServerTime", 0))) / 3600.0))
+    elif st == 1:
+        b["idle"] += 1
+    elif st == 5:
+        b["held"] += 1
+if not B:
+    sys.exit('no batch of %s in the queue matches "%s"' % (a.user, pat))
+
+def eta(running, idle, t):
+    """wall hours until all are done: running jobs need t - elapsed, idle ones t each, on len(running) slots"""
+    slots = sorted(max(t - e, 0.05 * t) for e in running) or [0.0]
+    for _ in range(idle):
+        slots.sort(); slots[0] += t
+    return max(slots)
+
+now = datetime.now()
+print('pattern "%s", user %s, %s\n' % (pat, a.user, now.strftime("%d.%m. %H:%M")))
+print("%-8s %-44s %6s %5s %6s %5s %7s  %-20s %8s  %s" % ("SCHEDD", "BATCH", "DONE", "RUN", "IDLE", "HOLD", "TOTAL", "JOB TIME", "LEFT", "READY"))
+for (schedd, name), b in sorted(B.items(), key=lambda x: x[0][1]):
+    hist = []
+    for c in b["cl"]:
+        hist += run(["condor_history", "-json", "-name", schedd, "-constraint", "ClusterId==%d && JobStatus==4" % c, "-af:hj", "RemoteWallClockTime"])
+    w = [h["RemoteWallClockTime"] / 3600.0 for h in hist if h.get("RemoteWallClockTime")]
+    total = sum(b["cl"].values())
+    queued = len(b["run"]) + b["idle"] + b["held"]
+    done = max(total - queued, len(w))
+    if w:
+        t = sum(w) / len(w); how = "%.2f h mean of %d" % (t, len(w))
+    else:
+        t = b["tmax"]; how = "%.0f h raw (request)" % t
+    left = eta(b["run"], b["idle"], t) if (b["run"] or b["idle"]) else 0.0
+    ready = (now + timedelta(hours=left)).strftime("%d.%m. %H:%M") if left else "-"
+    if not b["run"] and b["idle"]:
+        ready = "no slot yet"
+    nm = name if len(name) <= 44 else name[:41] + "..."
+    print("%-8s %-44s %6d %5d %6d %5d %7d  %-20s %7.1fh  %s" % (schedd.split(".")[0], nm, done, len(b["run"]), b["idle"], b["held"], total, how, left, ready))
+print("\nmeasured = mean wall time of the finished jobs of the batch; raw = the requested MaxRuntimeHours (upper bound);"
+      "\nslots = the jobs running now, idle jobs start as they free up; held jobs are not counted.")
