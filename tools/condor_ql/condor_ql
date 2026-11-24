@@ -1,0 +1,286 @@
+#!/cvmfs/software.physik.uni-bonn.de/common/miniforge/24.7.1-0-py312/bin/python3
+import subprocess, json, argparse, os, sys
+from datetime import datetime
+
+# parse flags
+parser = argparse.ArgumentParser(description='''Fetches the json output of condor_q and presents it in a nice way.''')
+parser.add_argument('--version', action='version', version='%(prog)s 2.1, 23 May 2025 by Marvin Lenk; batch view + default (-b -u sghosh) added in BAF/tools 2026-11-24')
+parser.add_argument("-u", "--user", help="Submitter user name, e.g. s6mxmust")
+parser.add_argument("-s", "--status", help="Current status, 0=Wait, 1=Idle, 2=Run, 3=Rem, 4=Done, 5=Hold, 6=Err, 7=Susp")
+parser.add_argument("-hn", "--hostname", help="Submitting host name, e.g. theo123")
+parser.add_argument("-hi", "--history", action='store_true', help="Look through history instead of queue")
+parser.add_argument("-b", "--batch", action='store_true', help="One line per batch (JobBatchName) across the cluster, then condor_userprio")
+parser.add_argument("-j", "--jobs", action='store_true', help="The original per job view (the default is: -b -u sghosh)")
+
+args = parser.parse_args()
+
+# BAF/tools addition (sghosh 2026-11-24): with no flags at all, condor_ql = condor_ql -b -u sghosh
+if len(sys.argv) == 1:
+  args.batch = True
+  args.user = "sghosh"
+
+try:
+  username = os.environ["USER"]
+except:
+  username = os.environ["USERNAME"]
+
+# fill string with free spaces and add delimiter
+def filltab(strin, lstr=13, delim="| "):
+  if len(strin) < lstr:
+    strout = strin + " " * (lstr - len(strin)) + delim
+  else:
+    strout = strin + delim
+
+  return strout
+
+# list of fields wanted from condor_q with their appropriate names
+fields = {
+  "gId" : "GlobalJobId",
+  "cId" : "ClusterId",
+  "pId" : "ProcId",
+  "st" : "JobStatus",
+  "rhost" : "RemoteHost",
+  "lrhost" : "LastRemoteHost",
+  "cpus" : "RequestCpus",
+  "tmax" : "MaxRuntimeHours",
+  "tnow" : "ServerTime",
+  "trwc" : "RemoteWallClockTime",
+  "tsubmit" : "QDate",
+  "tstat" : "EnteredCurentStatus",
+  "tstart" : "JobCurrentStartDate",
+  "tend" : "JobFinishedHookDone",
+  "ram" : "ResidentSetSize_RAW",
+  "rammax" : "RequestMemory",
+  "hdd" : "DiskUsage_RAW",
+  "hddmax" : "RequestDisk",
+  "args" : "Args"
+  }
+
+# dictionary of status integer
+status = {
+  "0" : "Wait",
+  "1" : "Idle",
+  "2" : "Run",
+  "3" : "Rem",
+  "4" : "Done",
+  "5" : "Hold",
+  "6" : "Err",
+  "7" : "Susp"
+  }
+
+# ---- batch view (BAF/tools addition, sghosh 2026-11-24) ----
+def run(cmd):
+  p = subprocess.run(cmd, stdout=subprocess.PIPE, stderr=subprocess.PIPE, text=True)
+  return p.stdout if p.returncode == 0 else ""
+
+def batch_view():
+  os.chdir(os.path.expanduser("~"))
+  print("\033[H\033[2J", end="")          # clear the screen
+  user = args.user or username
+  call = ["condor_q", "-json", "--global", "-submitter", user, "-af:hj",
+          "ClusterId", "ProcId", "JobStatus", "JobBatchName", "QDate", "TotalSubmitProcs",
+          "JobCurrentStartDate", "ServerTime", "ResidentSetSize_RAW", "RequestMemory", "RequestCpus"]
+  out = run(call)
+  jobs = json.loads(out) if len(out) > 10 else []
+  B = {}
+  for j in jobs:
+    name = j.get("JobBatchName") or "ID: %s" % j["ClusterId"]
+    b = B.setdefault(name, {"clusters": {}, "st": {}, "q": j.get("QDate", 0), "wmax": 0.0, "ram": 0.0, "req": 0.0, "cpus": j.get("RequestCpus", 1)})
+    b["clusters"].setdefault(j["ClusterId"], j.get("TotalSubmitProcs") or 0)
+    st = j.get("JobStatus", 0); b["st"][st] = b["st"].get(st, 0) + 1
+    b["q"] = min(b["q"], j.get("QDate", b["q"]))
+    if st == 2 and j.get("JobCurrentStartDate"):
+      b["wmax"] = max(b["wmax"], (j.get("ServerTime", 0) - j["JobCurrentStartDate"]) / 3600.0)
+    if j.get("ResidentSetSize_RAW"): b["ram"] = max(b["ram"], j["ResidentSetSize_RAW"] / 1024.0 / 1024.0)
+    if j.get("RequestMemory"): b["req"] = max(b["req"], j["RequestMemory"] / 1024.0)
+  now = datetime.now().strftime("%d.%m. %H:%M")
+  print("%s   batches of %s across the cluster   %s" % ("condor_ql -b", user, now))
+  head = "%-46s %-11s %7s %7s %7s %6s %7s  %-22s %8s %11s" % ("BATCH", "SUBMITTED", "DONE", "RUN", "IDLE", "HOLD", "TOTAL", "PROGRESS", "MAX W/h", "RAM/REQ GB")
+  print(head); print("-" * len(head))
+  tot = {"d": 0, "r": 0, "i": 0, "h": 0, "t": 0}
+  for name, b in sorted(B.items(), key=lambda x: x[1]["q"]):
+    run_, idle, hold = b["st"].get(2, 0), b["st"].get(1, 0), b["st"].get(5, 0)
+    total = sum(b["clusters"].values()) or sum(b["st"].values())
+    done = max(total - sum(b["st"].values()), 0)
+    frac = done / total if total else 0.0
+    bar = "#" * int(round(20 * frac)) + "." * (20 - int(round(20 * frac)))
+    sub = datetime.fromtimestamp(b["q"]).strftime("%d.%m %H:%M") if b["q"] else "-"
+    nm = name if len(name) <= 46 else name[:43] + "..."
+    print("%-46s %-11s %7d %7d %7d %6d %7d  %s %3d%% %6.1f %11s" % (nm, sub, done, run_, idle, hold, total, bar, round(100 * frac), b["wmax"], "%.1f/%.0f" % (b["ram"], b["req"])))
+    for k, v in (("d", done), ("r", run_), ("i", idle), ("h", hold), ("t", total)): tot[k] += v
+  print("-" * len(head))
+  print("%-46s %-11s %7d %7d %7d %6d %7d  %d batches" % ("total", "", tot["d"], tot["r"], tot["i"], tot["h"], tot["t"], len(B)))
+  print("\n" + (run(["condor_userprio"]) or "condor_userprio: no output"))
+
+if args.batch and not args.jobs and not args.history:
+  batch_view()
+  exit(0)
+
+# flags for the condor_q call
+if args.history:
+  condor_q_call = [
+    "condor_history",
+    "-json"]
+else:
+  condor_q_call = [
+    "condor_q",
+    "-json"]
+
+# add name flag if specified
+if args.hostname is None:
+  if not args.history:
+    condor_q_call.append("--global")
+else:
+  condor_q_call.extend(["-name", args.hostname])
+
+# add submitter flag if specified or needed
+if not(args.user is None):
+  if args.history:
+    condor_q_call.extend([args.user])
+  else:
+    condor_q_call.extend(["-submitter", args.user])
+elif args.history:
+  condor_q_call.extend([username])
+
+# add status flag if specified
+if not(args.status is None):
+    condor_q_call.extend(["-constraint", "JobStatus=={0}".format(args.status)])
+
+#  "-constraint",
+#    "JobStatus==2",
+condor_q_call.extend(["-af:hj",
+    fields["cId"],
+    fields["pId"],
+    fields["gId"],
+    fields["st"],
+    fields["cpus"],
+    fields["tmax"],
+    fields["tnow"],
+    fields["tstart"],
+    fields["ram"],
+    fields["rammax"],
+    fields["hdd"],
+    fields["hddmax"],
+    fields["args"]
+  ])
+
+if args.history:
+  condor_q_call.extend([fields["lrhost"],
+                        fields["tend"],
+                        fields["tsubmit"]])
+else:
+  condor_q_call.extend([fields["rhost"],
+                        fields["trwc"]])
+
+# call and read out condor_q_call
+condor_q = subprocess.Popen(condor_q_call, stdout=subprocess.PIPE, text=True)
+condor_q_str = condor_q.communicate()[0]
+if condor_q.poll():
+  raise Exception(condor_q.errors)
+
+# draw headline of output
+print(filltab("Host", lstr=8), end="")
+print(filltab("Cl-ID", lstr=9), end="")
+print(filltab("RHost", lstr=6), end="")
+print(filltab("CPUs", lstr=3), end="")
+if args.history:
+  print(filltab("Submitted", lstr=15), end="")
+  print(filltab("Started", lstr=15), end="")
+  print(filltab("Ended", lstr=15), end="")
+else:
+  print(filltab("W-time/h"), end="")
+
+print(filltab("RAM/GB"), end="")
+print(filltab("Quota/GB"), end="")
+print(filltab("Stat", lstr=5), end="")
+print(filltab("Args", delim="", lstr=12))
+
+# exit if no jobs are present
+if len(condor_q_str) < 10:
+  exit(0)
+
+# convert json to array of dictionaries
+qjson = json.loads(condor_q_str)
+
+# iterate through jobs and print details
+for el in qjson:
+  gId = str(el[fields["gId"]])
+  idot = gId.find(".")
+  print(filltab(gId[0:idot], lstr=8), end="")
+  print(filltab(str(el[fields["cId"]]) + "." + str(el[fields["pId"]]), lstr=9), end="")
+  
+  # For history we need the last rhost
+  try:
+    if args.history:
+      rhost_h = el[fields["lrhost"]]
+    else:
+      rhost_h = el[fields["rhost"]]
+    
+    rhost = str(rhost_h)
+  except:
+    print(filltab("-", lstr=6), end="")
+  else:
+    iat = rhost.find("@")
+    print(filltab(rhost[iat+1:iat+6], lstr=6), end="")
+  
+  print(filltab(str(el[fields["cpus"]]), lstr=4), end="")
+  
+  if args.history:
+    # submit time without seconds
+    submittime = datetime.fromtimestamp(el[fields["tsubmit"]]).strftime("%x %X")[:-3]
+    print(filltab(submittime, lstr=15), end="")
+    
+    # start time without seconds
+    try:
+      starttime = datetime.fromtimestamp(el[fields["tstart"]]).strftime("%x %X")[:-3]
+    except:
+      starttime = "-"
+    
+    print(filltab(starttime, lstr=15), end="")
+    
+    # end time without seconds
+    endtime = datetime.fromtimestamp(el[fields["tend"]]).strftime("%x %X")[:-3]
+    print(filltab(endtime, lstr=15), end="")
+  else:
+    if el[fields["st"]] == 2:
+      try:
+        wtime = round( ( el[fields["tnow"]] - el[fields["tstart"]] ) / (60.0 * 60.0) , 1)
+      except:
+        wtime = 0.0
+    else:
+      wtime = 0.0
+
+    wtime_max = round( float(el[fields["tmax"]]) - (el[fields["trwc"]] / (60.0 * 60.0) ) ,1)
+    print( filltab(str(wtime) + " / " + str(wtime_max)), end="" )
+    
+  try:
+    ram = round( (el[fields["ram"]] + 1023) / (1024.0 * 1024.0) , 1)
+  except:
+    ram = 0.0
+    quota = 0.0
+  else:
+    quota = round( (el[fields["hdd"]] + 1023) / (1024.0 * 1024.0) , 1)
+
+  rammax = el[fields["rammax"]] / 1024
+  print( filltab(str(ram) + " / " + str(rammax)), end="" )
+
+  try:
+    quotamax = el[fields["hddmax"]] / (1024 * 1024)
+  except:
+    quotamax = el[fields["hddmax"]]
+
+  print( filltab(str(quota) + " / " + str(quotamax)), end="" )
+  try:
+    st_str = status[str(el[fields["st"]])]
+  except:
+    st_str = str(el[fields["st"]])
+  print( filltab( st_str, lstr=5 ), end="" )
+  
+  try:
+    qargs = el[fields["args"]]
+  except:
+    qargs = ""
+  
+  print( filltab(qargs , delim="", lstr=12 ) )
+exit(0)
+# end
