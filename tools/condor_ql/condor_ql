@@ -78,13 +78,14 @@ def batch_view():
   print("\033[H\033[2J", end="")          # clear the screen
   user = args.user or username
   call = ["condor_q", "-json", "--global", "-submitter", user, "-af:hj",
-          "ClusterId", "ProcId", "JobStatus", "JobBatchName", "QDate", "TotalSubmitProcs",
+          "ClusterId", "ProcId", "GlobalJobId", "JobStatus", "JobBatchName", "QDate", "TotalSubmitProcs",
           "JobCurrentStartDate", "ServerTime", "ResidentSetSize_RAW", "RequestMemory", "RequestCpus"]
   out = run(call)
   jobs = json.loads(out) if len(out) > 10 else []
   B = {}
   for j in jobs:
-    name = j.get("JobBatchName") or "ID: %s" % j["ClusterId"]
+    schedd = str(j.get("GlobalJobId", "?")).split("#")[0].split(".")[0]   # theo199, exp199, ...
+    name = (schedd, j.get("JobBatchName") or "ID: %s" % j["ClusterId"])
     b = B.setdefault(name, {"clusters": {}, "st": {}, "q": j.get("QDate", 0), "wmax": 0.0, "ram": 0.0, "req": 0.0, "cpus": j.get("RequestCpus", 1)})
     b["clusters"].setdefault(j["ClusterId"], j.get("TotalSubmitProcs") or 0)
     st = j.get("JobStatus", 0); b["st"][st] = b["st"].get(st, 0) + 1
@@ -95,7 +96,7 @@ def batch_view():
     if j.get("RequestMemory"): b["req"] = max(b["req"], j["RequestMemory"] / 1024.0)
   now = datetime.now().strftime("%d.%m. %H:%M")
   print("%s   batches of %s across the cluster   %s" % ("condor_ql -b", user, now))
-  head = "%-46s %-11s %7s %7s %7s %6s %7s  %-22s %8s %11s" % ("BATCH", "SUBMITTED", "DONE", "RUN", "IDLE", "HOLD", "TOTAL", "PROGRESS", "MAX W/h", "RAM/REQ GB")
+  head = "%-8s %-46s %-11s %7s %7s %7s %6s %7s  %-22s %8s %11s" % ("SCHEDD", "BATCH", "SUBMITTED", "DONE", "RUN", "IDLE", "HOLD", "TOTAL", "PROGRESS", "MAX W/h", "RAM/REQ GB")
   print(head); print("-" * len(head))
   tot = {"d": 0, "r": 0, "i": 0, "h": 0, "t": 0}
   for name, b in sorted(B.items(), key=lambda x: x[1]["q"]):
@@ -105,11 +106,11 @@ def batch_view():
     frac = done / total if total else 0.0
     bar = "#" * int(round(20 * frac)) + "." * (20 - int(round(20 * frac)))
     sub = datetime.fromtimestamp(b["q"]).strftime("%d.%m %H:%M") if b["q"] else "-"
-    nm = name if len(name) <= 46 else name[:43] + "..."
-    print("%-46s %-11s %7d %7d %7d %6d %7d  %s %3d%% %6.1f %11s" % (nm, sub, done, run_, idle, hold, total, bar, round(100 * frac), b["wmax"], "%.1f/%.0f" % (b["ram"], b["req"])))
+    nm = name[1] if len(name[1]) <= 46 else name[1][:43] + "..."
+    print("%-8s %-46s %-11s %7d %7d %7d %6d %7d  %s %3d%% %6.1f %11s" % (name[0], nm, sub, done, run_, idle, hold, total, bar, round(100 * frac), b["wmax"], "%.1f/%.0f" % (b["ram"], b["req"])))
     for k, v in (("d", done), ("r", run_), ("i", idle), ("h", hold), ("t", total)): tot[k] += v
   print("-" * len(head))
-  print("%-46s %-11s %7d %7d %7d %6d %7d  %d batches" % ("total", "", tot["d"], tot["r"], tot["i"], tot["h"], tot["t"], len(B)))
+  print("%-8s %-46s %-11s %7d %7d %7d %6d %7d  %d batches" % ("", "total", "", tot["d"], tot["r"], tot["i"], tot["h"], tot["t"], len(B)))
   print("\n" + (run(["condor_userprio"]) or "condor_userprio: no output"))
 
 if args.batch and not args.jobs and not args.history:
