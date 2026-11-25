@@ -4,20 +4,20 @@ from datetime import datetime
 
 # parse flags
 parser = argparse.ArgumentParser(description='''Fetches the json output of condor_q and presents it in a nice way.''')
-parser.add_argument('--version', action='version', version='%(prog)s 2.1, 23 May 2025 by Marvin Lenk; batch view + default (-b -u sghosh) added in BAF/tools 2026-11-24')
+parser.add_argument('--version', action='version', version='%(prog)s 2.1, 23 May 2025 by Marvin Lenk; batch view + default (-b -u $USER) added in BAF/tools 2026-11-24')
 parser.add_argument("-u", "--user", help="Submitter user name, e.g. s6mxmust")
 parser.add_argument("-s", "--status", help="Current status, 0=Wait, 1=Idle, 2=Run, 3=Rem, 4=Done, 5=Hold, 6=Err, 7=Susp")
 parser.add_argument("-hn", "--hostname", help="Submitting host name, e.g. theo123")
 parser.add_argument("-hi", "--history", action='store_true', help="Look through history instead of queue")
 parser.add_argument("-b", "--batch", action='store_true', help="One line per batch (JobBatchName) across the cluster, then condor_userprio")
-parser.add_argument("-j", "--jobs", action='store_true', help="The original per job view (the default is: -b -u sghosh)")
+parser.add_argument("-j", "--jobs", action='store_true', help="The original per job view (the default is: -b -u $USER)")
 
 args = parser.parse_args()
 
-# BAF/tools addition (sghosh 2026-11-24): with no flags at all, condor_ql = condor_ql -b -u sghosh
+# BAF/tools addition (sghosh 2026-11-24): with no flags at all, condor_ql = condor_ql -b -u $USER
 if len(sys.argv) == 1:
   args.batch = True
-  args.user = "sghosh"
+  args.user = os.environ.get("USER", "sghosh")
 
 try:
   username = os.environ["USER"]
